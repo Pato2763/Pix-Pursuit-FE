@@ -5,9 +5,11 @@ import { View, Text } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 import Leaderboard from "./screens/Leaderboard";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { createStackNavigator } from "@react-navigation/stack";
 import TermsScreen from "./screens/TermsScreen";
 import { EmptyScreen } from "./screens/EmptyScreen";
+
 import Header from "./components/Header";
 
 const Tab = createBottomTabNavigator();
@@ -32,6 +34,7 @@ function App() {
     <NavigationContainer>
       <Header />
       <Stack.Navigator
+        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
         }}
