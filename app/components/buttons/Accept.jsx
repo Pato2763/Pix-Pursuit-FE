@@ -1,11 +1,17 @@
 import React from "react";
 import { Text, Pressable } from "react-native";
 import { blueButton } from "../../utils/styles/buttons";
+import {
+  createStaticNavigation,
+  useNavigation,
+} from "@react-navigation/native";
 
-export default function Accept({ setAcceptedTerms }) {
+export default function Accept() {
+  const navigation = useNavigation();
+
   const title = "Accept and Continue";
   const onPress = () => {
-    setAcceptedTerms(true);
+    navigation.navigate("Home");
   };
   return (
     <Pressable style={blueButton.Accpet} onPress={onPress}>

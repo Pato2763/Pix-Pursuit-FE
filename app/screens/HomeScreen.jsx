@@ -9,11 +9,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView>
-      {!AcceptedTerms ? (
-        <HomeLoading setAcceptedTerms={setAcceptedTerms} />
-      ) : (
-        <Text>in home screen actual</Text>
-      )}
+      <Text>in home screen actual</Text>
     </SafeAreaView>
   );
 };
