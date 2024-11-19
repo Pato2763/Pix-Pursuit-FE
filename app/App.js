@@ -34,7 +34,7 @@ function App() {
     <NavigationContainer>
       <Header />
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Terms"
         screenOptions={{
           headerShown: false,
         }}
