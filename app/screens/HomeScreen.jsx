@@ -1,13 +1,9 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
+import Header from "../components/Header";
+import HomeLoading from "../components/HomeLoading";
 
 const HomeScreen = () => {
-  return (
-    <>
-      <View>
-        <Text>Home Screen</Text>
-      </View>
-    </>
-  );
+  return <HomeLoading />;
 };
 
 export default HomeScreen;
