@@ -15,3 +15,9 @@ export function loginUser(body) {
     return response.data.msg;
   });
 }
+
+export function getPursuits(lat, long) {
+  return api.get("/pursuits", { params: { lat, long } }).then((response) => {
+    return response.data.pursuits;
+  });
+}

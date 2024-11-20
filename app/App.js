@@ -11,6 +11,7 @@ import { EmptyScreen } from "./screens/EmptyScreen";
 import Header from "./components/Header";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
+import { ChoosePursuitScreen } from "./screens/ChoosePursuitsScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -58,6 +59,7 @@ const NavTab = () => {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Leaderboard" component={Leaderboard} />
+      <Tab.Screen name="ChoosePursuits" component={ChoosePursuitScreen} />
     </Tab.Navigator>
   );
 };
