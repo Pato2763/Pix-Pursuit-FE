@@ -4,6 +4,7 @@ import { Styles } from "../utils/styles/login";
 import { TouchableWithoutFeedback } from "react-native";
 import { Keyboard } from "react-native";
 import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
   const [loginInfo, setLoginInfo] = useState({
@@ -11,6 +12,7 @@ const LoginScreen = () => {
     password: "",
   });
   const refPasswordInput = useRef(null);
+  const navigation = useNavigation();
 
   const focusOnPassword = () => {
     if (refPasswordInput && refPasswordInput.current) {
@@ -54,7 +56,12 @@ const LoginScreen = () => {
               Forgot Password?
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={Styles.loginBtn}>
+          <TouchableOpacity
+            style={Styles.loginBtn}
+            onPress={() => {
+              navigation.navigate("Home");
+            }}
+          >
             <Text>Log In</Text>
           </TouchableOpacity>
           <Text
@@ -63,10 +70,10 @@ const LoginScreen = () => {
               marginHorizontal: "auto",
             }}
           >
-            Not a member ?
+            Not a member?
           </Text>
           <TouchableOpacity style={Styles.signupBtn}>
-            <Text>Signup</Text>
+            <Text>Sign up</Text>
           </TouchableOpacity>
         </View>
       </View>
