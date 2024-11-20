@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
 import { MapViewer } from "../components/MapViewer";
+import { Styles } from "../utils/styles/login";
 
 const HomeScreen = () => {
   const [AcceptedTerms, setAcceptedTerms] = useState(false);
@@ -33,7 +34,11 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text>Home Screen</Text>
+      <Text
+        style={{
+          backgroundColor: "white",
+        }}
+      ></Text>
       <MapViewer trackedLocation={trackedLocation} />
     </SafeAreaView>
   );
