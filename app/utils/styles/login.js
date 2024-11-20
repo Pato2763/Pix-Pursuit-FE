@@ -34,7 +34,7 @@ export const Styles = StyleSheet.create({
   },
   loginBtn: {
     width: "80%",
-    backgroundColor: "#3AB4BA",
+    backgroundColor: Colours.AQUA_BLUE,
     borderRadius: 15,
     height: 50,
     alignItems: "center",
