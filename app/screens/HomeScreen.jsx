@@ -8,8 +8,11 @@ import { MapViewer } from "../components/MapViewer";
 
 const HomeScreen = () => {
   const [AcceptedTerms, setAcceptedTerms] = useState(false);
-  const [location, setLocation] = useState([]);
-  const [trackedLocation, setTrackedLocation] = useState([]);
+  const [location, setLocation] = useState({});
+  const [trackedLocation, setTrackedLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
 
   useEffect(() => {
     getLocation(setLocation);
@@ -32,12 +35,6 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <Text>Home Screen</Text>
       <MapViewer trackedLocation={trackedLocation} />
-      <Text>
-        {location?.latitude} {location?.longitude}
-      </Text>
-      <Text>
-        {trackedLocation.latitude} {trackedLocation.longitude}
-      </Text>
     </SafeAreaView>
   );
 };
