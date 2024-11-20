@@ -9,3 +9,9 @@ export function getUsers() {
     return response.data.users;
   });
 }
+
+export function loginUser(body) {
+  return api.post("/users/login", body).then((response) => {
+    return response.data.msg;
+  });
+}

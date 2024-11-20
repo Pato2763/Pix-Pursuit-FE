@@ -57,4 +57,10 @@ export const Styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 30,
   },
+  errorMsg: {
+    color: "red",
+    width: 200,
+    textAlign: "center",
+    marginHorizontal: "auto",
+  },
 });
