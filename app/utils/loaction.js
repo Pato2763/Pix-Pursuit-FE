@@ -9,15 +9,15 @@ exports.getLocation = (setLocation) => {
       return Location.getCurrentPositionAsync();
     })
     .then((location) => {
-      setLocation([
-        location.coords.latitude,
-        location.coords.longitude,
-        location.timestamp,
-      ]);
+      setLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        timestamp: location.timestamp,
+      });
     });
 };
 
-exports.getTrackedLocation = (setlocationTracked) => {
+exports.getTrackedLocation = (setTrackedLocation) => {
   return Location.watchPositionAsync(
     {
       accuaracy: Location.Accuracy.BestForNavigation,
@@ -26,11 +26,11 @@ exports.getTrackedLocation = (setlocationTracked) => {
     },
     (newLocation) => {
       console.log("new location set", newLocation);
-      setlocationTracked([
-        newLocation.coords.latitude,
-        newLocation.coords.longitude,
-        newLocation.timestamp,
-      ]);
+      setTrackedLocation({
+        latitude: newLocation.coords.latitude,
+        longitude: newLocation.coords.longitude,
+        timestamp: newLocation.timestamp,
+      });
     }
   );
 };
