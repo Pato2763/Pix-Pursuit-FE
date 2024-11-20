@@ -10,6 +10,7 @@ import TermsScreen from "./screens/TermsScreen";
 import { EmptyScreen } from "./screens/EmptyScreen";
 import Header from "./components/Header";
 import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -73,6 +74,7 @@ function App() {
       >
         <Stack.Screen name="Terms" component={TermsScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Home" component={NavTab} />
         <Stack.Screen name="Profile" component={EmptyScreen} />
         <Stack.Screen name="Settings" component={EmptyScreen} />

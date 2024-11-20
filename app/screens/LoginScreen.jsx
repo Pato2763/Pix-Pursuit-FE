@@ -68,7 +68,7 @@ const LoginScreen = () => {
             ref={refPasswordInput}
             style={Styles.inputText}
             placeholder="Enter your password"
-            secureTextEntry
+            secureTextEntry={true}
             returnKeyType="done"
             value={loginInfo.password}
             onSubmitEditing={Keyboard.dismiss}
