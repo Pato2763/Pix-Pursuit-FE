@@ -1,7 +1,8 @@
 import { Button, Pressable, View, Text } from "react-native";
 import Accept from "./buttons/Accept";
+import LoginScreen from "../screens/LoginScreen";
 
-const HomeLoading = ({ setAcceptedTerms }) => {
+const HomeLoading = () => {
   return (
     <View style={[{ padding: 15, margin: 10 }]}>
       <Text>Lorem ipsum dolor sit amet.</Text>
@@ -16,7 +17,7 @@ const HomeLoading = ({ setAcceptedTerms }) => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi laudantium
         nulla necessitatibus quasi odio sunt?
       </Text>
-      <Accept setAcceptedTerms={setAcceptedTerms} />
+      <Accept tarRedirect="Login" />
     </View>
   );
 };

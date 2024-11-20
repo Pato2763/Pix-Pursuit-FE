@@ -1,17 +1,14 @@
 import React from "react";
 import { Text, Pressable } from "react-native";
 import { blueButton } from "../../utils/styles/buttons";
-import {
-  createStaticNavigation,
-  useNavigation,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Accept() {
+export default function Accept({ tarRedirect }) {
   const navigation = useNavigation();
 
   const title = "Accept and Continue";
   const onPress = () => {
-    navigation.navigate("Home");
+    navigation.navigate(tarRedirect);
   };
   return (
     <Pressable style={blueButton.Accpet} onPress={onPress}>
