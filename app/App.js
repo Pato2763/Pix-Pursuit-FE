@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./screens/HomeScreen";
 import Leaderboard from "./screens/Leaderboard";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/AntDesign";
 import { createStackNavigator } from "@react-navigation/stack";
 import TermsScreen from "./screens/TermsScreen";

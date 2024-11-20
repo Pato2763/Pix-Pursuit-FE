@@ -60,6 +60,7 @@ const SignupScreen = () => {
               placeholder="Enter your e-mail"
               returnKeyType="next"
               value={signupInfo.email}
+              autoComplete="email"
               onSubmitEditing={() => refPasswordInput.current.focus()}
               onChangeText={(text) => handleInputChange("email", text)}
             />

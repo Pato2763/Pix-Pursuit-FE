@@ -17,6 +17,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     getLocation(setLocation);
+    console.log;
   }, []);
 
   useEffect(() => {
