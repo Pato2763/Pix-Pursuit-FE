@@ -11,7 +11,7 @@ export default function Accept() {
 
   const title = "Accept and Continue";
   const onPress = () => {
-    navigation.navigate("Home");
+    navigation.navigate("HomeScreen");
   };
   return (
     <Pressable style={blueButton.Accpet} onPress={onPress}>
