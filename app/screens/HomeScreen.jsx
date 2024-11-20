@@ -4,6 +4,7 @@ import HomeLoading from "../components/HomeLoading";
 import { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
+import { MapViewer } from "../components/MapViewer";
 
 const HomeScreen = () => {
   const [AcceptedTerms, setAcceptedTerms] = useState(false);
@@ -28,13 +29,14 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView>
-      <Text>in home screen actual</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Text>Home Screen</Text>
+      <MapViewer trackedLocation={trackedLocation} />
       <Text>
-        {location[0]} {location[2]}
+        {location?.latitude} {location?.longitude}
       </Text>
       <Text>
-        {trackedLocation[0]} {trackedLocation[2]}
+        {trackedLocation.latitude} {trackedLocation.longitude}
       </Text>
     </SafeAreaView>
   );
