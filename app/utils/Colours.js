@@ -6,5 +6,6 @@ const Colours = {
   GREY: "#566573",
   AQUA_BLUE: "#03FCDF",
   LIGHTGREY: "FFFFFF",
+  PURPLEBLUE: "#1E2237",
 };
 export default Colours;
