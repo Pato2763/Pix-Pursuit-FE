@@ -1,23 +1,20 @@
-import { View, Text, Image } from "react-native";
-import Header from "../components/Header";
-import HomeLoading from "../components/HomeLoading";
+import { Button, Text, TouchableOpacity, View } from "react-native";
 import { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
 import { MapViewer } from "../components/MapViewer";
-import { Styles } from "../utils/styles/login";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
-  const [AcceptedTerms, setAcceptedTerms] = useState(false);
   const [location, setLocation] = useState({});
   const [trackedLocation, setTrackedLocation] = useState({
     latitude: 0,
     longitude: 0,
   });
+  const navigation = useNavigation();
 
   useEffect(() => {
     getLocation(setLocation);
-    console.log;
   }, []);
 
   useEffect(() => {
@@ -25,7 +22,6 @@ const HomeScreen = () => {
     getTrackedLocation(setTrackedLocation).then((subscription) => {
       watchID = subscription;
     });
-
     return () => {
       if (watchID) {
         watchID.remove();
@@ -35,11 +31,14 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text
-        style={{
-          backgroundColor: "white",
-        }}
-      ></Text>
+      <View>
+        <Button
+          title="create pursuit"
+          onPress={() => {
+            navigation.navigate("CreatePursuit");
+          }}
+        />
+      </View>
       <MapViewer trackedLocation={trackedLocation} />
     </SafeAreaView>
   );
