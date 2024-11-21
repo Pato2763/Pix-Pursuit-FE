@@ -58,7 +58,11 @@ const NavTab = () => {
         },
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ gestureEnabled: false }}
+      />
       <Tab.Screen name="Leaderboard" component={Leaderboard} />
       <Tab.Screen name="ChoosePursuits" component={ChoosePursuitScreen} />
     </Tab.Navigator>
@@ -78,7 +82,11 @@ function App() {
         <Stack.Screen name="Terms" component={TermsScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="Home" component={NavTab} />
+         <Stack.Screen
+          name="Home"
+          component={NavTab}
+          options={{ gestureEnabled: false }}
+        />
         <Stack.Screen name="CreatePursuit" component={CreatePursuitScreen} />
         <Stack.Screen name="Camera" component={CameraScreen} />
         <Stack.Screen name="Profile" component={EmptyScreen} />
