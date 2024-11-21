@@ -3,6 +3,7 @@ import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Colours from "../utils/Colours";
+
 export const MapViewer = ({ trackedLocation }) => {
   if (
     !trackedLocation ||

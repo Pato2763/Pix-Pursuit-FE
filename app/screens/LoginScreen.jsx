@@ -4,12 +4,15 @@ import {
   TextInput,
   TouchableOpacity,
   Keyboard,
+  ImageBackground,
 } from "react-native";
 import React, { useState, useRef, useEffect } from "react";
 import { Styles } from "../utils/styles/login";
 import { useNavigation } from "@react-navigation/native";
 import { loginUser } from "../api";
 import { TouchableWithoutFeedback, ActivityIndicator } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import Colours from "../utils/Colours";
 
 const LoginScreen = () => {
   const [loginInfo, setLoginInfo] = useState({
@@ -49,52 +52,65 @@ const LoginScreen = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={Styles.container}>
-        <Text style={Styles.welcome}>Welcome to Pix Pursuit!</Text>
-        <View style={Styles.signUpContainer}>
-          <Text>Username:</Text>
-          <TextInput
-            style={Styles.inputText}
-            placeholder="Enter your username"
-            returnKeyType="next"
-            value={loginInfo.username}
-            onSubmitEditing={focusOnPassword}
-            onChangeText={(text) => handleInputChange("username", text)}
-          />
+    <ImageBackground
+      source={require("../../assets/triangleBG.png")}
+      resizeMode="cover"
+      style={Styles.image}
+      imageStyle={{ opacity: 0.15, backgroundColor: "white" }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={Styles.container}>
+          <Text style={Styles.welcome}>Welcome to Pix Pursuit!</Text>
+          <View style={Styles.signUpContainer}>
+            <Text>Username:</Text>
+            <TextInput
+              style={Styles.inputText}
+              placeholder="Enter your username"
+              returnKeyType="next"
+              value={loginInfo.username}
+              onSubmitEditing={focusOnPassword}
+              onChangeText={(text) => handleInputChange("username", text)}
+            />
 
-          <Text>Password:</Text>
-          <TextInput
-            ref={refPasswordInput}
-            style={Styles.inputText}
-            placeholder="Enter your password"
-            secureTextEntry={true}
-            returnKeyType="done"
-            value={loginInfo.password}
-            onSubmitEditing={Keyboard.dismiss}
-            onChangeText={(text) => handleInputChange("password", text)}
-          />
-          <TouchableOpacity>
-            <Text style={{ textDecorationLine: "underline" }}>
-              Forgot Password?
+            <Text>Password:</Text>
+            <TextInput
+              ref={refPasswordInput}
+              style={Styles.inputText}
+              placeholder="Enter your password"
+              secureTextEntry={true}
+              returnKeyType="done"
+              value={loginInfo.password}
+              onSubmitEditing={Keyboard.dismiss}
+              onChangeText={(text) => handleInputChange("password", text)}
+            />
+            <TouchableOpacity>
+              <Text style={{ textDecorationLine: "underline" }}>
+                Forgot Password?
+              </Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity style={Styles.loginBtn} onPress={submitLogin}> */}
+            <TouchableOpacity
+              style={Styles.loginBtn}
+              onPress={() => {
+                navigation.navigate("Home");
+              }}
+            >
+              {loading ? <ActivityIndicator /> : <Text>Log In</Text>}
+            </TouchableOpacity>
+            {error && <Text style={Styles.errorMsg}>Error logging you in</Text>}
+            <Text style={{ textAlign: "center", marginVertical: 10 }}>
+              Not a member?
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={Styles.loginBtn} onPress={submitLogin}>
-            {loading ? <ActivityIndicator /> : <Text>Log In</Text>}
-          </TouchableOpacity>
-          {error && <Text style={Styles.errorMsg}>Error logging you in</Text>}
-          <Text style={{ textAlign: "center", marginVertical: 10 }}>
-            Not a member?
-          </Text>
-          <TouchableOpacity
-            style={Styles.signupBtn}
-            onPress={() => navigation.navigate("Signup")}
-          >
-            <Text>Sign up</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={Styles.signupBtn}
+              onPress={() => navigation.navigate("Signup")}
+            >
+              <Text>Sign up</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </ImageBackground>
   );
 };
 

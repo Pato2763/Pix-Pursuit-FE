@@ -11,6 +11,8 @@ import Header from "./components/Header";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import { ChoosePursuitScreen } from "./screens/ChoosePursuitsScreen";
+import CreatePursuitScreen from "./screens/CreatePursuitScreen";
+import CameraScreen from "./screens/CameraScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -77,6 +79,8 @@ function App() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Home" component={NavTab} />
+        <Stack.Screen name="CreatePursuit" component={CreatePursuitScreen} />
+        <Stack.Screen name="Camera" component={CameraScreen} />
         <Stack.Screen name="Profile" component={EmptyScreen} />
         <Stack.Screen name="Settings" component={EmptyScreen} />
       </Stack.Navigator>

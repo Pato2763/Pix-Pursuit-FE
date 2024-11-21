@@ -17,15 +17,21 @@ export const Styles = StyleSheet.create({
     padding: 20,
     borderColor: "#D9D9D9",
     borderWidth: 2,
+    backgroundColor: "rgba(300, 300, 300, 0.8)",
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
   },
   inputText: {
     padding: 15,
     height: 50,
     borderRadius: 10,
-    backgroundColor: Colours.LIGHTGREY,
+    backgroundColor: "white",
     color: "white",
     borderColor: "#D9D9D9",
     borderWidth: 2,
+
     color: "black",
   },
   forgotAndSignUpText: {
@@ -52,6 +58,7 @@ export const Styles = StyleSheet.create({
     borderColor: "#D9D9D9",
     borderWidth: 2,
     color: "black",
+    backgroundColor: "white",
   },
   welcome: {
     fontSize: 20,
