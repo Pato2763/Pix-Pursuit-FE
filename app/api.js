@@ -21,3 +21,11 @@ export function getPursuits(lat, long) {
     return response.data.pursuits;
   });
 }
+
+export function patchUsersCurrentPursuit(user_id, pursuit_id) {
+  return api
+    .patch(`/usersToCurrentPursuit/${user_id}`, { newPursuit: pursuit_id })
+    .then((response) => {
+      return response.data.currentPursuit;
+    });
+}
