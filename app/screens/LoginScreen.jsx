@@ -6,13 +6,14 @@ import {
   Keyboard,
   ImageBackground,
 } from "react-native";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Styles } from "../utils/styles/login";
 import { useNavigation } from "@react-navigation/native";
 import { loginUser } from "../api";
 import { TouchableWithoutFeedback, ActivityIndicator } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Colours from "../utils/Colours";
+import { UserContext } from "../context/UserContext";
 
 const LoginScreen = () => {
   const [loginInfo, setLoginInfo] = useState({
@@ -23,6 +24,7 @@ const LoginScreen = () => {
   const [loading, setLoading] = useState(false);
   const refPasswordInput = useRef(null);
   const navigation = useNavigation();
+  const { setUser } = useContext(UserContext);
 
   const handleInputChange = (key, value) => {
     setLoginInfo((prevState) => ({ ...prevState, [key]: value }));
@@ -39,7 +41,8 @@ const LoginScreen = () => {
   const submitLogin = () => {
     setLoading(true);
     loginUser(loginInfo)
-      .then(() => {
+      .then((newUser) => {
+        setUser(newUser);
         setError(false);
         setLoading(false);
         navigation.navigate("Home");
@@ -88,13 +91,13 @@ const LoginScreen = () => {
                 Forgot Password?
               </Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity style={Styles.loginBtn} onPress={submitLogin}> */}
-            <TouchableOpacity
+            <TouchableOpacity style={Styles.loginBtn} onPress={submitLogin}>
+              {/* <TouchableOpacity
               style={Styles.loginBtn}
               onPress={() => {
                 navigation.navigate("Home");
               }}
-            >
+             > to skip log in*/}
               {loading ? <ActivityIndicator /> : <Text>Log In</Text>}
             </TouchableOpacity>
             {error && <Text style={Styles.errorMsg}>Error logging you in</Text>}
