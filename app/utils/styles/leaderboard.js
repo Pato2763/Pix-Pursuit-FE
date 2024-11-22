@@ -35,4 +35,12 @@ export const leaderboard = StyleSheet.create({
     color: Colours.AQUA_BLUE,
     fontSize: 20,
   },
+  miniLeaderboardCard: {
+    flexDirection: "row",
+    width: "80%",
+    justifyContent: "space-between",
+    borderWidth: 1,
+    borderBottomColor: "#c0e3e0",
+    borderColor: Colours.PURPLEBLUE,
+  },
 });

@@ -1,11 +1,21 @@
 import { View, Text } from "react-native";
 import { leaderboard } from "../utils/styles/leaderboard";
+import { useState, useEffect } from "react";
 
-const LeaderboardCard = (user) => {
+const LeaderboardCard = ({ user }) => {
+  const [cardStyle, setCardStyle] = useState({});
+  useEffect(() => {
+    if (user.user_id) {
+      setCardStyle(leaderboard.leaderboardCard);
+    } else {
+      setCardStyle(leaderboard.miniLeaderboardCard);
+    }
+  }, [user]);
+
   return (
-    <View style={leaderboard.leaderboardCard}>
-      <Text style={leaderboard.cardText}>{user.user.username}</Text>
-      <Text style={leaderboard.cardText}>{user.user.points}</Text>
+    <View style={cardStyle}>
+      <Text style={leaderboard.cardText}>{user.username}</Text>
+      <Text style={leaderboard.cardText}>{user.points}</Text>
     </View>
   );
 };

@@ -25,7 +25,6 @@ exports.getTrackedLocation = (setTrackedLocation) => {
           distanceInterval: 5,
         },
         (newLocation) => {
-          console.log("new location set", newLocation);
           setTrackedLocation({
             latitude: newLocation.coords.latitude,
             longitude: newLocation.coords.longitude,

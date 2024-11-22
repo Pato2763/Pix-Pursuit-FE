@@ -5,9 +5,35 @@ import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Colours from "../utils/Colours";
 import Loading from "./Loading";
+import { getLocation, getTrackedLocation } from "../utils/loaction";
+import { useNavigation } from "@react-navigation/native";
 
-export const MapViewer = ({ trackedLocation }) => {
+export const MapViewer = () => {
   const [region, setRegion] = useState(null);
+  const [location, setLocation] = useState({});
+  const [trackedLocation, setTrackedLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    getLocation(setLocation);
+  }, []);
+
+  useEffect(() => {
+    let watchID = null;
+    getTrackedLocation(setTrackedLocation).then((subscription) => {
+      watchID = subscription;
+    });
+    return () => {
+      if (watchID) {
+        watchID.remove();
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (
       trackedLocation &&
