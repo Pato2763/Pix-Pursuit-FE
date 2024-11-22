@@ -48,7 +48,7 @@ export const MapViewer = () => {
       });
     }
   }, [trackedLocation]);
-
+  
   if (
     !trackedLocation ||
     !trackedLocation.latitude ||
@@ -66,13 +66,13 @@ export const MapViewer = () => {
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.infoContainer}></View>
       <View style={styles.container}>
-        {region && (
-          <MapView
-            style={styles.map}
-            region={region} // this state should stop the map zooming out fellas
-            showsUserLocation={true} // blue dot for user
-          />
-        )}
+  
+        <MapView
+          trackedLocation={trackedLocation}
+          style={styles.map}
+       
+          showsUserLocation={true} // blue dot for user
+        />
       </View>
     </SafeAreaView>
   );
