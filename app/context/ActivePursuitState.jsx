@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const ActivePursuitContext = createContext();
 
 export const ActivePursuitProvider = ({ children }) => {
-  const [activePursuit, setActivePursuit] = useState({});
+  const [activePursuit, setActivePursuit] = useState(null);
 
   return (
     <ActivePursuitContext.Provider value={{ activePursuit, setActivePursuit }}>
