@@ -30,9 +30,7 @@ const LoginScreen = () => {
     setLoginInfo((prevState) => ({ ...prevState, [key]: value }));
   };
 
-  useEffect(() => {
-    console.log("Updated loginInfo:", loginInfo.username);
-  }, [loginInfo]);
+  useEffect(() => {}, [loginInfo]);
 
   const focusOnPassword = () => {
     refPasswordInput?.current?.focus();

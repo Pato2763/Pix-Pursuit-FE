@@ -29,3 +29,15 @@ export function patchUsersCurrentPursuit(user_id, pursuit_id) {
       return response.data.currentPursuit;
     });
 }
+
+export function getPursuitCompletedByUsers(pursuit_id) {
+  return api.get(`/pursuitsCompletedByUsers/${pursuit_id}`).then((response) => {
+    return response.data.users;
+  });
+}
+
+export function getPursuitbyPursuitID(pursuit_id) {
+  return api.get(`pursuits/${pursuit_id}`).then((response) => {
+    return response.data.pursuit;
+  });
+}
