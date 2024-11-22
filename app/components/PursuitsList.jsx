@@ -7,17 +7,21 @@ import {
   Text,
   View,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getPursuits, patchUsersCurrentPursuit } from "../api";
 import { PursuitCard } from "./PursuitCard";
 import { choosePursuits } from "../utils/styles/choosePursuits";
 import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../context/UserContext";
+import { ActivePursuitContext } from "../context/ActivePursuitState";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
   const [pursuits, setPursuits] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmPursuit, setConfirmPursuit] = useState({});
+  const { user } = useContext(UserContext);
+  const { setActivePursuit } = useContext(ActivePursuitContext);
 
   const navigation = useNavigation();
 
@@ -27,18 +31,21 @@ export function PursuitsList() {
 
   useEffect(() => {
     const { latitude, longitude } = location;
-    console.log(latitude, longitude);
+
     getPursuits(latitude, longitude).then((closePursuits) => {
       setPursuits(closePursuits);
     });
   }, [location]);
 
   function handleConfirm() {
-    patchUsersCurrentPursuit(26, confirmPursuit.id).then(() => {
-      setConfirmPursuit({});
-      setModalVisible(false);
-      navigation.navigate("Home");
-    });
+    patchUsersCurrentPursuit(user.user_id, confirmPursuit.id).then(
+      (currentPursuit) => {
+        setConfirmPursuit({});
+        setModalVisible(false);
+        setActivePursuit(currentPursuit.pursuit_id);
+        navigation.navigate("Home");
+      }
+    );
   }
 
   function handleCancel() {

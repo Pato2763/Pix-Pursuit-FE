@@ -14,6 +14,9 @@ import { ChoosePursuitScreen } from "./screens/ChoosePursuitsScreen";
 import CreatePursuitScreen from "./screens/CreatePursuitScreen";
 import CameraScreen from "./screens/CameraScreen";
 import { PhotoProvider } from "./context/Photo";
+import { UserProvider } from "./context/UserContext";
+import { ActivePursuitProvider } from "./context/ActivePursuitState";
+import { HostedPursuitProvider } from "./context/HostedPursuitContext";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -74,26 +77,35 @@ function App() {
   return (
     <NavigationContainer>
       <PhotoProvider>
-        <Header />
-        <Stack.Navigator
-          initialRouteName="Terms"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Terms" component={TermsScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Signup" component={SignupScreen} />
-          <Stack.Screen
-            name="Home"
-            component={NavTab}
-            options={{ gestureEnabled: false }}
-          />
-          <Stack.Screen name="CreatePursuit" component={CreatePursuitScreen} />
-          <Stack.Screen name="Camera" component={CameraScreen} />
-          <Stack.Screen name="Profile" component={EmptyScreen} />
-          <Stack.Screen name="Settings" component={EmptyScreen} />
-        </Stack.Navigator>
+        <UserProvider>
+          <ActivePursuitProvider>
+            <HostedPursuitProvider>
+              <Header />
+              <Stack.Navigator
+                initialRouteName="Terms"
+                screenOptions={{
+                  headerShown: false,
+                }}
+              >
+                <Stack.Screen name="Terms" component={TermsScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Signup" component={SignupScreen} />
+                <Stack.Screen
+                  name="Home"
+                  component={NavTab}
+                  options={{ gestureEnabled: false }}
+                />
+                <Stack.Screen
+                  name="CreatePursuit"
+                  component={CreatePursuitScreen}
+                />
+                <Stack.Screen name="Camera" component={CameraScreen} />
+                <Stack.Screen name="Profile" component={EmptyScreen} />
+                <Stack.Screen name="Settings" component={EmptyScreen} />
+              </Stack.Navigator>
+            </HostedPursuitProvider>
+          </ActivePursuitProvider>
+        </UserProvider>
       </PhotoProvider>
     </NavigationContainer>
   );
