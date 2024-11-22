@@ -11,6 +11,10 @@ export const Styles = StyleSheet.create({
     border: "1",
     justifyContent: "flex-end",
   },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+  },
   signUpContainer: {
     gap: 15,
     width: "80%",
@@ -18,6 +22,7 @@ export const Styles = StyleSheet.create({
     padding: 20,
     borderColor: "#D9D9D9",
     borderWidth: 2,
+    backgroundColor: "rgba(300, 300, 300, 0.8)",
   },
   inputText: {
     padding: 15,

@@ -111,12 +111,19 @@ function App() {
                     header: () => <Header />,
                   }}
                 />
-                <Stack.Screen name="Signup" component={SignupScreen} />
+                <Stack.Screen
+                  name="Signup"
+                  component={SignupScreen}
+                  options={{
+                    headerShown: true,
+                    gestureEnabled: false,
+                    header: () => <Header />,
+                  }}
+                />
                 <Stack.Screen
                   name="Home"
                   component={NavTab}
                   options={{
-                    headerShown: true,
                     gestureEnabled: false,
                     header: () => <Header />,
                   }}
