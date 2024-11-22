@@ -12,7 +12,7 @@ const LeaderbaordList = () => {
   useEffect(() => {
     getUsers().then((fetchedUsers) => {
       setUsers(fetchedUsers);
-      setLoading(true);
+      setLoading(false);
     });
   }, []);
 

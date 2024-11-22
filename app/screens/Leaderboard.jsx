@@ -10,7 +10,7 @@ const Leaderboard = () => {
           source={require("../../assets/Pursuit-Leader-boards.png")}
           style={leaderboard.header}
         />
-        <LeaderbaordList />;
+        <LeaderbaordList />
       </View>
     </ScrollView>
   );
