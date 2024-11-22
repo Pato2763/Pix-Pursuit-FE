@@ -7,21 +7,21 @@ import Colours from "../utils/Colours";
 import Loading from "./Loading";
 
 export const MapViewer = ({ trackedLocation }) => {
-  const [region, setRegion] = useState(null);
-  useEffect(() => {
-    if (
-      trackedLocation &&
-      trackedLocation.latitude &&
-      trackedLocation.longitude
-    ) {
-      setRegion({
-        latitude: trackedLocation.latitude,
-        longitude: trackedLocation.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
-    }
-  }, [trackedLocation]);
+  // const [region, setRegion] = useState(null);
+  // useEffect(() => {
+  //   if (
+  //     trackedLocation &&
+  //     trackedLocation.latitude &&
+  //     trackedLocation.longitude
+  //   ) {
+  //     setRegion({
+  //       latitude: trackedLocation.latitude,
+  //       longitude: trackedLocation.longitude,
+  //       latitudeDelta: 0.0922,
+  //       longitudeDelta: 0.0421,
+  //     });
+  //   }
+  // }, []);
 
   if (
     !trackedLocation ||
@@ -40,13 +40,13 @@ export const MapViewer = ({ trackedLocation }) => {
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.infoContainer}></View>
       <View style={styles.container}>
-        {region && (
-          <MapView
-            style={styles.map}
-            region={region} // this state should stop the map zooming out fellas
-            showsUserLocation={true} // blue dot for user
-          />
-        )}
+        {/* {region && ( */}
+        <MapView
+          trackedLocation={trackedLocation}
+          style={styles.map}
+          // region={region} // this state should stop the map zooming out fellas
+          showsUserLocation={true} // blue dot for user
+        />
       </View>
     </SafeAreaView>
   );
