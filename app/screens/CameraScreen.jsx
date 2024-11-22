@@ -8,17 +8,19 @@ import {
 } from "react-native";
 import React from "react";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Colours from "../utils/Colours";
 import { useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
+import { PhotoContext } from "../context/Photo";
 
 const CameraScreen = () => {
-  const [facing, setFacing] = useState("back");
   const [permission, requestPermission] = useCameraPermissions();
-  const [photo, setPhoto] = useState(null);
   const cameraRef = useRef();
   const navigation = useNavigation();
+  const { photo, setPhoto } = useContext(PhotoContext);
+
   if (!permission) {
     return <View />;
   }
@@ -42,10 +44,6 @@ const CameraScreen = () => {
     }
   };
 
-  const toggleCameraFacing = () => {
-    setFacing((current) => (current === "back" ? "front" : "back"));
-  };
-
   return (
     <View style={styles.container}>
       {photo ? (
@@ -63,18 +61,21 @@ const CameraScreen = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.retakeBtn}
-              onPress={() => setPhoto(null)}
+              onPress={() => {
+                navigation.goBack();
+              }}
             >
               <Text style={styles.text}>Use photo</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>
       ) : (
-        <CameraView ref={cameraRef} style={styles.camera} facing={facing}>
+        <CameraView ref={cameraRef} style={styles.camera}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() => {
                 navigation.goBack();
+                setPhoto(null);
               }}
               style={styles.button}
             >

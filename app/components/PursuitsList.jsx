@@ -27,7 +27,8 @@ export function PursuitsList() {
 
   useEffect(() => {
     const { latitude, longitude } = location;
-    getPursuits().then((closePursuits) => {
+    console.log(latitude, longitude);
+    getPursuits(latitude, longitude).then((closePursuits) => {
       setPursuits(closePursuits);
     });
   }, [location]);

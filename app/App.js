@@ -13,6 +13,7 @@ import SignupScreen from "./screens/SignupScreen";
 import { ChoosePursuitScreen } from "./screens/ChoosePursuitsScreen";
 import CreatePursuitScreen from "./screens/CreatePursuitScreen";
 import CameraScreen from "./screens/CameraScreen";
+import { PhotoProvider } from "./context/Photo";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -72,26 +73,28 @@ const NavTab = () => {
 function App() {
   return (
     <NavigationContainer>
-      <Header />
-      <Stack.Navigator
-        initialRouteName="Terms"
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Terms" component={TermsScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Signup" component={SignupScreen} />
-         <Stack.Screen
-          name="Home"
-          component={NavTab}
-          options={{ gestureEnabled: false }}
-        />
-        <Stack.Screen name="CreatePursuit" component={CreatePursuitScreen} />
-        <Stack.Screen name="Camera" component={CameraScreen} />
-        <Stack.Screen name="Profile" component={EmptyScreen} />
-        <Stack.Screen name="Settings" component={EmptyScreen} />
-      </Stack.Navigator>
+      <PhotoProvider>
+        <Header />
+        <Stack.Navigator
+          initialRouteName="Terms"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Terms" component={TermsScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
+          <Stack.Screen
+            name="Home"
+            component={NavTab}
+            options={{ gestureEnabled: false }}
+          />
+          <Stack.Screen name="CreatePursuit" component={CreatePursuitScreen} />
+          <Stack.Screen name="Camera" component={CameraScreen} />
+          <Stack.Screen name="Profile" component={EmptyScreen} />
+          <Stack.Screen name="Settings" component={EmptyScreen} />
+        </Stack.Navigator>
+      </PhotoProvider>
     </NavigationContainer>
   );
 }
