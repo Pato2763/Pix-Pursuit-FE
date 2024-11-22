@@ -48,7 +48,7 @@ export const MapViewer = () => {
       });
     }
   }, [trackedLocation]);
-  
+
   if (
     !trackedLocation ||
     !trackedLocation.latitude ||
@@ -66,11 +66,9 @@ export const MapViewer = () => {
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.infoContainer}></View>
       <View style={styles.container}>
-  
         <MapView
           trackedLocation={trackedLocation}
           style={styles.map}
-       
           showsUserLocation={true} // blue dot for user
         />
       </View>
