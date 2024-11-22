@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
 import { MapViewer } from "../components/MapViewer";
 import { useNavigation } from "@react-navigation/native";
+import CreatePursuit from "../components/buttons/CreatePursuit.jsx";
 
 const HomeScreen = () => {
   const [location, setLocation] = useState({});
@@ -33,12 +34,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
-        <Button
-          title="create pursuit"
-          onPress={() => {
-            navigation.navigate("CreatePursuit");
-          }}
-        />
+        <CreatePursuit redirect={"CreatePursuit"} />
       </View>
       <MapViewer trackedLocation={trackedLocation} />
     </SafeAreaView>
