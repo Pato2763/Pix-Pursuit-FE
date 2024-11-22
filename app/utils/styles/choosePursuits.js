@@ -10,7 +10,7 @@ export const choosePursuits = StyleSheet.create({
   pursuitsListContainer: {
     alignItems: "center",
     padding: 1,
-    borderRadius: 15,
+    borderRadius: 10,
     width: "100%",
     backgroundColor: Colours.PURPLEBLUE,
     gap: 0,
@@ -21,7 +21,8 @@ export const choosePursuits = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     gap: 10,
-    width: "90%",
+    borderRadius: 10,
+    width: width * 0.8,
     paddingTop: 15,
     paddingBottom: 15,
     borderWidth: 1,

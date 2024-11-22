@@ -14,6 +14,7 @@ import { choosePursuits } from "../utils/styles/choosePursuits";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../context/UserContext";
 import { ActivePursuitContext } from "../context/ActivePursuitState";
+import Loading from "./Loading";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
@@ -22,6 +23,7 @@ export function PursuitsList() {
   const [confirmPursuit, setConfirmPursuit] = useState({});
   const { user } = useContext(UserContext);
   const { setActivePursuit } = useContext(ActivePursuitContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigation = useNavigation();
 
@@ -34,6 +36,7 @@ export function PursuitsList() {
 
     getPursuits().then((closePursuits) => {
       setPursuits(closePursuits);
+      setIsLoading(false);
     });
   }, [location]);
 
@@ -78,7 +81,14 @@ export function PursuitsList() {
       </Modal>
       <ScrollView>
         <View style={choosePursuits.pursuitsListContainer}>
-          {pursuits.map((pursuit) => {
+          {pursuits.map((pursuit, index) => {
+            if (isLoading) {
+              return (
+                <View style={choosePursuits.pursuitdCard}>
+                  <Loading key={index} />
+                </View>
+              );
+            }
             if (pursuit.active) {
               return (
                 <PursuitCard
