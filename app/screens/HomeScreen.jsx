@@ -11,8 +11,6 @@ const HomeScreen = () => {
     latitude: 0,
     longitude: 0,
   });
-  const [activePursuit, setActivePursuit] = useState({});
-  const [hosttedPursuit, setHostedPursuit] = useState({});
 
   const navigation = useNavigation();
 
