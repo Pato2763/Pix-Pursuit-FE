@@ -32,7 +32,7 @@ export function PursuitsList() {
   useEffect(() => {
     const { latitude, longitude } = location;
 
-    getPursuits(latitude, longitude).then((closePursuits) => {
+    getPursuits().then((closePursuits) => {
       setPursuits(closePursuits);
     });
   }, [location]);
@@ -86,6 +86,7 @@ export function PursuitsList() {
                   pursuit={pursuit}
                   setModalVisible={setModalVisible}
                   setConfirmPursuit={setConfirmPursuit}
+                  location={location}
                 />
               );
             }
