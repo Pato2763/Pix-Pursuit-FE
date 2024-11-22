@@ -1,12 +1,20 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, ImageBackground } from "react-native";
 import React from "react";
 import HomeLoading from "../components/HomeLoading";
 import Accept from "../components/buttons/Accept";
+import { StyleForTerm } from "../utils/styles/Terms";
 
 export default function TermsScreen() {
   return (
-    <View>
-      <HomeLoading />
-    </View>
+    <ImageBackground
+      source={require("../../assets/triangleBG.png")}
+      resizeMode="cover"
+      style={StyleForTerm.image}
+      imageStyle={{ opacity: 0.15, backgroundColor: "white" }}
+    >
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <HomeLoading />
+      </View>
+    </ImageBackground>
   );
 }
