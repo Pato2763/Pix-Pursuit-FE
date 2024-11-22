@@ -5,6 +5,7 @@ import { getLocation, getTrackedLocation } from "../utils/loaction";
 import { MapViewer } from "../components/MapViewer";
 import { useNavigation } from "@react-navigation/native";
 import CreatePursuit from "../components/buttons/CreatePursuit.jsx";
+import ChoosePursuit from "../components/buttons/FindPursuit.jsx";
 
 const HomeScreen = () => {
   const [location, setLocation] = useState({});
@@ -35,6 +36,7 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <View>
         <CreatePursuit redirect={"CreatePursuit"} />
+        <ChoosePursuit redirect={"ChoosePursuits"} />
       </View>
       <MapViewer trackedLocation={trackedLocation} />
     </SafeAreaView>
