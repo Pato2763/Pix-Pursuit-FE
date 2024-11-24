@@ -1,16 +1,65 @@
 import React from "react";
-import MapView, { Marker } from "react-native-maps";
+import { useState, useEffect } from "react";
+import MapView from "react-native-maps";
 import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Colours from "../utils/Colours";
+import Loading from "./Loading";
+import { getLocation, getTrackedLocation } from "../utils/loaction";
+import { useNavigation } from "@react-navigation/native";
 
-export const MapViewer = ({ trackedLocation }) => {
+export const MapViewer = () => {
+  const [region, setRegion] = useState(null);
+  const [location, setLocation] = useState({});
+  const [trackedLocation, setTrackedLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    getLocation(setLocation);
+  }, []);
+
+  useEffect(() => {
+    let watchID = null;
+    getTrackedLocation(setTrackedLocation).then((subscription) => {
+      watchID = subscription;
+    });
+    return () => {
+      if (watchID) {
+        watchID.remove();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (
+      trackedLocation &&
+      trackedLocation.latitude &&
+      trackedLocation.longitude
+    ) {
+      setRegion({
+        latitude: trackedLocation.latitude,
+        longitude: trackedLocation.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    }
+  }, [trackedLocation]);
+
   if (
     !trackedLocation ||
     !trackedLocation.latitude ||
     !trackedLocation.longitude
   ) {
-    return <Text>Loading location...</Text>;
+    return (
+      <View>
+        <Loading />
+        <Text>Loading location...</Text>
+      </View>
+    );
   }
 
   return (
@@ -18,22 +67,10 @@ export const MapViewer = ({ trackedLocation }) => {
       <View style={styles.infoContainer}></View>
       <View style={styles.container}>
         <MapView
+          trackedLocation={trackedLocation}
           style={styles.map}
-          region={{
-            latitude: trackedLocation.latitude,
-            longitude: trackedLocation.longitude,
-            latitudeDelta: 0.0922, //these delta thing fellas are for zooming purpopes
-            longitudeDelta: 0.0421,
-          }}
-          showsUserLocation={true} // this is the blue dot, the Marker shows a red pin drop which we dont want
-        >
-          {/* <Marker
-            coordinate={{
-              latitude: trackedLocation.latitude,
-              longitude: trackedLocation.longitude,
-            }}
-          /> */}
-        </MapView>
+          showsUserLocation={true} // blue dot for user
+        />
       </View>
     </SafeAreaView>
   );
