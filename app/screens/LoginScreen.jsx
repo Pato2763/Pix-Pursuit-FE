@@ -11,12 +11,11 @@ import { Styles } from "../utils/styles/login";
 import { useNavigation } from "@react-navigation/native";
 import { loginUser } from "../api";
 import { TouchableWithoutFeedback, ActivityIndicator } from "react-native";
-<<<<<<< HEAD
-=======
+
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Colours from "../utils/Colours";
 import { UserContext } from "../context/UserContext";
->>>>>>> 0947359a918e621303357ab703f1613a13848194
+
 
 const LoginScreen = () => {
   const [loginInfo, setLoginInfo] = useState({

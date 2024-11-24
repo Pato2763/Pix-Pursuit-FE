@@ -1,6 +1,6 @@
 import * as Location from "expo-location";
 
-<<<<<<< HEAD
+
 exports.getLocation = () => {
   return Location.requestForegroundPermissionsAsync().then(({ status }) => {
     if (status !== "granted") {
@@ -8,16 +8,7 @@ exports.getLocation = () => {
     }
     return Location.getCurrentPositionAsync();
   });
-=======
-exports.getLocation = (setLocation) => {
-  return Location.getCurrentPositionAsync().then((location) => {
-    setLocation({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      timestamp: location.timestamp,
-    });
-  });
-};
+}
 
 exports.getTrackedLocation = (setTrackedLocation) => {
   return Location.requestForegroundPermissionsAsync()
@@ -42,5 +33,4 @@ exports.getTrackedLocation = (setTrackedLocation) => {
         }
       );
     });
->>>>>>> 0947359a918e621303357ab703f1613a13848194
 };
