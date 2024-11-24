@@ -22,7 +22,7 @@ export function PursuitsList() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    getLocation(setLocation);
+    setLocation(getLocation());
   }, []);
 
   useEffect(() => {

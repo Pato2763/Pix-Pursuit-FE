@@ -29,3 +29,17 @@ export function patchUsersCurrentPursuit(user_id, pursuit_id) {
       return response.data.currentPursuit;
     });
 }
+
+export async function postPursuit(body, location, radiusCoords, fileName) {
+  const newBody = {
+    ...body,
+    targetLat: location.latitude,
+    targetLong: location.longitude,
+    image: `https://pix-pursuit.s3.eu-north-1.amazonaws.com/${fileName}`,
+    randomLat: radiusCoords.latitude,
+    randomLong: radiusCoords.longitude,
+  };
+  return api.post("/pursuits", newBody).then((response) => {
+    return response.data.pursuit;
+  });
+}

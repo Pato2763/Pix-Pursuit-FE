@@ -1,4 +1,4 @@
-import { Button, Text, TouchableOpacity, View } from "react-native";
+import { Button, View } from "react-native";
 import { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
@@ -14,7 +14,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    getLocation(setLocation);
+    setLocation(getLocation());
   }, []);
 
   useEffect(() => {

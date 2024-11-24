@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Image, ScrollView } from "react-native";
 import LeaderbaordList from "../components/LeaderboardList";
 import { leaderboard } from "../utils/styles/leaderboard";
 
@@ -10,7 +10,7 @@ const Leaderboard = () => {
           source={require("../../assets/Pursuit-Leader-boards.png")}
           style={leaderboard.header}
         />
-        <LeaderbaordList />;
+        <LeaderbaordList />
       </View>
     </ScrollView>
   );

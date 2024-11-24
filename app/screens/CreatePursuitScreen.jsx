@@ -5,24 +5,102 @@ import {
   Image,
   TextInput,
   TouchableHighlight,
-} from "react-native";
-import React from "react";
-import Colours from "../utils/Colours";
-import {
   TouchableOpacity,
   ScrollView,
   Keyboard,
+  KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
+import React, { useState, useContext, useEffect, useRef } from "react";
+import Colours from "../utils/Colours";
 import SelectDifficulty from "../components/SelectDifficulty";
 import { useNavigation } from "@react-navigation/native";
-import { useState, useContext } from "react";
 import { PhotoContext } from "../context/Photo";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import AWS from "aws-sdk";
+import calcRadius from "../utils/calcRadius";
+import { getLocation } from "../utils/loaction";
+import { postPursuit } from "../api";
 
 const CreatePursuit = () => {
   const navigation = useNavigation();
   const { photo, setPhoto } = useContext(PhotoContext);
+  const [pursuitData, setPursuitData] = useState({
+    host_ID: 1,
+    title: "",
+    image: "",
+    difficulty: null,
+    active: true,
+  });
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const titleInputRef = useRef(null);
+  const scrollViewRef = useRef(null);
+
+  AWS.config.update({
+    accessKeyId: "AKIASE5KREEWTLLWTPD4",
+    secretAccessKey: "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",
+    region: "eu-north-1",
+  });
+
+  const s3 = new AWS.S3();
+
+  const uploadFileToS3 = (bucketName, fileName, filePath) => {
+    const params = {
+      Bucket: bucketName,
+      Key: fileName,
+      Body: filePath,
+    };
+
+    return s3.upload(params).promise();
+  };
+
+  const final = async () => {
+    if (pursuitData.difficulty === null || pursuitData.title.length === 0) {
+      return setError("Please fill in all information to post a pursuit");
+    }
+
+    const bucketName = "pix-pursuit";
+    const filePath = photo.uri.replace("file://", "");
+    const fileName = `${Math.random() * 100000}`;
+
+    try {
+      const currLocation = await getLocation();
+      const newLocation = {
+        latitude: currLocation.coords.latitude,
+        longitude: currLocation.coords.longitude,
+      };
+      const radiusCoords = calcRadius(newLocation, pursuitData.difficulty);
+      console.log(pursuitData, newLocation, radiusCoords, fileName);
+      const posted = await postPursuit(
+        pursuitData,
+        newLocation,
+        radiusCoords,
+        fileName
+      );
+      setPursuitData({
+        host_ID: 1,
+        title: "",
+        image: "",
+        difficulty: null,
+        active: true,
+      });
+      setPhoto(null);
+
+      const fileData = await fetch(filePath).then((response) =>
+        response.blob()
+      );
+      await uploadFileToS3(bucketName, fileName, fileData);
+
+      console.log("file uploaded:", fileName);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError("Error uploading your pursuit");
+      console.log(error);
+    }
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView>
@@ -56,10 +134,13 @@ const CreatePursuit = () => {
                   <View>
                     <Image
                       style={Styles.imagePreview}
-                      source={{ uri: `data:image/jpeg;base64,${photo.base64}` }}
+                      source={{
+                        uri: `data:image/jpeg;base64,${photo.base64}`,
+                      }}
                     />
                     <TouchableOpacity
                       onPress={() => {
+                        setError(null);
                         setPhoto(null);
                       }}
                     >
@@ -73,26 +154,41 @@ const CreatePursuit = () => {
                   <View style={Styles.formContainer}>
                     <Text style={Styles.labelText}>Title:</Text>
                     <TextInput
+                      ref={titleInputRef}
                       style={Styles.formInputText}
                       placeholder="Enter a pursuit title"
+                      value={pursuitData.title}
+                      onChangeText={(text) =>
+                        setPursuitData((prev) => {
+                          return {
+                            ...prev,
+                            title: text,
+                          };
+                        })
+                      }
                     ></TextInput>
-                    <Text style={Styles.labelText}>Description:</Text>
-                    <TextInput
-                      style={Styles.formInputText}
-                      placeholder="Enter a pursuit description"
-                    ></TextInput>
+
                     <View style={Styles.difficultyContainer}>
                       <Text style={[Styles.labelText, { paddingTop: 15 }]}>
                         Select a difficulty:
                       </Text>
-                      <SelectDifficulty />
+                      <SelectDifficulty setPursuitData={setPursuitData} />
                     </View>
                   </View>
                 </View>
+                <View>
+                  {error ? <Text style={Styles.errorMsg}>{error}</Text> : null}
+                </View>
                 <TouchableOpacity
-                  style={Styles.createBtn}
+                  disabled={!photo}
+                  style={[
+                    Styles.createBtn,
+                    !photo ? { backgroundColor: "gray" } : null,
+                  ]}
                   onPress={() => {
-                    navigation.navigate("Home");
+                    setError(false);
+                    setLoading(true);
+                    final();
                   }}
                 >
                   <Text style={{ fontWeight: "bold" }}>
@@ -207,5 +303,9 @@ const Styles = StyleSheet.create({
     marginVertical: 15,
     marginHorizontal: "auto",
     textDecorationLine: "underline",
+  },
+  errorMsg: {
+    color: "red",
+    marginHorizontal: "auto",
   },
 });
