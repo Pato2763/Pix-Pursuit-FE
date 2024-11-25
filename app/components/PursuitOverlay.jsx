@@ -15,10 +15,10 @@ export const PursuitOverlay = () => {
     Hard: 750,
   };
   useEffect(() => {
-    console.log("in use effect");
+    console.log(user.pursuit_id);
+
     getPursuitbyPursuitID(user.pursuit_id)
       .then((res) => {
-        console.log("in async");
         const fetchedCoordinates = {
           random_lat: res.random_lat,
           random_long: res.random_long,
@@ -30,7 +30,7 @@ export const PursuitOverlay = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [user.pursuit_id]);
+  }, [user]);
 
   //   if (loading) {
   //     return (

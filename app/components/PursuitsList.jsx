@@ -41,9 +41,7 @@ export function PursuitsList() {
         return setPursuits(closePursuits);
       })
       .then(() => {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 5000);
+        setIsLoading(false);
       });
   }, []);
 
@@ -68,11 +66,9 @@ export function PursuitsList() {
         setConfirmPursuit({});
         setModalVisible(false);
         setUser((currUser) => {
-          const newUser = currUser;
-          newUser.pursuit_id = currentPursuit.pursuit_id;
-          return newUser;
+          return { ...currUser, pursuit_id: currentPursuit.pursuit_id };
         });
-        navigation.navigate("Home");
+        navigation.goBack();
       }
     );
   }
@@ -80,10 +76,6 @@ export function PursuitsList() {
   function handleCancel() {
     setConfirmPursuit({});
     setModalVisible(false);
-  }
-
-  if (isLoading) {
-    return <Text>Loading</Text>;
   }
 
   return (
