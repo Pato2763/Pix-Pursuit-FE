@@ -5,9 +5,8 @@ import { UserContext } from "../context/UserContext";
 import MapView, { Circle } from "react-native-maps";
 import Loading from "./Loading";
 
-export const PursuitOverlay = () => {
+export const PursuitOverlay = ({ coordinates, setCoordinates }) => {
   const { user } = useContext(UserContext);
-  const [coordinates, setCoordinates] = useState({});
   const [loading, setLoading] = useState(true);
   const difficultyRange = {
     Easy: 250,
@@ -15,8 +14,6 @@ export const PursuitOverlay = () => {
     Hard: 750,
   };
   useEffect(() => {
-    console.log(user.pursuit_id);
-
     getPursuitbyPursuitID(user.pursuit_id)
       .then((res) => {
         const fetchedCoordinates = {
@@ -32,14 +29,14 @@ export const PursuitOverlay = () => {
       });
   }, [user]);
 
-  //   if (loading) {
-  //     return (
-  //       <View>
-  //         <Loading />
-  //         <Text>Loading pursuit data...</Text>
-  //       </View>
-  //     );
-  //   }
+  // if (loading) {
+  //   return (
+  //     <View>
+  //       <Loading />
+  //       <Text>Loading pursuit data...</Text>
+  //     </View>
+  //   );
+  // }
 
   return (
     <Circle

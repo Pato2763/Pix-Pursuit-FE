@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import MapView, { Circle } from "react-native-maps";
 import { StyleSheet, View, Text } from "react-native";
@@ -8,14 +8,22 @@ import Loading from "./Loading";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
 import { useNavigation } from "@react-navigation/native";
 import { PursuitOverlay } from "./PursuitOverlay";
+import MapViewDirections from "react-native-maps-directions";
+import { getCenter } from "geolib";
+import { UserContext } from "../context/UserContext";
 
 export const MapViewer = () => {
   const [region, setRegion] = useState(null);
   const [location, setLocation] = useState({});
+  const [coordinates, setCoordinates] = useState({
+    random_lat: 0,
+    random_long: 0,
+  });
   const [trackedLocation, setTrackedLocation] = useState({
     latitude: 0,
     longitude: 0,
   });
+  const { user } = useContext(UserContext);
 
   const navigation = useNavigation();
 
@@ -41,14 +49,25 @@ export const MapViewer = () => {
       trackedLocation.latitude &&
       trackedLocation.longitude
     ) {
+      const { latitude, longitude } = getCenter([
+        {
+          latitude: trackedLocation.latitude,
+          longitude: trackedLocation.longitude,
+        },
+        {
+          latitude: coordinates.random_lat,
+          longitude: coordinates.random_long,
+        },
+      ]);
+      console.log(latitude, longitude, user.pursuit_id);
       setRegion({
-        latitude: trackedLocation.latitude,
-        longitude: trackedLocation.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitude,
+        longitude,
+        latitudeDelta: 0.08,
+        longitudeDelta: 0.03,
       });
     }
-  }, [trackedLocation]);
+  }, [trackedLocation, user]);
 
   if (
     !trackedLocation ||
@@ -70,9 +89,23 @@ export const MapViewer = () => {
           style={styles.map}
           showsUserLocation={true} // Show blue dot for user's location
           trackedLocation={trackedLocation}
+          user={user}
           region={region}
         >
-          <PursuitOverlay />
+          <MapViewDirections
+            origin={trackedLocation}
+            destination={{
+              latitude: coordinates.random_lat,
+              longitude: coordinates.random_long,
+            }}
+            apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
+            strokeWidth={4}
+            strokeColor={Colours.RED}
+          />
+          <PursuitOverlay
+            coordinates={coordinates}
+            setCoordinates={setCoordinates}
+          />
         </MapView>
       </View>
     </SafeAreaView>
