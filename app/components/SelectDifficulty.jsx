@@ -8,7 +8,7 @@ const data = [
   { label: "Hard", value: "Hard" },
 ];
 
-const SelectDifficulty = () => {
+const SelectDifficulty = ({ setPursuitData }) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -28,6 +28,12 @@ const SelectDifficulty = () => {
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {
           setValue(item.value);
+          setPursuitData((prev) => {
+            return {
+              ...prev,
+              difficulty: item.value,
+            };
+          });
           setIsFocus(false);
         }}
       />

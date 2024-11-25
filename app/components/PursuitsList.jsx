@@ -14,28 +14,34 @@ import { choosePursuits } from "../utils/styles/choosePursuits";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../context/UserContext";
 import { ActivePursuitContext } from "../context/ActivePursuitState";
+import { ActivityIndicator } from "react-native";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
   const [pursuits, setPursuits] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmPursuit, setConfirmPursuit] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(UserContext);
   const { setActivePursuit } = useContext(ActivePursuitContext);
 
   const navigation = useNavigation();
 
   useEffect(() => {
-    getLocation(setLocation);
+    getLocation()
+      .then((res) => {
+        return setLocation(res.coords);
+      })
+      .then(() => {
+        return getPursuits(location.latitude, location.longitude);
+      })
+      .then((closePursuits) => {
+        return setPursuits(closePursuits);
+      })
+      .then(() => {
+        setIsLoading(false);
+      });
   }, []);
-
-  useEffect(() => {
-    const { latitude, longitude } = location;
-
-    getPursuits().then((closePursuits) => {
-      setPursuits(closePursuits);
-    });
-  }, [location]);
 
   function handleConfirm() {
     patchUsersCurrentPursuit(user.user_id, confirmPursuit.id).then(
@@ -77,21 +83,25 @@ export function PursuitsList() {
         </View>
       </Modal>
       <ScrollView>
-        <View style={choosePursuits.pursuitsListContainer}>
-          {pursuits.map((pursuit) => {
-            if (pursuit.active) {
-              return (
-                <PursuitCard
-                  key={pursuit.pursuit_id}
-                  pursuit={pursuit}
-                  setModalVisible={setModalVisible}
-                  setConfirmPursuit={setConfirmPursuit}
-                  location={location}
-                />
-              );
-            }
-          })}
-        </View>
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <View style={choosePursuits.pursuitsListContainer}>
+            {pursuits.map((pursuit) => {
+              if (pursuit.active) {
+                return (
+                  <PursuitCard
+                    key={pursuit.pursuit_id}
+                    pursuit={pursuit}
+                    setModalVisible={setModalVisible}
+                    setConfirmPursuit={setConfirmPursuit}
+                    location={location}
+                  />
+                );
+              }
+            })}
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

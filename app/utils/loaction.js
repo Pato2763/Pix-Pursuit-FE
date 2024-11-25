@@ -1,12 +1,11 @@
 import * as Location from "expo-location";
 
-exports.getLocation = (setLocation) => {
-  return Location.getCurrentPositionAsync().then((location) => {
-    setLocation({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      timestamp: location.timestamp,
-    });
+exports.getLocation = async () => {
+  return Location.requestForegroundPermissionsAsync().then(({ status }) => {
+    if (status !== "granted") {
+      return "permission to access loaction denied";
+    }
+    return Location.getCurrentPositionAsync();
   });
 };
 

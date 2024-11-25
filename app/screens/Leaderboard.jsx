@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Image, ScrollView } from "react-native";
 import LeaderbaordList from "../components/LeaderboardList";
 import { leaderboard } from "../utils/styles/leaderboard";
 
