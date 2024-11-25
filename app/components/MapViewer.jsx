@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import MapView, { Circle } from "react-native-maps";
 import { StyleSheet, View, Text } from "react-native";
@@ -8,20 +8,29 @@ import Loading from "./Loading";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
 import { useNavigation } from "@react-navigation/native";
 import { PursuitOverlay } from "./PursuitOverlay";
+import MapViewDirections from "react-native-maps-directions";
+import { getCenter } from "geolib";
+import { UserContext } from "../context/UserContext";
 
 export const MapViewer = () => {
-  const [region, setRegion] = useState(null);
+  const [region, setRegion] = useState({});
+  const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState({});
+  const [coordinates, setCoordinates] = useState({
+    random_lat: 0,
+    random_long: 0,
+  });
   const [trackedLocation, setTrackedLocation] = useState({
     latitude: 0,
     longitude: 0,
   });
+  const { user } = useContext(UserContext);
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    getLocation(setLocation);
-  }, []);
+  // useEffect(() => {
+  //   getLocation(setLocation);
+  // }, []);
 
   useEffect(() => {
     let watchID = null;
@@ -36,25 +45,12 @@ export const MapViewer = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      trackedLocation &&
-      trackedLocation.latitude &&
-      trackedLocation.longitude
-    ) {
-      setRegion({
-        latitude: trackedLocation.latitude,
-        longitude: trackedLocation.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
-    }
-  }, [trackedLocation]);
+    getLocation(setLocation);
 
-  if (
-    !trackedLocation ||
-    !trackedLocation.latitude ||
-    !trackedLocation.longitude
-  ) {
+    setLoading(false);
+  }, [coordinates]);
+
+  if (loading) {
     return (
       <View>
         <Loading />
@@ -69,10 +65,48 @@ export const MapViewer = () => {
         <MapView
           style={styles.map}
           showsUserLocation={true} // Show blue dot for user's location
-          trackedLocation={trackedLocation}
+          trackedLocation={coordinates}
           region={region}
         >
-          <PursuitOverlay />
+          <MapViewDirections
+            origin={trackedLocation}
+            destination={{
+              latitude: coordinates.random_lat,
+              longitude: coordinates.random_long,
+            }}
+            onReady={() => {
+              const { latitude, longitude } = getCenter([
+                {
+                  latitude: trackedLocation.latitude,
+                  longitude: trackedLocation.longitude,
+                },
+                {
+                  latitude: coordinates.random_lat,
+                  longitude: coordinates.random_long,
+                },
+              ]);
+              setRegion({
+                latitude,
+                longitude,
+                latitudeDelta:
+                  Math.abs(coordinates.random_lat - trackedLocation.latitude) +
+                  0.01,
+                longitudeDelta:
+                  Math.abs(
+                    coordinates.random_long - trackedLocation.longitude
+                  ) + 0.01,
+              });
+            }}
+            resetOnChange={false}
+            apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
+            strokeWidth={4}
+            strokeColor={Colours.RED}
+          />
+          <PursuitOverlay
+            coordinates={coordinates}
+            setCoordinates={setCoordinates}
+            setLoading={setLoading}
+          />
         </MapView>
       </View>
     </SafeAreaView>
