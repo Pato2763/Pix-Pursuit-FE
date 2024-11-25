@@ -14,6 +14,7 @@ import { choosePursuits } from "../utils/styles/choosePursuits";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../context/UserContext";
 import { ActivityIndicator } from "react-native";
+import { getDistance } from "geolib";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
@@ -21,6 +22,7 @@ export function PursuitsList() {
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmPursuit, setConfirmPursuit] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [orderedPursuits, setOrderedPursuits] = useState([]);
   const { user } = useContext(UserContext);
   const { setUser } = useContext(UserContext);
 
@@ -43,6 +45,21 @@ export function PursuitsList() {
         setIsLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    pursuits.forEach((pursuit) => {
+      pursuit.distance =
+        getDistance(
+          { latitude: location.latitude, longitude: location.longitude },
+          { latitude: pursuit.target_lat, longitude: pursuit.target_long }
+        ) / 1000;
+    });
+    pursuits.sort((a, b) => {
+      return a.distance - b.distance;
+    });
+
+    setOrderedPursuits(pursuits);
+  }, [pursuits]);
 
   function handleConfirm() {
     patchUsersCurrentPursuit(user.user_id, confirmPursuit.id).then(
@@ -92,8 +109,8 @@ export function PursuitsList() {
           <ActivityIndicator />
         ) : (
           <View style={choosePursuits.pursuitsListContainer}>
-            {pursuits.map((pursuit) => {
-              if (pursuit.active) {
+            {orderedPursuits.map((pursuit) => {
+              if (pursuit && pursuit.active) {
                 return (
                   <PursuitCard
                     key={pursuit.pursuit_id}
