@@ -7,7 +7,7 @@ import Loading from "./Loading";
 
 export const PursuitOverlay = ({ coordinates, setCoordinates }) => {
   const { user } = useContext(UserContext);
-  const [loading, setLoading] = useState(true);
+
   const difficultyRange = {
     Easy: 250,
     Medium: 500,
@@ -22,21 +22,11 @@ export const PursuitOverlay = ({ coordinates, setCoordinates }) => {
           difficulty: res.difficulty,
         };
         setCoordinates(fetchedCoordinates);
-        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [user]);
-
-  // if (loading) {
-  //   return (
-  //     <View>
-  //       <Loading />
-  //       <Text>Loading pursuit data...</Text>
-  //     </View>
-  //   );
-  // }
 
   return (
     <Circle
