@@ -35,7 +35,6 @@ export function PursuitsList() {
         return res.coords;
       })
       .then((location) => {
-        //location.latitude, location.longitude
         return getPursuits();
       })
       .then((closePursuits) => {

@@ -7,7 +7,10 @@ import ChoosePursuit from "../components/buttons/FindPursuit.jsx";
 import HostedPursuitInfo from "../components/HostedPuruitInfo.jsx";
 import { getTrackedLocation } from "../utils/loaction.js";
 import { useNavigation } from "@react-navigation/native";
+import { PursuitOverlay } from "../components/PursuitOverlay";
+
 import ConfirmLocation from "../components/buttons/Confirmlocation.jsx";
+
 
 const HomeScreen = () => {
   return (
