@@ -20,7 +20,6 @@ export default function ConfirmLocation() {
     });
   }, []);
 
-  const title = "Confirm Location";
   const onPress = () => {
     getLocation().then((fetchedLocation) => {
       setLocation(fetchedLocation);
@@ -47,7 +46,7 @@ export default function ConfirmLocation() {
 
   return (
     <Pressable style={blueButton.Accpet} onPress={onPress}>
-      <Text style={blueButton.text}>{title}</Text>
+      <Text style={blueButton.text}>Confirm location</Text>
     </Pressable>
   );
 }

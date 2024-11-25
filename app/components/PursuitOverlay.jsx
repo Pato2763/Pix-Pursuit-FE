@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { getPursuitbyPursuitID } from "../api";
-import { View, Text } from "react-native";
 import { UserContext } from "../context/UserContext";
-import MapView, { Circle } from "react-native-maps";
-import Loading from "./Loading";
+import { Circle } from "react-native-maps";
 
-export const PursuitOverlay = ({ coordinates, setCoordinates }) => {
+export const PursuitOverlay = ({
+  coordinates,
+  setCoordinates,
+  setPursuitImage,
+}) => {
   const { user } = useContext(UserContext);
 
   const difficultyRange = {
@@ -21,6 +23,7 @@ export const PursuitOverlay = ({ coordinates, setCoordinates }) => {
           random_long: res.random_long,
           difficulty: res.difficulty,
         };
+        setPursuitImage(res.image);
         setCoordinates(fetchedCoordinates);
       })
       .catch((err) => {
