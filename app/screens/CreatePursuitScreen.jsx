@@ -9,8 +9,9 @@ import {
   ScrollView,
   Keyboard,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import Colours from "../utils/Colours";
 import SelectDifficulty from "../components/SelectDifficulty";
 import { useNavigation } from "@react-navigation/native";
@@ -21,14 +22,16 @@ import calcRadius from "../utils/calcRadius";
 import { getLocation } from "../utils/loaction";
 import { postPursuit } from "../api";
 import { UserContext } from "../context/UserContext";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 
 const CreatePursuit = () => {
   const navigation = useNavigation();
   const { photo, setPhoto } = useContext(PhotoContext);
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
+  const [value, setValue] = useState(null);
   const [pursuitData, setPursuitData] = useState({
-    host_ID: user.user_ID,
     title: "",
     image: "",
     difficulty: null,
@@ -56,13 +59,14 @@ const CreatePursuit = () => {
   };
 
   const final = async () => {
+    setLoading(true);
     if (pursuitData.difficulty === null || pursuitData.title.length === 0) {
       return setError("Please fill in all information to post a pursuit");
     }
 
     const bucketName = "pix-pursuit";
     const filePath = photo.uri.replace("file://", "");
-    const fileName = `${Math.random() * 100000}`;
+    const fileName = uuidv4();
 
     try {
       const currLocation = await getLocation();
@@ -71,15 +75,16 @@ const CreatePursuit = () => {
         longitude: currLocation.coords.longitude,
       };
       const radiusCoords = calcRadius(newLocation, pursuitData.difficulty);
-      console.log(pursuitData, newLocation, radiusCoords, fileName);
+
       const posted = await postPursuit(
         pursuitData,
         newLocation,
         radiusCoords,
-        fileName
+        fileName,
+        user.user_id
       );
       setPursuitData({
-        host_ID: 1,
+        host_ID: user.user_id,
         title: "",
         image: "",
         difficulty: null,
@@ -172,7 +177,11 @@ const CreatePursuit = () => {
                       <Text style={[Styles.labelText, { paddingTop: 15 }]}>
                         Select a difficulty:
                       </Text>
-                      <SelectDifficulty setPursuitData={setPursuitData} />
+                      <SelectDifficulty
+                        setPursuitData={setPursuitData}
+                        value={value}
+                        setValue={setValue}
+                      />
                     </View>
                   </View>
                 </View>
@@ -180,7 +189,7 @@ const CreatePursuit = () => {
                   {error ? <Text style={Styles.errorMsg}>{error}</Text> : null}
                 </View>
                 <TouchableOpacity
-                  disabled={!photo}
+                  disabled={!photo || loading}
                   style={[
                     Styles.createBtn,
                     !photo ? { backgroundColor: "gray" } : null,
@@ -188,12 +197,17 @@ const CreatePursuit = () => {
                   onPress={() => {
                     setError(false);
                     setLoading(true);
+                    setValue(null);
                     final();
                   }}
                 >
-                  <Text style={{ fontWeight: "bold" }}>
-                    Create your pursuit!
-                  </Text>
+                  {loading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <Text style={{ fontWeight: "bold" }}>
+                      Create your pursuit!
+                    </Text>
+                  )}
                 </TouchableOpacity>
               </View>
               <TouchableOpacity

@@ -30,15 +30,23 @@ export function patchUsersCurrentPursuit(user_id, pursuit_id) {
     });
 }
 
-export async function postPursuit(body, location, radiusCoords, fileName) {
+export async function postPursuit(
+  body,
+  location,
+  radiusCoords,
+  fileName,
+  host
+) {
   const newBody = {
     ...body,
+    host_ID: host,
     targetLat: location.latitude,
     targetLong: location.longitude,
-    image: `https://pix-pursuit.s3.eu-north-1.amazonaws.com/${fileName}`,
+    image: `https://pix-pursuit.s3.eu-north-1.amazonaws.com/${fileName}.png`,
     randomLat: radiusCoords.latitude,
     randomLong: radiusCoords.longitude,
   };
+  console.log(newBody);
   return api.post("/pursuits", newBody).then((response) => {
     return response.data.pursuit;
   });

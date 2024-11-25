@@ -8,8 +8,7 @@ const data = [
   { label: "Hard", value: "Hard" },
 ];
 
-const SelectDifficulty = ({ setPursuitData }) => {
-  const [value, setValue] = useState(null);
+const SelectDifficulty = ({ setPursuitData, value, setValue }) => {
   const [isFocus, setIsFocus] = useState(false);
 
   return (
