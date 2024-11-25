@@ -104,7 +104,7 @@ export const MapViewer = () => {
                       ) + 0.01,
                   });
                 }}
-                resetOnChange={true}
+                resetOnChange={false}
                 apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
                 strokeWidth={4}
                 strokeColor={Colours.RED}
