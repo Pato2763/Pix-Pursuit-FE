@@ -32,14 +32,14 @@ export const PursuitOverlay = () => {
       });
   }, [user.pursuit_id]);
 
-  if (loading) {
-    return (
-      <View>
-        <Loading />
-        <Text>Loading pursuit data...</Text>
-      </View>
-    );
-  }
+  //   if (loading) {
+  //     return (
+  //       <View>
+  //         <Loading />
+  //         <Text>Loading pursuit data...</Text>
+  //       </View>
+  //     );
+  //   }
 
   return (
     <Circle
