@@ -13,8 +13,8 @@ import { PursuitCard } from "./PursuitCard";
 import { choosePursuits } from "../utils/styles/choosePursuits";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../context/UserContext";
-import { ActivityIndicator } from "react-native";
 import { getDistance } from "geolib";
+import Loading from "./Loading";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
@@ -35,13 +35,14 @@ export function PursuitsList() {
         return res.coords;
       })
       .then((location) => {
-        return getPursuits(location.latitude, location.longitude);
+        //location.latitude, location.longitude
+        return getPursuits();
       })
       .then((closePursuits) => {
         return setPursuits(closePursuits);
       })
       .then(() => {
-        setIsLoading(false);
+        //setIsLoading(false);
       });
   }, []);
 
@@ -105,7 +106,15 @@ export function PursuitsList() {
       </Modal>
       <ScrollView>
         {isLoading ? (
-          <ActivityIndicator />
+          pursuits.map((pursuit, index) => {
+            return (
+              <View key={index} style={choosePursuits.pursuitsListContainer}>
+                <View style={choosePursuits.pursuitdCard}>
+                  <Loading />
+                </View>
+              </View>
+            );
+          })
         ) : (
           <View style={choosePursuits.pursuitsListContainer}>
             {orderedPursuits.map((pursuit) => {
