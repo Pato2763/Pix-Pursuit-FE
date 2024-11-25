@@ -6,9 +6,14 @@ export const choosePursuits = StyleSheet.create({
   choosePursuitsPageContainer: {
     alignItems: "center",
   },
-  header: {},
+  header: {
+    width: width * 0.8,
+    height: height * 0.08,
+    resizeMode: "contain",
+  },
   pursuitsListContainer: {
     alignItems: "center",
+
     padding: 1,
     borderRadius: 15,
     width: "100%",
@@ -22,7 +27,7 @@ export const choosePursuits = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     width: width * 0.8,
-    paddingTop: 15,
+    paddingTop: 10,
     paddingBottom: 15,
     borderWidth: 1,
     borderRadius: 15,
