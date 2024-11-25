@@ -8,10 +8,9 @@ import {
   TouchableOpacity,
   ScrollView,
   Keyboard,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useRef } from "react";
 import Colours from "../utils/Colours";
 import SelectDifficulty from "../components/SelectDifficulty";
 import { useNavigation } from "@react-navigation/native";
@@ -25,6 +24,7 @@ import { postPursuit } from "../api";
 const CreatePursuit = () => {
   const navigation = useNavigation();
   const { photo, setPhoto } = useContext(PhotoContext);
+  const [loading, setLoading] = useState(false);
   const [pursuitData, setPursuitData] = useState({
     host_ID: 1,
     title: "",
@@ -33,15 +33,7 @@ const CreatePursuit = () => {
     active: true,
   });
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
   const titleInputRef = useRef(null);
-  const scrollViewRef = useRef(null);
-
-  AWS.config.update({
-    accessKeyId: "AKIASE5KREEWTLLWTPD4",
-    secretAccessKey: "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",
-    region: "eu-north-1",
-  });
 
   const s3 = new AWS.S3();
 

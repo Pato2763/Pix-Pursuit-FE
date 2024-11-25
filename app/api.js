@@ -30,7 +30,6 @@ export function patchUsersCurrentPursuit(user_id, pursuit_id) {
     });
 }
 
-<<<<<<< HEAD
 export async function postPursuit(body, location, radiusCoords, fileName) {
   const newBody = {
     ...body,
@@ -41,7 +40,10 @@ export async function postPursuit(body, location, radiusCoords, fileName) {
     randomLong: radiusCoords.longitude,
   };
   return api.post("/pursuits", newBody).then((response) => {
-=======
+    return response.data.pursuit;
+  });
+}
+
 export function getPursuitCompletedByUsers(pursuit_id) {
   return api.get(`/pursuitsCompletedByUsers/${pursuit_id}`).then((response) => {
     return response.data.users;
@@ -50,7 +52,6 @@ export function getPursuitCompletedByUsers(pursuit_id) {
 
 export function getPursuitbyPursuitID(pursuit_id) {
   return api.get(`pursuits/${pursuit_id}`).then((response) => {
->>>>>>> 0947359a918e621303357ab703f1613a13848194
     return response.data.pursuit;
   });
 }

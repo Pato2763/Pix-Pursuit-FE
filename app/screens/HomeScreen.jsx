@@ -1,27 +1,19 @@
-<<<<<<< HEAD
-import { Button, View } from "react-native";
-=======
-import { Button, ScrollView, Text, TouchableOpacity, View } from "react-native";
->>>>>>> 0947359a918e621303357ab703f1613a13848194
+import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MapViewer } from "../components/MapViewer";
 import CreatePursuit from "../components/buttons/CreatePursuit.jsx";
 import ChoosePursuit from "../components/buttons/FindPursuit.jsx";
 import HostedPursuitInfo from "../components/HostedPuruitInfo.jsx";
+import { getTrackedLocation } from "../utils/loaction.js";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
-<<<<<<< HEAD
-  const [location, setLocation] = useState({});
   const [trackedLocation, setTrackedLocation] = useState({
     latitude: 0,
     longitude: 0,
   });
   const navigation = useNavigation();
-
-  useEffect(() => {
-    setLocation(getLocation());
-  }, []);
 
   useEffect(() => {
     let watchID = null;
@@ -35,8 +27,6 @@ const HomeScreen = () => {
     };
   }, []);
 
-=======
->>>>>>> 0947359a918e621303357ab703f1613a13848194
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
