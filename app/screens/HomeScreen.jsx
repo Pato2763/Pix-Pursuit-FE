@@ -9,24 +9,6 @@ import { getTrackedLocation } from "../utils/loaction.js";
 import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
-  const [trackedLocation, setTrackedLocation] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    let watchID = null;
-    getTrackedLocation(setTrackedLocation).then((subscription) => {
-      watchID = subscription;
-    });
-    return () => {
-      if (watchID) {
-        watchID.remove();
-      }
-    };
-  }, []);
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
