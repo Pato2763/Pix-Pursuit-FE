@@ -30,9 +30,10 @@ export function PursuitsList() {
   useEffect(() => {
     getLocation()
       .then((res) => {
-        return setLocation(res.coords);
+        setLocation(res.coords);
+        return res.coords;
       })
-      .then(() => {
+      .then((location) => {
         return getPursuits(location.latitude, location.longitude);
       })
       .then((closePursuits) => {
