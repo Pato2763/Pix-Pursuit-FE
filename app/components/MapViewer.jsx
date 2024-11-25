@@ -88,8 +88,13 @@ export const MapViewer = () => {
               setRegion({
                 latitude,
                 longitude,
-                latitudeDelta: 0.1,
-                longitudeDelta: 0.05,
+                latitudeDelta:
+                  Math.abs(coordinates.random_lat - trackedLocation.latitude) +
+                  0.01,
+                longitudeDelta:
+                  Math.abs(
+                    coordinates.random_long - trackedLocation.longitude
+                  ) + 0.01,
               });
             }}
             resetOnChange={false}
