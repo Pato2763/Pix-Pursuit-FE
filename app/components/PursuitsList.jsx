@@ -13,8 +13,8 @@ import { PursuitCard } from "./PursuitCard";
 import { choosePursuits } from "../utils/styles/choosePursuits";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../context/UserContext";
-import { ActivePursuitContext } from "../context/ActivePursuitState";
 import { ActivityIndicator } from "react-native";
+import { getDistance } from "geolib";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
@@ -22,17 +22,19 @@ export function PursuitsList() {
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmPursuit, setConfirmPursuit] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [orderedPursuits, setOrderedPursuits] = useState([]);
   const { user } = useContext(UserContext);
-  const { setActivePursuit } = useContext(ActivePursuitContext);
+  const { setUser } = useContext(UserContext);
 
   const navigation = useNavigation();
 
   useEffect(() => {
     getLocation()
       .then((res) => {
-        return setLocation(res.coords);
+        setLocation(res.coords);
+        return res.coords;
       })
-      .then(() => {
+      .then((location) => {
         return getPursuits(location.latitude, location.longitude);
       })
       .then((closePursuits) => {
@@ -43,12 +45,31 @@ export function PursuitsList() {
       });
   }, []);
 
+  useEffect(() => {
+    pursuits.forEach((pursuit) => {
+      pursuit.distance =
+        getDistance(
+          { latitude: location.latitude, longitude: location.longitude },
+          { latitude: pursuit.target_lat, longitude: pursuit.target_long }
+        ) / 1000;
+    });
+    pursuits.sort((a, b) => {
+      return a.distance - b.distance;
+    });
+
+    setOrderedPursuits(pursuits);
+  }, [pursuits]);
+
   function handleConfirm() {
     patchUsersCurrentPursuit(user.user_id, confirmPursuit.id).then(
       (currentPursuit) => {
         setConfirmPursuit({});
         setModalVisible(false);
-        setActivePursuit(currentPursuit.pursuit_id);
+        setUser((currUser) => {
+          const newUser = currUser;
+          newUser.pursuit_id = currentPursuit.pursuit_id;
+          return newUser;
+        });
         navigation.navigate("Home");
       }
     );
@@ -87,8 +108,8 @@ export function PursuitsList() {
           <ActivityIndicator />
         ) : (
           <View style={choosePursuits.pursuitsListContainer}>
-            {pursuits.map((pursuit) => {
-              if (pursuit.active) {
+            {orderedPursuits.map((pursuit) => {
+              if (pursuit && pursuit.active) {
                 return (
                   <PursuitCard
                     key={pursuit.pursuit_id}

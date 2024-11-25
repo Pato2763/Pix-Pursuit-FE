@@ -15,9 +15,8 @@ import CreatePursuitScreen from "./screens/CreatePursuitScreen";
 import CameraScreen from "./screens/CameraScreen";
 import { PhotoProvider } from "./context/Photo";
 import { UserProvider } from "./context/UserContext";
-import { ActivePursuitProvider } from "./context/ActivePursuitState";
-import { HostedPursuitProvider } from "./context/HostedPursuitContext";
 import PursuitCompletedScreen from "./screens/PursuitCompletedScreen";
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

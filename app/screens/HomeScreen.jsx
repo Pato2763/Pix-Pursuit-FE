@@ -10,24 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 import ConfirmLocation from "../components/buttons/Confirmlocation.jsx";
 
 const HomeScreen = () => {
-  const [trackedLocation, setTrackedLocation] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    let watchID = null;
-    getTrackedLocation(setTrackedLocation).then((subscription) => {
-      watchID = subscription;
-    });
-    return () => {
-      if (watchID) {
-        watchID.remove();
-      }
-    };
-  }, []);
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
