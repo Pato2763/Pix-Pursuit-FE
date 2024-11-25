@@ -20,13 +20,15 @@ import AWS from "aws-sdk";
 import calcRadius from "../utils/calcRadius";
 import { getLocation } from "../utils/loaction";
 import { postPursuit } from "../api";
+import { UserContext } from "../context/UserContext";
 
 const CreatePursuit = () => {
   const navigation = useNavigation();
   const { photo, setPhoto } = useContext(PhotoContext);
+  const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [pursuitData, setPursuitData] = useState({
-    host_ID: 1,
+    host_ID: user.user_ID,
     title: "",
     image: "",
     difficulty: null,
@@ -36,6 +38,12 @@ const CreatePursuit = () => {
   const titleInputRef = useRef(null);
 
   const s3 = new AWS.S3();
+
+  AWS.config.update({
+    accessKeyId: process.env.EXPO_PUBLIC_KEY,
+    secretAccessKey: process.env.EXPO_PUBLIC_ACCESS_SECRET,
+    region: process.env.EXPO_PUBLIC_REGION,
+  });
 
   const uploadFileToS3 = (bucketName, fileName, filePath) => {
     const params = {

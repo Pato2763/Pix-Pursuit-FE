@@ -9,6 +9,9 @@ import { getTrackedLocation } from "../utils/loaction.js";
 import { useNavigation } from "@react-navigation/native";
 import { PursuitOverlay } from "../components/PursuitOverlay";
 
+import ConfirmLocation from "../components/buttons/Confirmlocation.jsx";
+
+
 const HomeScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -16,6 +19,7 @@ const HomeScreen = () => {
         <CreatePursuit redirect={"CreatePursuit"} />
         <ChoosePursuit redirect={"ChoosePursuits"} />
         <HostedPursuitInfo />
+        <ConfirmLocation />
       </View>
       <MapViewer />
     </SafeAreaView>
