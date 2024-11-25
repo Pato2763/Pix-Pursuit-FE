@@ -45,19 +45,22 @@ export const MapViewer = () => {
   }, []);
 
   useEffect(() => {
-    getLocation(setLocation);
+    setLoading(true);
+  }, [user.pursuit_id]);
 
+  useEffect(() => {
+    getLocation(setLocation);
     setLoading(false);
   }, [coordinates]);
 
-  if (loading) {
-    return (
-      <View>
-        <Loading />
-        <Text>Loading location...</Text>
-      </View>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <View>
+  //       <Loading />
+  //       <Text>Loading location...</Text>
+  //     </View>
+  //   );
+  // }
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
@@ -68,45 +71,51 @@ export const MapViewer = () => {
           trackedLocation={coordinates}
           region={region}
         >
-          <MapViewDirections
-            origin={trackedLocation}
-            destination={{
-              latitude: coordinates.random_lat,
-              longitude: coordinates.random_long,
-            }}
-            onReady={() => {
-              const { latitude, longitude } = getCenter([
-                {
-                  latitude: trackedLocation.latitude,
-                  longitude: trackedLocation.longitude,
-                },
-                {
+          {!loading ? (
+            <>
+              <MapViewDirections
+                origin={trackedLocation}
+                destination={{
                   latitude: coordinates.random_lat,
                   longitude: coordinates.random_long,
-                },
-              ]);
-              setRegion({
-                latitude,
-                longitude,
-                latitudeDelta:
-                  Math.abs(coordinates.random_lat - trackedLocation.latitude) +
-                  0.01,
-                longitudeDelta:
-                  Math.abs(
-                    coordinates.random_long - trackedLocation.longitude
-                  ) + 0.01,
-              });
-            }}
-            resetOnChange={false}
-            apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
-            strokeWidth={4}
-            strokeColor={Colours.RED}
-          />
-          <PursuitOverlay
-            coordinates={coordinates}
-            setCoordinates={setCoordinates}
-            setLoading={setLoading}
-          />
+                }}
+                onReady={() => {
+                  setLoading(false);
+                  const { latitude, longitude } = getCenter([
+                    {
+                      latitude: trackedLocation.latitude,
+                      longitude: trackedLocation.longitude,
+                    },
+                    {
+                      latitude: coordinates.random_lat,
+                      longitude: coordinates.random_long,
+                    },
+                  ]);
+                  setRegion({
+                    latitude,
+                    longitude,
+                    latitudeDelta:
+                      Math.abs(
+                        coordinates.random_lat - trackedLocation.latitude
+                      ) + 0.01,
+                    longitudeDelta:
+                      Math.abs(
+                        coordinates.random_long - trackedLocation.longitude
+                      ) + 0.01,
+                  });
+                }}
+                resetOnChange={false}
+                apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
+                strokeWidth={4}
+                strokeColor={Colours.RED}
+              />
+              <PursuitOverlay
+                coordinates={coordinates}
+                setCoordinates={setCoordinates}
+                setLoading={setLoading}
+              />
+            </>
+          ) : null}
         </MapView>
       </View>
     </SafeAreaView>
