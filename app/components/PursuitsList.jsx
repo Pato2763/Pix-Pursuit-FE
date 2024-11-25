@@ -52,7 +52,6 @@ export function PursuitsList() {
         setUser((currUser) => {
           const newUser = currUser;
           newUser.pursuit_id = currentPursuit.pursuit_id;
-          console.log(newUser);
           return newUser;
         });
         navigation.navigate("Home");
