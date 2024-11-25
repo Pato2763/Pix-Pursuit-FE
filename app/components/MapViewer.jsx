@@ -1,12 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import MapView from "react-native-maps";
+import MapView, { Circle } from "react-native-maps";
 import { StyleSheet, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Colours from "../utils/Colours";
 import Loading from "./Loading";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
 import { useNavigation } from "@react-navigation/native";
+import { PursuitOverlay } from "./PursuitOverlay";
 
 export const MapViewer = () => {
   const [region, setRegion] = useState(null);
@@ -64,13 +65,15 @@ export const MapViewer = () => {
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
-      <View style={styles.infoContainer}></View>
       <View style={styles.container}>
         <MapView
-          trackedLocation={trackedLocation}
           style={styles.map}
-          showsUserLocation={true} // blue dot for user
-        />
+          showsUserLocation={true} // Show blue dot for user's location
+          trackedLocation={trackedLocation}
+          region={region}
+        >
+          <PursuitOverlay />
+        </MapView>
       </View>
     </SafeAreaView>
   );

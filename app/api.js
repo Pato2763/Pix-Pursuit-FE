@@ -51,7 +51,13 @@ export function getPursuitCompletedByUsers(pursuit_id) {
 }
 
 export function getPursuitbyPursuitID(pursuit_id) {
-  return api.get(`pursuits/${pursuit_id}`).then((response) => {
+  return api.get(`/pursuits/${pursuit_id}`).then((response) => {
+    return response.data.pursuit;
+  });
+}
+
+export function getHostedPutsuitByHostId(user_id) {
+  return api.get(`/pursuits/host/${user_id}`).then((response) => {
     return response.data.pursuit;
   });
 }
