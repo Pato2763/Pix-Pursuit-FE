@@ -1,6 +1,7 @@
 import { getLocation } from "../utils/loaction";
 import {
   Button,
+  Image,
   Modal,
   SafeAreaView,
   ScrollView,
@@ -13,8 +14,8 @@ import { PursuitCard } from "./PursuitCard";
 import { choosePursuits } from "../utils/styles/choosePursuits";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../context/UserContext";
-import { ActivityIndicator } from "react-native";
 import { getDistance } from "geolib";
+import Loading from "./Loading";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
@@ -23,8 +24,7 @@ export function PursuitsList() {
   const [confirmPursuit, setConfirmPursuit] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [orderedPursuits, setOrderedPursuits] = useState([]);
-  const { user } = useContext(UserContext);
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const navigation = useNavigation();
 
@@ -35,7 +35,7 @@ export function PursuitsList() {
         return res.coords;
       })
       .then((location) => {
-        return getPursuits(location.latitude, location.longitude);
+        return getPursuits();
       })
       .then((closePursuits) => {
         return setPursuits(closePursuits);
@@ -66,11 +66,9 @@ export function PursuitsList() {
         setConfirmPursuit({});
         setModalVisible(false);
         setUser((currUser) => {
-          const newUser = currUser;
-          newUser.pursuit_id = currentPursuit.pursuit_id;
-          return newUser;
+          return { ...currUser, pursuit_id: currentPursuit.pursuit_id };
         });
-        navigation.navigate("Home");
+        navigation.goBack();
       }
     );
   }
@@ -82,6 +80,10 @@ export function PursuitsList() {
 
   return (
     <SafeAreaView>
+      <Image
+        source={require("../../assets/Pursuit-Leader-boards.png")}
+        style={choosePursuits.header}
+      />
       <Modal animationType="none" transparent={true} visible={modalVisible}>
         <View style={choosePursuits.centeredView}>
           <View style={choosePursuits.modalView}>
@@ -104,25 +106,31 @@ export function PursuitsList() {
         </View>
       </Modal>
       <ScrollView>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <View style={choosePursuits.pursuitsListContainer}>
-            {orderedPursuits.map((pursuit) => {
-              if (pursuit && pursuit.active) {
-                return (
-                  <PursuitCard
-                    key={pursuit.pursuit_id}
-                    pursuit={pursuit}
-                    setModalVisible={setModalVisible}
-                    setConfirmPursuit={setConfirmPursuit}
-                    location={location}
-                  />
-                );
-              }
-            })}
-          </View>
-        )}
+        <View style={choosePursuits.pursuitsListContainer}>
+          {orderedPursuits.map((pursuit) => {
+            if (isLoading) {
+              return (
+                <View
+                  key={pursuit.pursuit_id}
+                  style={choosePursuits.pursuitdCard}
+                >
+                  <Loading />
+                </View>
+              );
+            }
+            if (pursuit && pursuit.active && pursuit.host_id !== user.user_id) {
+              return (
+                <PursuitCard
+                  key={pursuit.pursuit_id}
+                  pursuit={pursuit}
+                  setModalVisible={setModalVisible}
+                  setConfirmPursuit={setConfirmPursuit}
+                  location={location}
+                />
+              );
+            }
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

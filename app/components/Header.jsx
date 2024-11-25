@@ -24,7 +24,12 @@ const styles = StyleSheet.create({
     paddingTop: height * 0.05,
 
     alignItems: "center",
-    paddingBottom: height * 0.02,
+
+    paddingBottom: height * 0.001,
+
+    paddingBottom: 0,
+    marginBottom: height * -0.02,
+
   },
   headerImage: {
     width: width * 0.5,

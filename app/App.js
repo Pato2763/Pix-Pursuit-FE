@@ -15,6 +15,7 @@ import CreatePursuitScreen from "./screens/CreatePursuitScreen";
 import CameraScreen from "./screens/CameraScreen";
 import { PhotoProvider } from "./context/Photo";
 import { UserProvider } from "./context/UserContext";
+import PursuitCompletedScreen from "./screens/PursuitCompletedScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -136,6 +137,13 @@ function App() {
               component={CameraScreen}
               options={{
                 headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Completed"
+              component={PursuitCompletedScreen}
+              options={{
+                header: () => <Header />,
               }}
             />
             <Stack.Screen name="Profile" component={EmptyScreen} />
