@@ -13,7 +13,6 @@ import { PursuitCard } from "./PursuitCard";
 import { choosePursuits } from "../utils/styles/choosePursuits";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../context/UserContext";
-import { ActivePursuitContext } from "../context/ActivePursuitState";
 import { ActivityIndicator } from "react-native";
 
 export function PursuitsList() {
@@ -23,7 +22,7 @@ export function PursuitsList() {
   const [confirmPursuit, setConfirmPursuit] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(UserContext);
-  const { setActivePursuit } = useContext(ActivePursuitContext);
+  const { setUser } = useContext(UserContext);
 
   const navigation = useNavigation();
 
@@ -34,7 +33,8 @@ export function PursuitsList() {
         return res.coords;
       })
       .then((location) => {
-        return getPursuits(location.latitude, location.longitude);
+        //location.latitude, location.longitude
+        return getPursuits();
       })
       .then((closePursuits) => {
         return setPursuits(closePursuits);
@@ -49,7 +49,12 @@ export function PursuitsList() {
       (currentPursuit) => {
         setConfirmPursuit({});
         setModalVisible(false);
-        setActivePursuit(currentPursuit.pursuit_id);
+        setUser((currUser) => {
+          const newUser = currUser;
+          newUser.pursuit_id = currentPursuit.pursuit_id;
+          console.log(newUser);
+          return newUser;
+        });
         navigation.navigate("Home");
       }
     );
