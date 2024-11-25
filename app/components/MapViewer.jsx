@@ -12,7 +12,7 @@ import MapViewDirections from "react-native-maps-directions";
 import { getCenter } from "geolib";
 import { UserContext } from "../context/UserContext";
 
-export const MapViewer = () => {
+export const MapViewer = ({ setPursuitImage }) => {
   const [region, setRegion] = useState({});
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState({});
@@ -63,85 +63,80 @@ export const MapViewer = () => {
   // }
 
   return (
-    <SafeAreaView style={styles.safeAreaContainer}>
-      <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          showsUserLocation={true} // Show blue dot for user's location
-          trackedLocation={coordinates}
-          region={region}
-        >
-          {!loading ? (
-            <>
-              <MapViewDirections
-                origin={trackedLocation}
-                destination={{
-                  latitude: coordinates.random_lat,
-                  longitude: coordinates.random_long,
-                }}
-                onReady={() => {
-                  setLoading(false);
-                  const { latitude, longitude } = getCenter([
-                    {
-                      latitude: trackedLocation.latitude,
-                      longitude: trackedLocation.longitude,
-                    },
-                    {
-                      latitude: coordinates.random_lat,
-                      longitude: coordinates.random_long,
-                    },
-                  ]);
-                  setRegion({
-                    latitude,
-                    longitude,
-                    latitudeDelta:
-                      Math.abs(
-                        coordinates.random_lat - trackedLocation.latitude
-                      ) + 0.01,
-                    longitudeDelta:
-                      Math.abs(
-                        coordinates.random_long - trackedLocation.longitude
-                      ) + 0.01,
-                  });
-                }}
-                resetOnChange={false}
-                apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
-                strokeWidth={4}
-                strokeColor={Colours.RED}
-              />
-              <PursuitOverlay
-                coordinates={coordinates}
-                setCoordinates={setCoordinates}
-                setLoading={setLoading}
-              />
-            </>
-          ) : null}
-        </MapView>
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <MapView
+        style={styles.map}
+        showsUserLocation={true} // Show blue dot for user's location
+        trackedLocation={coordinates}
+        region={region}
+      >
+        {!loading ? (
+          <>
+            <MapViewDirections
+              origin={trackedLocation}
+              destination={{
+                latitude: coordinates.random_lat,
+                longitude: coordinates.random_long,
+              }}
+              onReady={() => {
+                setLoading(false);
+                const { latitude, longitude } = getCenter([
+                  {
+                    latitude: trackedLocation.latitude,
+                    longitude: trackedLocation.longitude,
+                  },
+                  {
+                    latitude: coordinates.random_lat,
+                    longitude: coordinates.random_long,
+                  },
+                ]);
+                setRegion({
+                  latitude,
+                  longitude,
+                  latitudeDelta:
+                    Math.abs(
+                      coordinates.random_lat - trackedLocation.latitude
+                    ) + 0.01,
+                  longitudeDelta:
+                    Math.abs(
+                      coordinates.random_long - trackedLocation.longitude
+                    ) + 0.01,
+                });
+              }}
+              resetOnChange={false}
+              apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
+              strokeWidth={4}
+              strokeColor={Colours.RED}
+            />
+            <PursuitOverlay
+              coordinates={coordinates}
+              setCoordinates={setCoordinates}
+              setLoading={setLoading}
+              setPursuitImage={setPursuitImage}
+            />
+          </>
+        ) : null}
+      </MapView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: "white",
     borderColor: "white",
   },
   infoContainer: {
-    padding: 10,
-    margin: 10,
     backgroundColor: "white",
     borderColor: "white",
   },
   container: {
     flex: 1,
-    backgroundColor: "white",
   },
 
   map: {
-    width: "90",
-    height: "100%",
+    width: "90%",
+    height: "90%",
     flex: 1,
     gap: 20,
     width: "80%",

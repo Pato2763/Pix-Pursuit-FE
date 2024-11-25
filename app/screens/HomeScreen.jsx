@@ -1,27 +1,19 @@
-import { View } from "react-native";
-import { useState, useEffect } from "react";
+import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { MapViewer } from "../components/MapViewer";
 import CreatePursuit from "../components/buttons/CreatePursuit.jsx";
-import ChoosePursuit from "../components/buttons/FindPursuit.jsx";
 import HostedPursuitInfo from "../components/HostedPuruitInfo.jsx";
-import { getTrackedLocation } from "../utils/loaction.js";
-import { useNavigation } from "@react-navigation/native";
-import { PursuitOverlay } from "../components/PursuitOverlay";
-
-import ConfirmLocation from "../components/buttons/Confirmlocation.jsx";
-
+import CurrentPursuit from "../components/CurrentPursuit.jsx";
 
 const HomeScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View>
-        <CreatePursuit redirect={"CreatePursuit"} />
-        <ChoosePursuit redirect={"ChoosePursuits"} />
-        <HostedPursuitInfo />
-        <ConfirmLocation />
-      </View>
-      <MapViewer />
+      <ScrollView>
+        <View>
+          <CreatePursuit redirect={"CreatePursuit"} />
+          <CurrentPursuit />
+          <HostedPursuitInfo />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
