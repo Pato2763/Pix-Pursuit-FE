@@ -8,7 +8,7 @@ export default function ChoosePursuit({ redirect }) {
 
   const title = "Find Pursuit";
   const onPress = () => {
-    navigation.navigate(redirect);
+    navigation.navigate("ChoosePursuits");
   };
   return (
     <Pressable style={blueButton.Accpet} onPress={onPress}>
