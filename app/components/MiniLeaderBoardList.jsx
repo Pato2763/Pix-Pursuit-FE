@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import LeaderboardCard from "./LeaderboardCard";
 import { leaderboard } from "../utils/styles/leaderboard";
 import { getPursuitCompletedByUsers } from "../api";
+import Colours from "../utils/Colours";
 
 const MiniLeaderBoardList = () => {
   const { user } = useContext(UserContext);
@@ -25,7 +26,7 @@ const MiniLeaderBoardList = () => {
       {!miniLeaderBoardUsers.length ? (
         <Text>No users have completed this pursuit yet</Text>
       ) : (
-        <View style={leaderboard.leaderboardListContainer}>
+        <View style={Styles.leaderboardListContainer}>
           {miniLeaderBoardUsers.map((user, index) => {
             return (
               <LeaderboardCard
@@ -42,3 +43,15 @@ const MiniLeaderBoardList = () => {
 };
 
 export default MiniLeaderBoardList;
+
+const Styles = StyleSheet.create({
+  leaderboardListContainer: {
+    alignItems: "center",
+    paddingLeft: 10,
+    borderRadius: 10,
+    width: "90%",
+    backgroundColor: Colours.PURPLEBLUE,
+    gap: 2,
+    margin: "auto",
+  },
+});

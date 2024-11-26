@@ -22,7 +22,6 @@ const LeaderboardCard = ({ user, position }) => {
     <View style={miniLB.cardStyle}>
       <Text
         style={[
-          leaderboard.cardText,
           position === 0
             ? miniLB.first
             : position === 1
