@@ -7,6 +7,7 @@ export const PursuitOverlay = ({
   coordinates,
   setCoordinates,
   setPursuitImage,
+  setLoading,
 }) => {
   const { user } = useContext(UserContext);
 
@@ -16,6 +17,7 @@ export const PursuitOverlay = ({
     Hard: 750,
   };
   useEffect(() => {
+    setLoading(true);
     getPursuitbyPursuitID(user.pursuit_id)
       .then((res) => {
         const fetchedCoordinates = {
@@ -25,6 +27,7 @@ export const PursuitOverlay = ({
         };
         setPursuitImage(res.image);
         setCoordinates(fetchedCoordinates);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
