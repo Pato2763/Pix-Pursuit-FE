@@ -9,7 +9,7 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <View>
-          <CreatePursuit redirect={"CreatePursuit"} />
+          <CreatePursuit />
           <CurrentPursuit />
           <HostedPursuitInfo />
         </View>

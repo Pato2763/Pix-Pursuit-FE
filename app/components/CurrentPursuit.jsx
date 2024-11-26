@@ -1,30 +1,48 @@
-import { View, Text, Image } from "react-native";
-import React, { useState } from "react";
+import { View, Text, Image, ActivityIndicator } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { MapViewer } from "./MapViewer";
 import ToggleImage from "./ToggleImage";
 import ConfirmLocation from "./buttons/Confirmlocation";
 import ChangePursuit from "./buttons/ChangePursuit";
+import { getPursuitImage } from "../api";
+import { UserContext } from "../context/UserContext";
 
 const CurrentPursuit = () => {
   const [showingMap, setShowingMap] = useState(true);
   const [pursuitImage, setPursuitImage] = useState(null);
+  const [imageData, setImageData] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
+
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    setImageLoading(true);
+    getPursuitImage(user.pursuit_id)
+      .then((res) => {
+        setImageData(res);
+        setImageLoading(false);
+      })
+      .catch((err) => {
+        setImageData(null);
+        setImageLoading(false);
+        console.log(err);
+      });
+  }, [user.pursuit_id]);
 
   return (
     <View style={Styles.CurrentPursuitContainer}>
-      <ToggleImage
-        setShowingMap={setShowingMap}
-        showingMap={showingMap}
-        pursuitImage={pursuitImage}
-      />
+      <ToggleImage setShowingMap={setShowingMap} showingMap={showingMap} />
       {showingMap ? (
         <MapViewer setPursuitImage={setPursuitImage} />
+      ) : imageLoading ? (
+        <ActivityIndicator />
       ) : (
         <Image
           style={Styles.pursuitImage}
           source={{
-            uri: pursuitImage,
+            uri: imageData,
           }}
         />
       )}

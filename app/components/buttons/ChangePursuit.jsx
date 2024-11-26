@@ -1,11 +1,18 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const ChangePursuit = () => {
+  const navigation = useNavigation();
   return (
     <View>
-      <TouchableOpacity style={Styles.changePursuitBtn}>
+      <TouchableOpacity
+        style={Styles.changePursuitBtn}
+        onPress={() => {
+          navigation.navigate("ChoosePursuits");
+        }}
+      >
         <Text>Change Pursuit</Text>
       </TouchableOpacity>
     </View>

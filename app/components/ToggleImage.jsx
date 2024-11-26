@@ -2,10 +2,9 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { StyleSheet } from "react-native";
 
-const ToggleImage = ({ showingMap, setShowingMap, pursuitImage }) => {
+const ToggleImage = ({ showingMap, setShowingMap }) => {
   const handleClick = () => {
     setShowingMap(!showingMap);
-    console.log(pursuitImage);
   };
   return (
     <View>

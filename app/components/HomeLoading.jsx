@@ -25,7 +25,7 @@ const HomeLoading = () => {
           requests.
         </Text>
       </View>
-      <Accept tarRedirect="Login" />
+      <Accept />
     </View>
   );
 };
