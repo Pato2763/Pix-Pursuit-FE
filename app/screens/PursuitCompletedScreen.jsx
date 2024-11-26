@@ -8,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { blueButton } from "../utils/styles/buttons";
 import { UserContext } from "../context/UserContext";
 import {
+  getCompletedPursuits,
   patchUsersCurrentPursuit,
   patchUsersPoints,
   postPursuitsCompletedByUsers,
@@ -44,8 +45,19 @@ const PursuitCompletedScreen = ({ route }) => {
         <Pressable
           style={blueButton.Accpet}
           onPress={() => {
-            setUser((currUser) => {
-              return { ...currUser, pursuit_id: null };
+            getCompletedPursuits(user.user_id).then((completedPursuitsArr) => {
+              const completedPursuitsIdArr = completedPursuitsArr.map(
+                (pursuit) => {
+                  return pursuit.pursuit_id;
+                }
+              );
+              setUser((currUser) => {
+                return {
+                  ...currUser,
+                  pursuit_id: null,
+                  completedPursuits: completedPursuitsIdArr,
+                };
+              });
             });
             navigation.goBack();
           }}

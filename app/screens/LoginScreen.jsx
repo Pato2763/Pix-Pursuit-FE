@@ -9,13 +9,12 @@ import {
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Styles } from "../utils/styles/login";
 import { useNavigation } from "@react-navigation/native";
-import { loginUser } from "../api";
+import { getCompletedPursuits, loginUser } from "../api";
 import { TouchableWithoutFeedback, ActivityIndicator } from "react-native";
 
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Colours from "../utils/Colours";
 import { UserContext } from "../context/UserContext";
-
 
 const LoginScreen = () => {
   const [loginInfo, setLoginInfo] = useState({
@@ -26,7 +25,7 @@ const LoginScreen = () => {
   const [loading, setLoading] = useState(false);
   const refPasswordInput = useRef(null);
   const navigation = useNavigation();
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const handleInputChange = (key, value) => {
     setLoginInfo((prevState) => ({ ...prevState, [key]: value }));
@@ -42,11 +41,24 @@ const LoginScreen = () => {
     setLoading(true);
     loginUser(loginInfo)
       .then((newUser) => {
-        setUser(newUser);
+        console.log("here");
         setError(false);
         setLoading(false);
+
+        setUser(newUser);
+
+        return getCompletedPursuits(newUser.user_id);
+      })
+      .then((completedPursuitsArr) => {
+        const completedPursuitsIdArr = completedPursuitsArr.map((pursuit) => {
+          return pursuit.pursuit_id;
+        });
+        setUser((currUser) => {
+          return { ...currUser, completedPursuits: completedPursuitsIdArr };
+        });
         navigation.navigate("Home");
       })
+
       .catch((err) => {
         console.log(err);
         setError(true);
