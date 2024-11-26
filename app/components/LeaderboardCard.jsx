@@ -13,9 +13,11 @@ const LeaderboardCard = ({ user }) => {
   }, [user]);
 
   return (
-    <View style={cardStyle}>
-      <Text style={leaderboard.cardText}>{user.username}</Text>
-      <Text style={leaderboard.cardText}>{user.points}</Text>
+    <View style={leaderboard.cardStyle}>
+      <Text style={leaderboard.cardTextUser}>User Name: {user.username}</Text>
+      <Text style={leaderboard.cardTextPoints}>
+        Total Amount of Points: {user.points}
+      </Text>
     </View>
   );
 };
