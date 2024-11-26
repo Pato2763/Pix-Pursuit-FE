@@ -15,10 +15,16 @@ export default function ConfirmLocation() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    getPursuitbyPursuitID(user.pursuit_id).then((fetchedPursuit) => {
-      setPursuit(fetchedPursuit);
-    });
-  }, []);
+    console.log(user.pursuit_id);
+    getPursuitbyPursuitID(user.pursuit_id)
+      .then((fetchedPursuit) => {
+        console.log(fetchedPursuit);
+        setPursuit(fetchedPursuit);
+      })
+      .catch((err) => {
+        setPursuit(null);
+      });
+  }, [user.pursuit_id]);
 
   const onPress = () => {
     getLocation().then((fetchedLocation) => {
@@ -33,13 +39,16 @@ export default function ConfirmLocation() {
         longitude: pursuit.target_long,
       };
 
+      console.log(userLocation, pursuitLocation);
+
       const distance = getDistance(userLocation, pursuitLocation);
-      console.log(distance);
+
       navigation.navigate("Completed", {
         distance: distance,
         userLocation: userLocation,
         pursuitLocation: pursuitLocation,
         pursuit: pursuit,
+        won: distance <= 50 ? true : false,
       });
     });
   };

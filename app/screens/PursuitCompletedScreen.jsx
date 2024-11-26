@@ -1,26 +1,42 @@
 import { useNavigation } from "@react-navigation/native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { View, Text, Pressable } from "react-native";
-import Loading from "../components/Loading";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet } from "react-native";
 import Colours from "../utils/Colours";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { blueButton } from "../utils/styles/buttons";
-import { TouchableOpacity } from "react-native";
+import { UserContext } from "../context/UserContext";
+import {
+  patchUsersCurrentPursuit,
+  patchUsersPoints,
+  postPursuitsCompletedByUsers,
+} from "../api";
 
 const PursuitCompletedScreen = ({ route }) => {
+  const { user, setUser } = useContext(UserContext);
   const navigation = useNavigation();
-  const [won, setWon] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const { distance, pursuit, userLocation, pursuitLocation } = route.params;
+  const { distance, userLocation, pursuitLocation, won, pursuit } =
+    route.params;
 
-  useEffect(() => {
-    distance <= 50 ? setWon(true) : setWon(false);
-    setLoading(false);
-  });
+  if (won) {
+    console.log("in won if statement");
+    postPursuitsCompletedByUsers(user.user_id, pursuit.pursuit_id)
+      .then((points) => {
+        console.log(points);
+        return patchUsersPoints(user.user_id, points);
+      })
+      .then((fetchedUser) => {
+        console.log(fetchedUser);
+        // setUser((currUser) => {
+        //   return { ...currUser, points: fetchedUser.points };
+        // });
+        patchUsersCurrentPursuit(user.user_id, null);
+      });
+  }
 
   const Won = () => {
+    console.log("here in won");
     return (
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.infoContainer}>
@@ -35,6 +51,9 @@ const PursuitCompletedScreen = ({ route }) => {
         <Pressable
           style={blueButton.Accpet}
           onPress={() => {
+            setUser((currUser) => {
+              return { ...currUser, pursuit_id: null };
+            });
             navigation.goBack();
           }}
         >
@@ -102,7 +121,7 @@ const PursuitCompletedScreen = ({ route }) => {
       marginHorizontal: "auto",
     },
   });
-  return loading ? <Loading /> : won ? <Won /> : <Lost />;
+  return won ? <Won /> : <Lost />;
 };
 
 export default PursuitCompletedScreen;

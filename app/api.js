@@ -69,3 +69,17 @@ export function getHostedPutsuitByHostId(user_id) {
     return response.data.pursuit;
   });
 }
+
+export function postPursuitsCompletedByUsers(user_id, pursuit_id) {
+  const body = { user_id: user_id, pursuit_id: pursuit_id };
+  return api.post("/pursuitsCompletedByUsers", body).then((res) => {
+    return res.data.points;
+  });
+}
+
+export function patchUsersPoints(user_id, inc_points) {
+  const body = { inc_points: inc_points };
+  return api.patch(`users/points/${user_id}`, body).then((res) => {
+    return res.data.user;
+  });
+}
