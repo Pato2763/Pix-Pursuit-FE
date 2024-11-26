@@ -45,10 +45,6 @@ export const MapViewer = ({ setPursuitImage }) => {
   }, []);
 
   useEffect(() => {
-    setLoading(true);
-  }, [user.pursuit_id]);
-
-  useEffect(() => {
     getLocation(setLocation);
     setLoading(false);
   }, [coordinates]);
@@ -96,11 +92,11 @@ export const MapViewer = ({ setPursuitImage }) => {
                   latitudeDelta:
                     Math.abs(
                       coordinates.random_lat - trackedLocation.latitude
-                    ) + 0.01,
+                    ) + 0.04,
                   longitudeDelta:
                     Math.abs(
                       coordinates.random_long - trackedLocation.longitude
-                    ) + 0.01,
+                    ) + 0.04,
                 });
               }}
               resetOnChange={false}
