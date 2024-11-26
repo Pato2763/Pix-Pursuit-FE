@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ActivityIndicator } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
@@ -13,15 +13,20 @@ const CurrentPursuit = () => {
   const [showingMap, setShowingMap] = useState(true);
   const [pursuitImage, setPursuitImage] = useState(null);
   const [imageData, setImageData] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const { user } = useContext(UserContext);
 
   useEffect(() => {
+    setImageLoading(true);
     getPursuitImage(user.pursuit_id)
       .then((res) => {
         setImageData(res);
+        setImageLoading(false);
       })
       .catch((err) => {
+        setImageData(null);
+        setImageLoading(false);
         console.log(err);
       });
   }, [user.pursuit_id]);
@@ -31,6 +36,8 @@ const CurrentPursuit = () => {
       <ToggleImage setShowingMap={setShowingMap} showingMap={showingMap} />
       {showingMap ? (
         <MapViewer setPursuitImage={setPursuitImage} />
+      ) : imageLoading ? (
+        <ActivityIndicator />
       ) : (
         <Image
           style={Styles.pursuitImage}
