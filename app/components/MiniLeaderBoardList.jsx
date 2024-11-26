@@ -26,8 +26,14 @@ const MiniLeaderBoardList = () => {
         <Text>No users have completed this pursuit yet</Text>
       ) : (
         <View style={leaderboard.leaderboardListContainer}>
-          {miniLeaderBoardUsers.map((user) => {
-            return <LeaderboardCard key={user.username} user={user} />;
+          {miniLeaderBoardUsers.map((user, index) => {
+            return (
+              <LeaderboardCard
+                key={user.username}
+                position={index}
+                user={user}
+              />
+            );
           })}
         </View>
       )}
