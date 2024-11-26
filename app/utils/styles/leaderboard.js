@@ -15,9 +15,10 @@ export const leaderboard = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 10,
     borderRadius: 10,
-    width: "80%",
+    width: "90%",
     backgroundColor: Colours.PURPLEBLUE,
     gap: 2,
+    margin: "auto",
   },
   leaderboardCard: {
     flexDirection: "row",
@@ -42,5 +43,25 @@ export const leaderboard = StyleSheet.create({
     borderWidth: 1,
     borderBottomColor: "#c0e3e0",
     borderColor: Colours.PURPLEBLUE,
+  },
+  container: {
+    marginVertical: 20,
+    width: 350,
+    backgroundColor: "rgba(300, 300, 300, 0.8)",
+    padding: 20,
+    margin: "auto",
+    borderRadius: 10,
+    borderColor: "#D9D9D9",
+    borderWidth: 2,
+  },
+  text: {
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  textTitle: {
+    marginBottom: 10,
+    textAlign: "center",
+    fontWeight: "700",
+    fontSize: 20,
   },
 });

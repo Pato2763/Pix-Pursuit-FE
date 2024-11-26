@@ -28,7 +28,7 @@ import { v4 as uuidv4 } from "uuid";
 const CreatePursuit = () => {
   const navigation = useNavigation();
   const { photo, setPhoto } = useContext(PhotoContext);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(null);
   const [pursuitData, setPursuitData] = useState({
@@ -91,6 +91,9 @@ const CreatePursuit = () => {
         active: true,
       });
       setPhoto(null);
+      setUser((user) => {
+        return { ...user, hosted_pursuit_id: posted.pursuit_id };
+      });
 
       const fileData = await fetch(filePath).then((response) =>
         response.blob()
