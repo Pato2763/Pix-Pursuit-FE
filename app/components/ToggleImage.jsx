@@ -5,7 +5,6 @@ import { StyleSheet } from "react-native";
 const ToggleImage = ({ showingMap, setShowingMap, pursuitImage }) => {
   const handleClick = () => {
     setShowingMap(!showingMap);
-    console.log(pursuitImage);
   };
   return (
     <View>

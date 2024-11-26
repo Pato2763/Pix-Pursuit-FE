@@ -34,7 +34,6 @@ export default function ConfirmLocation() {
       };
 
       const distance = getDistance(userLocation, pursuitLocation);
-      console.log(distance);
       navigation.navigate("Completed", {
         distance: distance,
         userLocation: userLocation,

@@ -37,17 +37,16 @@ export async function postPursuit(
   fileName,
   host
 ) {
-  const newBody = {
+  const data = {
     ...body,
     host_ID: host,
     targetLat: location.latitude,
     targetLong: location.longitude,
-    image: `https://pix-pursuit.s3.eu-north-1.amazonaws.com/${fileName}.png`,
+    image: `${fileName}`,
     randomLat: radiusCoords.latitude,
     randomLong: radiusCoords.longitude,
   };
-  console.log(newBody);
-  return api.post("/pursuits", newBody).then((response) => {
+  return api.post("/pursuits", data).then((response) => {
     return response.data.pursuit;
   });
 }
@@ -67,5 +66,11 @@ export function getPursuitbyPursuitID(pursuit_id) {
 export function getHostedPutsuitByHostId(user_id) {
   return api.get(`/pursuits/host/${user_id}`).then((response) => {
     return response.data.pursuit;
+  });
+}
+
+export function getPursuitImage(pursuit_id) {
+  return api.get(`/pursuits/${pursuit_id}/image`).then((response) => {
+    return response.data.image;
   });
 }
