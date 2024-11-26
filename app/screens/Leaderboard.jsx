@@ -4,15 +4,9 @@ import { leaderboard } from "../utils/styles/leaderboard";
 
 const Leaderboard = () => {
   return (
-    <ScrollView>
-      <View style={leaderboard.leaderboardPageContainer}>
-        <Image
-          source={require("../../assets/Pursuit-Leader-boards.png")}
-          style={leaderboard.header}
-        />
-        <LeaderbaordList />
-      </View>
-    </ScrollView>
+    <View style={leaderboard.leaderboardPageContainer}>
+      <LeaderbaordList />
+    </View>
   );
 };
 

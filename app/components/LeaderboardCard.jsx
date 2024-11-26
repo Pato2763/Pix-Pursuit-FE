@@ -19,6 +19,7 @@ const LeaderboardCard = ({ user, position }) => {
   }, [user]);
 
   return (
+
     <View style={miniLB.cardStyle}>
       <Text
         style={[
@@ -32,7 +33,6 @@ const LeaderboardCard = ({ user, position }) => {
         {user.username}
       </Text>
       <Text style={miniLB.points}>{placement[position]}</Text>
-    </View>
   );
 };
 
