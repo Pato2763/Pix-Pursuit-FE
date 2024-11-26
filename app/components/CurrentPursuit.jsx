@@ -8,6 +8,7 @@ import ConfirmLocation from "./buttons/Confirmlocation";
 import ChangePursuit from "./buttons/ChangePursuit";
 import { getPursuitImage } from "../api";
 import { UserContext } from "../context/UserContext";
+import { NoActivePursuitHome } from "./NoActivePursuitHome";
 
 const CurrentPursuit = () => {
   const [showingMap, setShowingMap] = useState(true);
@@ -18,6 +19,7 @@ const CurrentPursuit = () => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
+    console.log(user.pursuit_id);
     setImageLoading(true);
     getPursuitImage(user.pursuit_id)
       .then((res) => {
@@ -32,25 +34,32 @@ const CurrentPursuit = () => {
   }, [user.pursuit_id]);
 
   return (
-    <View style={Styles.CurrentPursuitContainer}>
-      <ToggleImage setShowingMap={setShowingMap} showingMap={showingMap} />
-      {showingMap ? (
-        <MapViewer setPursuitImage={setPursuitImage} />
-      ) : imageLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <Image
-          style={Styles.pursuitImage}
-          source={{
-            uri: imageData,
-          }}
-        />
-      )}
+    <View>
+      {user.pursuit_id ? (
+        <View style={Styles.CurrentPursuitContainer}>
+          <Text style={Styles.title}>Your chosen Pursuit</Text>
+          <ToggleImage setShowingMap={setShowingMap} showingMap={showingMap} />
+          {showingMap ? (
+            <MapViewer setPursuitImage={setPursuitImage} />
+          ) : imageLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <Image
+              style={Styles.pursuitImage}
+              source={{
+                uri: imageData,
+              }}
+            />
+          )}
 
-      <View style={Styles.ButtonContainer}>
-        <ChangePursuit />
-        <ConfirmLocation />
-      </View>
+          <View style={Styles.ButtonContainer}>
+            <ChangePursuit />
+            <ConfirmLocation />
+          </View>
+        </View>
+      ) : (
+        <NoActivePursuitHome />
+      )}
     </View>
   );
 };
@@ -59,11 +68,16 @@ export default CurrentPursuit;
 
 const Styles = StyleSheet.create({
   CurrentPursuitContainer: {
-    height: 500,
-    width: 400,
+    height: 550,
+    width: 350,
     marginTop: 20,
     margin: "auto",
     marginBottom: "20",
+    borderRadius: 10,
+    paddingVertical: 20,
+    borderColor: "#D9D9D9",
+    borderWidth: 2,
+    backgroundColor: "rgba(300, 300, 300, 0.8)",
   },
   ButtonContainer: {
     flexDirection: "row",
@@ -75,5 +89,11 @@ const Styles = StyleSheet.create({
     height: 400,
     width: 300,
     margin: "auto",
+  },
+  title: {
+    marginBottom: 10,
+    textAlign: "center",
+    fontWeight: "700",
+    fontSize: 20,
   },
 });
