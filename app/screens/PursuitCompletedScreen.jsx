@@ -19,24 +19,17 @@ const PursuitCompletedScreen = ({ route }) => {
   const { distance, userLocation, pursuitLocation, won, pursuit } =
     route.params;
 
-  if (won) {
-    console.log("in won if statement");
+  if (won && user.pursuit_id) {
     postPursuitsCompletedByUsers(user.user_id, pursuit.pursuit_id)
       .then((points) => {
-        console.log(points);
         return patchUsersPoints(user.user_id, points);
       })
       .then((fetchedUser) => {
-        console.log(fetchedUser);
-        // setUser((currUser) => {
-        //   return { ...currUser, points: fetchedUser.points };
-        // });
         patchUsersCurrentPursuit(user.user_id, null);
       });
   }
 
   const Won = () => {
-    console.log("here in won");
     return (
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.infoContainer}>

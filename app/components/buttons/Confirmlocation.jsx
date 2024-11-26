@@ -15,10 +15,8 @@ export default function ConfirmLocation() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log(user.pursuit_id);
     getPursuitbyPursuitID(user.pursuit_id)
       .then((fetchedPursuit) => {
-        console.log(fetchedPursuit);
         setPursuit(fetchedPursuit);
       })
       .catch((err) => {
@@ -38,8 +36,6 @@ export default function ConfirmLocation() {
         latitude: pursuit.target_lat,
         longitude: pursuit.target_long,
       };
-
-      console.log(userLocation, pursuitLocation);
 
       const distance = getDistance(userLocation, pursuitLocation);
 
