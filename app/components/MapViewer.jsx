@@ -9,9 +9,13 @@ import { PursuitOverlay } from "./PursuitOverlay";
 import MapViewDirections from "react-native-maps-directions";
 import { getCenter } from "geolib";
 import { UserContext } from "../context/UserContext";
+import { getPursuitbyPursuitID } from "../api";
 
 export const MapViewer = ({ setPursuitImage }) => {
-  const [region, setRegion] = useState({});
+  const [region, setRegion] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState({});
   const [coordinates, setCoordinates] = useState({
@@ -39,6 +43,19 @@ export const MapViewer = ({ setPursuitImage }) => {
   }, []);
 
   useEffect(() => {
+    getPursuitbyPursuitID(user.pursuit_id)
+      .then((res) => {
+        const fetchedCoordinates = {
+          random_lat: res.random_lat,
+          random_long: res.random_long,
+          difficulty: res.difficulty,
+        };
+        setPursuitImage(res.image);
+        setCoordinates(fetchedCoordinates);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     getLocation(setLocation);
     setLoading(false);
   }, [coordinates]);
@@ -48,55 +65,54 @@ export const MapViewer = ({ setPursuitImage }) => {
       <MapView
         style={styles.map}
         showsUserLocation={true} // Show blue dot for user's location
-        trackedLocation={coordinates}
+        trackedLocation={trackedLocation}
         region={region}
       >
         {!loading ? (
-          <>
-            <MapViewDirections
-              origin={trackedLocation}
-              destination={{
-                latitude: coordinates.random_lat,
-                longitude: coordinates.random_long,
-              }}
-              onReady={() => {
-                setLoading(false);
-                const { latitude, longitude } = getCenter([
-                  {
-                    latitude: trackedLocation.latitude,
-                    longitude: trackedLocation.longitude,
-                  },
-                  {
-                    latitude: coordinates.random_lat,
-                    longitude: coordinates.random_long,
-                  },
-                ]);
-                setRegion({
-                  latitude,
-                  longitude,
-                  latitudeDelta:
-                    Math.abs(
-                      coordinates.random_lat - trackedLocation.latitude
-                    ) + 0.04,
-                  longitudeDelta:
-                    Math.abs(
-                      coordinates.random_long - trackedLocation.longitude
-                    ) + 0.04,
-                });
-              }}
-              resetOnChange={false}
-              apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
-              strokeWidth={4}
-              strokeColor={Colours.RED}
-            />
-            <PursuitOverlay
-              coordinates={coordinates}
-              setCoordinates={setCoordinates}
-              setLoading={setLoading}
-              setPursuitImage={setPursuitImage}
-            />
-          </>
+          <MapViewDirections
+            origin={trackedLocation}
+            destination={{
+              latitude: coordinates.random_lat,
+              longitude: coordinates.random_long,
+            }}
+            onReady={() => {
+              const { latitude, longitude } = getCenter([
+                {
+                  latitude: trackedLocation.latitude,
+                  longitude: trackedLocation.longitude,
+                },
+                {
+                  latitude: coordinates.random_lat,
+                  longitude: coordinates.random_long,
+                },
+              ]);
+              setRegion({
+                latitude,
+                longitude,
+                latitudeDelta:
+                  Math.abs(coordinates.random_lat - trackedLocation.latitude) +
+                  0.04,
+                longitudeDelta:
+                  Math.abs(
+                    coordinates.random_long - trackedLocation.longitude
+                  ) + 0.04,
+              });
+            }}
+            onError={(err) => {
+              console.log(err);
+            }}
+            resetOnChange={false}
+            apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
+            strokeWidth={4}
+            strokeColor={Colours.RED}
+          />
         ) : null}
+        <PursuitOverlay
+          coordinates={coordinates}
+          setCoordinates={setCoordinates}
+          setLoading={setLoading}
+          setPursuitImage={setPursuitImage}
+        />
       </MapView>
     </View>
   );
