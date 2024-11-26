@@ -2,9 +2,7 @@ import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import MapView, { Circle } from "react-native-maps";
 import { StyleSheet, View, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Colours from "../utils/Colours";
-import Loading from "./Loading";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
 import { useNavigation } from "@react-navigation/native";
 import { PursuitOverlay } from "./PursuitOverlay";
@@ -28,10 +26,6 @@ export const MapViewer = ({ setPursuitImage }) => {
 
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   getLocation(setLocation);
-  // }, []);
-
   useEffect(() => {
     let watchID = null;
     getTrackedLocation(setTrackedLocation).then((subscription) => {
@@ -48,15 +42,6 @@ export const MapViewer = ({ setPursuitImage }) => {
     getLocation(setLocation);
     setLoading(false);
   }, [coordinates]);
-
-  // if (loading) {
-  //   return (
-  //     <View>
-  //       <Loading />
-  //       <Text>Loading location...</Text>
-  //     </View>
-  //   );
-  // }
 
   return (
     <View style={styles.container}>
