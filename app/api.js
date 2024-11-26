@@ -69,8 +69,34 @@ export function getHostedPutsuitByHostId(user_id) {
   });
 }
 
+export function postPursuitsCompletedByUsers(user_id, pursuit_id) {
+  const body = { user_id: user_id, pursuit_id: pursuit_id };
+  return api.post("/pursuitsCompletedByUsers", body).then((res) => {
+    return res.data.points;
+  });
+}
+
+export function patchUsersPoints(user_id, inc_points) {
+  const body = { inc_points: inc_points };
+  return api.patch(`users/points/${user_id}`, body).then((res) => {
+    return res.data.user;
+  });
+}
+
 export function getPursuitImage(pursuit_id) {
   return api.get(`/pursuits/${pursuit_id}/image`).then((response) => {
     return response.data.image;
   });
+}
+
+export function getCompletedPursuits(user_id) {
+  return api
+    .get(`/pursuitsCompletedByUsers/users/${user_id}`)
+    .then((response) => {
+      console.log(response.data);
+      return response.data.pursuits;
+    })
+    .catch((err) => {
+      console.log(err, "<<<<<");
+    });
 }
