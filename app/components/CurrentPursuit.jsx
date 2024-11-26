@@ -22,7 +22,6 @@ const CurrentPursuit = () => {
         setImageData(res);
       })
       .catch((err) => {
-        console.log("error");
         console.log(err);
       });
   }, [user.pursuit_id]);

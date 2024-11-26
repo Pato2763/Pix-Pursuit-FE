@@ -3,16 +3,15 @@ import { Text, Pressable } from "react-native";
 import { blueButton } from "../../utils/styles/buttons";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Accept({ tarRedirect }) {
+export default function Accept() {
   const navigation = useNavigation();
 
-  const title = "Accept and Continue";
   const onPress = () => {
-    navigation.navigate(tarRedirect);
+    navigation.navigate("Login");
   };
   return (
     <Pressable style={blueButton.Accpet} onPress={onPress}>
-      <Text style={blueButton.text}>{title}</Text>
+      <Text style={blueButton.text}>Accept and continue</Text>
     </Pressable>
   );
 }
