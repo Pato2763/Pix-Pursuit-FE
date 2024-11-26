@@ -43,7 +43,7 @@ export function PursuitsList() {
       .then(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     pursuits.forEach((pursuit) => {
@@ -118,7 +118,11 @@ export function PursuitsList() {
                 </View>
               );
             }
-            if (pursuit && pursuit.active && pursuit.host_id !== user.user_id) {
+            if (
+              pursuit.active &&
+              pursuit.host_id !== user.user_id &&
+              !user.completedPursuits.includes(pursuit.pursuit_id)
+            ) {
               return (
                 <PursuitCard
                   key={pursuit.pursuit_id}
