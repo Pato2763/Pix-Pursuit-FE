@@ -9,6 +9,7 @@ import { blueButton } from "../utils/styles/buttons";
 import { UserContext } from "../context/UserContext";
 import {
   getPursuitImage,
+  getCompletedPursuits,
   patchUsersCurrentPursuit,
   patchUsersPoints,
   postPursuitsCompletedByUsers,
@@ -69,11 +70,22 @@ const PursuitCompletedScreen = ({ route }) => {
           <Pressable
             style={styles.button}
             onPress={() => {
+            getCompletedPursuits(user.user_id).then((completedPursuitsArr) => {
+              const completedPursuitsIdArr = completedPursuitsArr.map(
+                (pursuit) => {
+                  return pursuit.pursuit_id;
+                }
+              );
               setUser((currUser) => {
-                return { ...currUser, pursuit_id: null };
+                return {
+                  ...currUser,
+                  pursuit_id: null,
+                  completedPursuits: completedPursuitsIdArr,
+                };
               });
-              navigation.goBack();
-            }}
+            });
+            navigation.goBack();
+          }}
           >
             <Text style={blueButton.text}>Collect {pursuitPoints} Points</Text>
           </Pressable>
