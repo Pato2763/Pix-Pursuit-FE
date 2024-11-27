@@ -10,12 +10,13 @@ import { UserContext } from "../context/UserContext";
 import { NoActivePursuitHome } from "./NoActivePursuitHome";
 import Timer from "./Timer";
 import Colours from "../utils/Colours";
+import ActivePursuit from "./ActivePursuit";
+import InactivePursuit from "./InactivePursuit";
+
 
 const CurrentPursuit = () => {
-  const [showingMap, setShowingMap] = useState(true);
-  const [pursuitImage, setPursuitImage] = useState(null);
   const [imageData, setImageData] = useState(null);
-  const [createdAt, setCreatedAt] = useState(null);
+  const [isActivePursuit, setIsActivePursuit] = useState(true);
   const [imageLoading, setImageLoading] = useState(false);
 
   const { user } = useContext(UserContext);
@@ -35,33 +36,17 @@ const CurrentPursuit = () => {
 
   return (
     <View>
-      {user.pursuit_id ? (
-        <View style={Styles.CurrentPursuitContainer}>
-          <Text style={Styles.title}>Your chosen Pursuit</Text>
-          <ToggleImage setShowingMap={setShowingMap} showingMap={showingMap} />
-          {showingMap ? (
-            <MapViewer
-              setPursuitImage={setPursuitImage}
-              setCreatedAt={setCreatedAt}
-            />
-          ) : imageLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <Image
-              style={Styles.pursuitImage}
-              source={{
-                uri: imageData,
-              }}
-            />
-          )}
-          <Timer createdAt={createdAt} type={"selected"} />
-          <View style={Styles.ButtonContainer}>
-            <ChangePursuit />
-            <ConfirmLocation />
-          </View>
-        </View>
-      ) : (
+      {!user.pursuit_id ? (
         <NoActivePursuitHome />
+      ) : isActivePursuit ? (
+        <ActivePursuit
+          setIsActivePursuit={setIsActivePursuit}
+          setImageLoading={setImageLoading}
+          imageLoading={imageLoading}
+          imageData={imageData}
+        />
+      ) : (
+        <InactivePursuit />
       )}
     </View>
   );

@@ -17,7 +17,12 @@ import { getCenter } from "geolib";
 import { UserContext } from "../context/UserContext";
 import { getPursuitbyPursuitID } from "../api";
 
-export const MapViewer = ({ setPursuitImage, setCreatedAt }) => {
+export const MapViewer = ({
+  setPursuitImage,
+  setCreatedAt,
+  setPursuitTitle,
+  setIsActivePursuit,
+}) => {
   const [region, setRegion] = useState({
     latitude: 0,
     longitude: 0,
@@ -60,6 +65,8 @@ export const MapViewer = ({ setPursuitImage, setCreatedAt }) => {
         setCreatedAt(res.created_at);
         setPursuitImage(res.image);
         setCoordinates(fetchedCoordinates);
+        setPursuitTitle(res.title);
+        setIsActivePursuit(res.active);
       })
       .catch((err) => {});
     getLocation(setLocation);
