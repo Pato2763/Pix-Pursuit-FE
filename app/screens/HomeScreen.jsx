@@ -12,7 +12,7 @@ const HomeScreen = () => {
       style={Styles.image}
       imageStyle={{ opacity: 0.15, backgroundColor: "white" }}
     >
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <CurrentPursuit />
           <HostedPursuitInfo />
