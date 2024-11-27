@@ -6,6 +6,7 @@ import ToggleImage from "./ToggleImage";
 import ConfirmLocation from "./buttons/Confirmlocation";
 import ChangePursuit from "./buttons/ChangePursuit";
 import Timer from "./Timer";
+import Colours from "../utils/Colours";
 
 const ActivePursuit = ({
   setIsActivePursuit,
@@ -70,11 +71,17 @@ const Styles = StyleSheet.create({
     gap: 10,
   },
   pursuitImage: {
-    height: 350,
-    width: 300,
-    margin: "auto",
-    borderRadius: 8,
-    marginBottom: 10,
+    flex: 1,
+    gap: 20,
+    width: "80%",
+    borderRadius: 10,
+    padding: 5,
+    borderColor: "#D9D9D9",
+    borderWidth: 2,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    backgroundColor: Colours.AQUA_BLUE,
+    marginHorizontal: "auto",
   },
   title: {
     marginBottom: 10,
