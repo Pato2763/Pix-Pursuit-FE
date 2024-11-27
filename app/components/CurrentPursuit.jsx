@@ -19,7 +19,6 @@ const CurrentPursuit = () => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    console.log(user.pursuit_id);
     setImageLoading(true);
     getPursuitImage(user.pursuit_id)
       .then((res) => {

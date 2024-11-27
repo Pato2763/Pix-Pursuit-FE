@@ -38,7 +38,6 @@ const LoginScreen = () => {
     setLoading(true);
     loginUser(loginInfo)
       .then((newUser) => {
-        console.log("here");
         setError(false);
         setLoading(false);
 

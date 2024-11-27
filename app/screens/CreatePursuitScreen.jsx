@@ -100,7 +100,6 @@ const CreatePursuit = () => {
       );
       await uploadFileToS3(bucketName, fileName, fileData);
 
-      console.log("file uploaded:", fileName);
       setLoading(false);
     } catch (error) {
       setLoading(false);

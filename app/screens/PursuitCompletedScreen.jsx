@@ -70,22 +70,24 @@ const PursuitCompletedScreen = ({ route }) => {
           <Pressable
             style={styles.button}
             onPress={() => {
-            getCompletedPursuits(user.user_id).then((completedPursuitsArr) => {
-              const completedPursuitsIdArr = completedPursuitsArr.map(
-                (pursuit) => {
-                  return pursuit.pursuit_id;
+              getCompletedPursuits(user.user_id).then(
+                (completedPursuitsArr) => {
+                  const completedPursuitsIdArr = completedPursuitsArr.map(
+                    (pursuit) => {
+                      return pursuit.pursuit_id;
+                    }
+                  );
+                  setUser((currUser) => {
+                    return {
+                      ...currUser,
+                      pursuit_id: null,
+                      completedPursuits: completedPursuitsIdArr,
+                    };
+                  });
                 }
               );
-              setUser((currUser) => {
-                return {
-                  ...currUser,
-                  pursuit_id: null,
-                  completedPursuits: completedPursuitsIdArr,
-                };
-              });
-            });
-            navigation.goBack();
-          }}
+              navigation.goBack();
+            }}
           >
             <Text style={blueButton.text}>Collect {pursuitPoints} Points</Text>
           </Pressable>
@@ -96,7 +98,6 @@ const PursuitCompletedScreen = ({ route }) => {
 
   const Lost = () => {
     useEffect(() => {
-      console.log("here");
       getPursuitImage(user.pursuit_id)
         .then((res) => {
           setImageData(res);

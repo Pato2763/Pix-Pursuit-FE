@@ -10,13 +10,11 @@ const HostedPursuitInfo = () => {
   const [isHosting, setIsHosting] = useState();
 
   useEffect(() => {
-    console.log("running in useEffect");
     if (user.hosted_pursuit_id) {
       setIsHosting(true);
     } else {
       setIsHosting(false);
     }
-    console.log(isHosting);
   }, [user.hosted_pursuit_id]);
 
   return (
