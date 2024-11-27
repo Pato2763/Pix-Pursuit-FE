@@ -3,20 +3,25 @@ import { UserContext } from "../context/UserContext";
 import { View, Text, StyleSheet } from "react-native";
 import LeaderboardCard from "./LeaderboardCard";
 import { leaderboard } from "../utils/styles/leaderboard";
-import { getPursuitCompletedByUsers } from "../api";
+import { getPursuitbyPursuitID, getPursuitCompletedByUsers } from "../api";
 import Colours from "../utils/Colours";
+import Timer from "./Timer";
+import CreatePursuit from "./buttons/CreatePursuit";
 
 const MiniLeaderBoardList = () => {
   const { user } = useContext(UserContext);
   const [miniLeaderBoardUsers, setMiniLeaderboardUsers] = useState([]);
+  const [hostedTimeRemaining, setHostedTimeRemaining] = useState(null);
   useEffect(() => {
     getPursuitCompletedByUsers(user.hosted_pursuit_id).then(
       (fetchedMiniLeaderBoardUsers) => {
         setMiniLeaderboardUsers(fetchedMiniLeaderBoardUsers);
       }
     );
+    getPursuitbyPursuitID(user.hosted_pursuit_id).then((res) => {
+      setHostedTimeRemaining(res.created_at);
+    });
   }, [user.hosted_pursuit_id]);
-
   return (
     <View style={leaderboard.container}>
       <Text style={leaderboard.textTitle}>Your hosted Pursuit</Text>
@@ -38,6 +43,7 @@ const MiniLeaderBoardList = () => {
           })}
         </View>
       )}
+      <Timer createdAt={hostedTimeRemaining} />
     </View>
   );
 };

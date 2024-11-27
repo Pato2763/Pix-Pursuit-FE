@@ -1,7 +1,6 @@
 import { View, Text, Image, ActivityIndicator } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-
 import { MapViewer } from "./MapViewer";
 import ToggleImage from "./ToggleImage";
 import ConfirmLocation from "./buttons/Confirmlocation";
@@ -9,11 +8,13 @@ import ChangePursuit from "./buttons/ChangePursuit";
 import { getPursuitImage } from "../api";
 import { UserContext } from "../context/UserContext";
 import { NoActivePursuitHome } from "./NoActivePursuitHome";
+import Timer from "./Timer";
 
 const CurrentPursuit = () => {
   const [showingMap, setShowingMap] = useState(true);
   const [pursuitImage, setPursuitImage] = useState(null);
   const [imageData, setImageData] = useState(null);
+  const [createdAt, setCreatedAt] = useState(null);
   const [imageLoading, setImageLoading] = useState(false);
 
   const { user } = useContext(UserContext);
@@ -39,7 +40,10 @@ const CurrentPursuit = () => {
           <Text style={Styles.title}>Your chosen Pursuit</Text>
           <ToggleImage setShowingMap={setShowingMap} showingMap={showingMap} />
           {showingMap ? (
-            <MapViewer setPursuitImage={setPursuitImage} />
+            <MapViewer
+              setPursuitImage={setPursuitImage}
+              setCreatedAt={setCreatedAt}
+            />
           ) : imageLoading ? (
             <ActivityIndicator />
           ) : (
@@ -50,7 +54,7 @@ const CurrentPursuit = () => {
               }}
             />
           )}
-
+          <Timer createdAt={createdAt} type={"selected"} />
           <View style={Styles.ButtonContainer}>
             <ChangePursuit />
             <ConfirmLocation />
