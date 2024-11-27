@@ -16,12 +16,15 @@ export const BigLeaderboardCard = ({ user }) => {
 
   return (
     <View style={BigLeaderboard.cardStyle}>
-      <Text style={BigLeaderboard.cardTextUser}>
-        User Name: {user.username}
-      </Text>
-      <Text style={BigLeaderboard.cardTextPoints}>
-        Total Amount of Points: {user.points}
-      </Text>
+      <View style={BigLeaderboard.rowContainer}>
+        <Text style={BigLeaderboard.cardTextUser}>User Name:</Text>
+        <Text style={BigLeaderboard.cardTextUser}>{user.username}</Text>
+      </View>
+
+      <View style={BigLeaderboard.rowContainer}>
+        <Text style={BigLeaderboard.cardTextPoints}>Points:</Text>
+        <Text style={BigLeaderboard.cardTextPoints}>{user.points}</Text>
+      </View>
     </View>
   );
 };
@@ -36,9 +39,9 @@ export const BigLeaderboard = StyleSheet.create({
     resizeMode: "contain",
   },
   cardStyle: {
-    margin: 10,
-    width: 325,
-    backgroundColor: Colours.PURPLEBLUE,
+    margin: 6,
+    width: 326,
+    backgroundColor: Colours.GREY,
     borderRadius: 150,
     shadowColor: Colours.AQUA_BLUE,
     shadowOffset: {
@@ -50,7 +53,7 @@ export const BigLeaderboard = StyleSheet.create({
     elevation: 5,
     height: 70,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "start",
   },
   //actual background
   leaderboardListContainer: {
@@ -59,6 +62,7 @@ export const BigLeaderboard = StyleSheet.create({
     width: 350,
     gap: 100,
     position: "centre",
+    backgroundColor: Colours.PURPLEBLUE,
   },
   leaderboardCard: {
     flexDirection: "row",
@@ -76,15 +80,17 @@ export const BigLeaderboard = StyleSheet.create({
     color: Colours.AQUA_BLUE,
     fontSize: 18,
     justifyContent: "space-between",
-    margin: 5,
+    margin: 2,
     fontWeight: "bold",
+    padding: 5,
   },
   cardTextUser: {
     color: Colours.AQUA_BLUE,
     fontSize: 20,
     justifyContent: "space-between",
-    margin: 5,
+    margin: 2,
     fontWeight: "bold",
+    padding: 5,
   },
   miniLeaderboardCard: {
     flexDirection: "row",
@@ -93,5 +99,11 @@ export const BigLeaderboard = StyleSheet.create({
     borderWidth: 1,
     borderBottomColor: "#c0e3e0",
     borderColor: Colours.PURPLEBLUE,
+  },
+  rowContainer: {
+    flexDirection: "row",
+    marginBottom: 0.6,
+    padding: 0.2,
+    paddingLeft: 15,
   },
 });
