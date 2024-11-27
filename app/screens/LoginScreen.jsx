@@ -9,9 +9,11 @@ import {
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Styles } from "../utils/styles/login";
 import { useNavigation } from "@react-navigation/native";
-import { getCompletedPursuits, loginUser } from "../api";
+import { getCompletedPursuits, getPursuitbyPursuitID, loginUser } from "../api";
 import { TouchableWithoutFeedback, ActivityIndicator } from "react-native";
 import { UserContext } from "../context/UserContext";
+import calcRadius from "../utils/calcRadius";
+import calcTimer from "../utils/calcTimer";
 
 const LoginScreen = () => {
   const [loginInfo, setLoginInfo] = useState({
@@ -43,14 +45,24 @@ const LoginScreen = () => {
 
         setUser(newUser);
 
-        return getCompletedPursuits(newUser.user_id);
+        return Promise.all([
+          getCompletedPursuits(newUser.user_id),
+          getPursuitbyPursuitID(newUser.pursuit_id),
+        ]);
       })
-      .then((completedPursuitsArr) => {
+      .then(([completedPursuitsArr, currentPursuit]) => {
         const completedPursuitsIdArr = completedPursuitsArr.map((pursuit) => {
           return pursuit.pursuit_id;
         });
+        currentPursuit.active =
+          calcTimer(currentPursuit.created_at, currentPursuit.pursuit_id) !==
+          "Pursuit timer expired!";
         setUser((currUser) => {
-          return { ...currUser, completedPursuits: completedPursuitsIdArr };
+          return {
+            ...currUser,
+            completedPursuits: completedPursuitsIdArr,
+            currentPursuit,
+          };
         });
         navigation.navigate("Home");
       })

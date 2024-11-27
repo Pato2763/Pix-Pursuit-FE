@@ -1,17 +1,24 @@
 import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import calcTimer from "../utils/calcTimer";
 import { StyleSheet } from "react-native";
 import CreatePursuit from "./buttons/CreatePursuit";
+import { UserContext } from "../context/UserContext";
 
-const Timer = ({ createdAt, type, setIsActivePursuit }) => {
+const Timer = ({ createdAt, type, pursuit_id }) => {
   const [timeRemaining, setTimeRemaining] = useState(null);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    if (timeRemaining <= 0) {
+    if (calcTimer(createdAt, pursuit_id) <= 0) {
+      setUser((currUser) => {
+        const { currentPursuit } = currUser;
+        currentPursuit.active = false;
+        return { ...currUser, currentPursuit };
+      });
     }
     const interval = setInterval(() => {
-      setTimeRemaining(calcTimer(createdAt));
+      setTimeRemaining(calcTimer(createdAt, pursuit_id));
     }, 1000);
     return () => clearInterval(interval);
   }, [createdAt]);

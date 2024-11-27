@@ -8,7 +8,6 @@ import InactivePursuit from "./InactivePursuit";
 
 const CurrentPursuit = () => {
   const [imageData, setImageData] = useState(null);
-  const [isActivePursuit, setIsActivePursuit] = useState(true);
   const [imageLoading, setImageLoading] = useState(false);
 
   const { user } = useContext(UserContext);
@@ -23,22 +22,24 @@ const CurrentPursuit = () => {
         setImageData(null);
         setImageLoading(false);
       });
-    console.log(isActivePursuit, "here");
-  }, [user.pursuit_id, isActivePursuit]);
+  }, []);
+
+  if (!user.currentPursuit) {
+    return <View></View>;
+  }
 
   return (
     <View>
-      {!user.pursuit_id ? (
+      {!user.currentPursuit.pursuit_id ? (
         <NoActivePursuitHome />
-      ) : isActivePursuit ? (
+      ) : user.currentPursuit.active ? (
         <ActivePursuit
-          setIsActivePursuit={setIsActivePursuit}
           setImageLoading={setImageLoading}
           imageLoading={imageLoading}
           imageData={imageData}
         />
       ) : (
-        <InactivePursuit setIsActivePursuit={setIsActivePursuit} />
+        <InactivePursuit />
       )}
     </View>
   );
