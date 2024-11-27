@@ -99,3 +99,9 @@ export function getCompletedPursuits(user_id) {
       console.log(err);
     });
 }
+
+export function patchPursuit(pursuit_id) {
+  return api.patch(`/pursuits/${pursuit_id}`, { active: false }).then((res) => {
+    return res.data.pursuit;
+  });
+}

@@ -9,13 +9,14 @@ import {
   View,
 } from "react-native";
 import { useContext, useEffect, useState } from "react";
-import { getPursuits, patchUsersCurrentPursuit } from "../api";
+import { getPursuits, patchPursuit, patchUsersCurrentPursuit } from "../api";
 import { PursuitCard } from "./PursuitCard";
 import { choosePursuits } from "../utils/styles/choosePursuits";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../context/UserContext";
 import { getDistance } from "geolib";
 import Loading from "./Loading";
+import calcTimer from "../utils/calcTimer";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
@@ -47,12 +48,17 @@ export function PursuitsList() {
 
   useEffect(() => {
     pursuits.forEach((pursuit) => {
-      pursuit.distance =
-        getDistance(
-          { latitude: location.latitude, longitude: location.longitude },
-          { latitude: pursuit.target_lat, longitude: pursuit.target_long }
-        ) / 1000;
+      if (calcTimer(pursuit.created_at) === "Pursuit timer expired!") {
+        patchPursuit(pursuit.pursuit_id);
+      } else {
+        pursuit.distance =
+          getDistance(
+            { latitude: location.latitude, longitude: location.longitude },
+            { latitude: pursuit.target_lat, longitude: pursuit.target_long }
+          ) / 1000;
+      }
     });
+
     pursuits.sort((a, b) => {
       return a.distance - b.distance;
     });
