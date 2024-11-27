@@ -6,14 +6,28 @@ export function PursuitCard({ pursuit, setModalVisible, setConfirmPursuit }) {
     setModalVisible(true);
     setConfirmPursuit({ id: pursuit.pursuit_id, title: pursuit.title });
   }
-
+  const pursuitDistance = pursuit.distance.toFixed(1);
   return (
     <Pressable onPress={handlePress} style={choosePursuits.pursuitdCard}>
-      <Text style={choosePursuits.cardText}>{pursuit.title}</Text>
-      <Text style={choosePursuits.cardText}>{pursuit.difficulty}</Text>
-      <Text
-        style={choosePursuits.cardText}
-      >{`${pursuit.distance}km away`}</Text>
+      <Text style={choosePursuits.title}>{pursuit.title}</Text>
+      <View style={choosePursuits.topDiv}>
+        <Text
+          style={[
+            choosePursuits.difficulty,
+            pursuit.difficulty === "Easy"
+              ? choosePursuits.easy
+              : pursuit.difficulty === "Medium"
+              ? choosePursuits.medium
+              : choosePursuits.hard,
+          ]}
+        >
+          {pursuit.difficulty}
+        </Text>
+        <Text style={choosePursuits.cardText}>{`
+        ${
+          pursuitDistance > 1 ? pursuitDistance : "Less than 1"
+        } km away`}</Text>
+      </View>
     </Pressable>
   );
 }

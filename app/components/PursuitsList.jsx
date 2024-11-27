@@ -1,5 +1,6 @@
 import { getLocation } from "../utils/loaction";
 import {
+  ActivityIndicator,
   Button,
   Image,
   Modal,
@@ -16,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../context/UserContext";
 import { getDistance } from "geolib";
 import Loading from "./Loading";
+import { getPursuitImage } from "../api";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
@@ -25,6 +27,8 @@ export function PursuitsList() {
   const [isLoading, setIsLoading] = useState(true);
   const [orderedPursuits, setOrderedPursuits] = useState([]);
   const { user, setUser } = useContext(UserContext);
+  const [imageData, setImageData] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const navigation = useNavigation();
 
@@ -60,6 +64,20 @@ export function PursuitsList() {
     setOrderedPursuits(pursuits);
   }, [pursuits]);
 
+  useEffect(() => {
+    setImageLoading(true);
+    getPursuitImage(confirmPursuit.id)
+      .then((res) => {
+        setImageData(res);
+        setImageLoading(false);
+      })
+      .catch((err) => {
+        setImageData(null);
+        setImageLoading(false);
+        console.log(err);
+      });
+  }, [confirmPursuit.id]);
+
   function handleConfirm() {
     patchUsersCurrentPursuit(user.user_id, confirmPursuit.id).then(
       (currentPursuit) => {
@@ -80,32 +98,53 @@ export function PursuitsList() {
 
   return (
     <SafeAreaView>
-      <Image
-        source={require("../../assets/Pursuit-Leader-boards.png")}
-        style={choosePursuits.header}
-      />
-      <Modal animationType="none" transparent={true} visible={modalVisible}>
-        <View style={choosePursuits.centeredView}>
-          <View style={choosePursuits.modalView}>
-            <Text>{`Are you sure you want to confirm ${confirmPursuit.title} as your active pursuit?`}</Text>
-            <View style={choosePursuits.buttons}>
-              <Button
-                title={"confirm"}
-                onPress={() => {
-                  handleConfirm();
-                }}
-              ></Button>
-              <Button
-                title={"cancel"}
-                onPress={() => {
-                  handleCancel();
-                }}
-              ></Button>
+      <ScrollView>
+        <Modal animationType="none" transparent={true} visible={modalVisible}>
+          <View style={choosePursuits.centeredView}>
+            <View style={choosePursuits.modalView}>
+              <Text style={choosePursuits.imagePreviewText}>
+                Here is your Pursuit image that you will be chasing:
+              </Text>
+              {imageLoading ? (
+                <View style={choosePursuits.imageLoadingContainer}>
+                  <Text>Your image is loading</Text>
+                  <ActivityIndicator />
+                </View>
+              ) : (
+                <Image
+                  style={choosePursuits.previewImage}
+                  source={{
+                    uri: imageData,
+                  }}
+                />
+              )}
+
+              <Text>{`Are you sure you want to confirm ${confirmPursuit.title} as your active pursuit?`}</Text>
+              <View style={choosePursuits.buttons}>
+                <Button
+                  title={"confirm"}
+                  onPress={() => {
+                    handleConfirm();
+                  }}
+                ></Button>
+                <Button
+                  title={"cancel"}
+                  onPress={() => {
+                    handleCancel();
+                  }}
+                ></Button>
+              </View>
             </View>
           </View>
+        </Modal>
+
+        <View>
+          <Text style={choosePursuits.titleText}>
+            Choose from your local pursuits below. The faster you complete it
+            the more points you will earn and climb up the leaderboards. Each
+            pursuit will last 24 hours before it deactivates.
+          </Text>
         </View>
-      </Modal>
-      <ScrollView>
         <View style={choosePursuits.pursuitsListContainer}>
           {orderedPursuits.map((pursuit) => {
             if (isLoading) {
