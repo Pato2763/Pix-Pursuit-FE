@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect, useContext } from "react";
-import { View, Text, Pressable, Image } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import { View, Text, Pressable, Image, ImageBackground } from "react-native";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import { StyleSheet } from "react-native";
 import Colours from "../utils/Colours";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,7 +15,7 @@ import {
   postPursuitsCompletedByUsers,
 } from "../api";
 import Loading from "../components/Loading";
-import { getCenter } from "geolib";
+import { StyleForTerm } from "../utils/styles/Terms";
 
 const PursuitCompletedScreen = ({ route }) => {
   const { user, setUser } = useContext(UserContext);
@@ -62,6 +62,20 @@ const PursuitCompletedScreen = ({ route }) => {
           >
             <Marker coordinate={userLocation} pinColor="blue"></Marker>
             <Marker coordinate={pursuitLocation} pinColor="green"></Marker>
+            <Polyline
+              coordinates={[
+                {
+                  latitude: userLocation.latitude,
+                  longitude: userLocation.longitude,
+                },
+                {
+                  latitude: pursuitLocation.latitude,
+                  longitude: pursuitLocation.longitude,
+                },
+              ]}
+              strokeColor={Colours.AQUA_BLUE}
+              strokeWidth={3}
+            />
           </MapView>
         </View>
         {pointsLoading ? (
@@ -116,24 +130,31 @@ const PursuitCompletedScreen = ({ route }) => {
     }
 
     return (
-      <SafeAreaView style={styles.safeAreaContainer}>
-        <Text style={styles.infoContainer}>{text}</Text>
-        <View>
-          {imageLoading ? (
-            <Loading />
-          ) : (
-            <Image style={styles.pursuitImage} source={{ uri: imageData }} />
-          )}
-        </View>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <Text style={blueButton.text}>Done</Text>
-        </Pressable>
-      </SafeAreaView>
+      <ImageBackground
+        source={require("../../assets/triangleBG.png")}
+        resizeMode="cover"
+        style={StyleForTerm.image}
+        imageStyle={{ opacity: 0.15, backgroundColor: "white" }}
+      >
+        <SafeAreaView style={styles.safeAreaContainer}>
+          <Text style={styles.infoContainer}>{text}</Text>
+          <View>
+            {imageLoading ? (
+              <Loading />
+            ) : (
+              <Image style={styles.pursuitImage} source={{ uri: imageData }} />
+            )}
+          </View>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Text style={blueButton.text}>Done</Text>
+          </Pressable>
+        </SafeAreaView>
+      </ImageBackground>
     );
   };
 
@@ -142,21 +163,17 @@ const PursuitCompletedScreen = ({ route }) => {
       flex: 1,
       justifyContent: "center",
       alignContent: "center",
-      backgroundColor: "white",
       borderColor: "white",
       gap: 30,
     },
     infoContainer: {
       padding: 10,
       margin: "auto",
-      backgroundColor: "white",
-      borderColor: "white",
       fontWeight: "bold",
       alignContent: "center",
     },
     container: {
       flex: 1,
-      backgroundColor: "white",
       alignContent: "center",
     },
     button: {
@@ -188,10 +205,10 @@ const PursuitCompletedScreen = ({ route }) => {
       marginHorizontal: "auto",
     },
     pursuitImage: {
-      height: 500,
+      height: 550,
       width: 300,
       margin: "auto",
-      borderRadius: 10,
+      borderRadius: 30,
       borderColor: "#D9D9D9",
       borderWidth: 2,
       backgroundColor: Colours.AQUA_BLUE,
