@@ -150,8 +150,6 @@ const styles = StyleSheet.create({
   },
 
   map: {
-    width: "90%",
-    height: "90%",
     flex: 1,
     gap: 20,
     width: "80%",

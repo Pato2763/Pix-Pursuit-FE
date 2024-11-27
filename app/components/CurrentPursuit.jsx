@@ -9,6 +9,7 @@ import { getPursuitImage } from "../api";
 import { UserContext } from "../context/UserContext";
 import { NoActivePursuitHome } from "./NoActivePursuitHome";
 import Timer from "./Timer";
+import Colours from "../utils/Colours";
 
 const CurrentPursuit = () => {
   const [showingMap, setShowingMap] = useState(true);
@@ -89,9 +90,17 @@ const Styles = StyleSheet.create({
     gap: 10,
   },
   pursuitImage: {
-    height: 350,
-    width: 300,
-    margin: "auto",
+    flex: 1,
+    gap: 20,
+    width: "80%",
+    borderRadius: 10,
+    padding: 5,
+    borderColor: "#D9D9D9",
+    borderWidth: 2,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    backgroundColor: Colours.AQUA_BLUE,
+    marginHorizontal: "auto",
   },
   title: {
     marginBottom: 10,
