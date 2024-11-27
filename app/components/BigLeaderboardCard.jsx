@@ -16,12 +16,15 @@ export const BigLeaderboardCard = ({ user }) => {
 
   return (
     <View style={BigLeaderboard.cardStyle}>
-      <Text style={BigLeaderboard.cardTextUser}>
-        User Name: {user.username}
-      </Text>
-      <Text style={BigLeaderboard.cardTextPoints}>
-        Total Amount of Points: {user.points}
-      </Text>
+      <View style={BigLeaderboard.rowContainer}>
+        <Text style={BigLeaderboard.cardTextUser}>User Name:</Text>
+        <Text style={BigLeaderboard.cardTextUser}>{user.username}</Text>
+      </View>
+
+      <View style={BigLeaderboard.rowContainer}>
+        <Text style={BigLeaderboard.cardTextPoints}>Points:</Text>
+        <Text style={BigLeaderboard.cardTextPoints}>{user.points}</Text>
+      </View>
     </View>
   );
 };
@@ -93,5 +96,10 @@ export const BigLeaderboard = StyleSheet.create({
     borderWidth: 1,
     borderBottomColor: "#c0e3e0",
     borderColor: Colours.PURPLEBLUE,
+  },
+  rowContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginBottom: 0.5,
   },
 });
