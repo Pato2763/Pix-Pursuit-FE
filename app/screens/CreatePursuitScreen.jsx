@@ -121,6 +121,21 @@ const CreatePursuit = () => {
                 compete to finish your pursuit as fast as possible!
               </Text>
               <View style={Styles.container}>
+                <Text style={Styles.labelText}>Title:</Text>
+                <TextInput
+                  ref={titleInputRef}
+                  style={Styles.formInputText}
+                  placeholder="Enter a pursuit title"
+                  value={pursuitData.title}
+                  onChangeText={(text) =>
+                    setPursuitData((prev) => {
+                      return {
+                        ...prev,
+                        title: text,
+                      };
+                    })
+                  }
+                ></TextInput>
                 <View style={Styles.picContainer}>
                   <Text style={Styles.picInputText}>
                     Upload a Pursuit picture
@@ -159,22 +174,6 @@ const CreatePursuit = () => {
                 ) : null}
                 <View>
                   <View style={Styles.formContainer}>
-                    <Text style={Styles.labelText}>Title:</Text>
-                    <TextInput
-                      ref={titleInputRef}
-                      style={Styles.formInputText}
-                      placeholder="Enter a pursuit title"
-                      value={pursuitData.title}
-                      onChangeText={(text) =>
-                        setPursuitData((prev) => {
-                          return {
-                            ...prev,
-                            title: text,
-                          };
-                        })
-                      }
-                    ></TextInput>
-
                     <View style={Styles.difficultyContainer}>
                       <Text style={[Styles.labelText, { paddingTop: 15 }]}>
                         Select a difficulty:
