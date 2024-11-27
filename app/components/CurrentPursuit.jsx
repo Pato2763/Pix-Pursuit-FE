@@ -89,8 +89,8 @@ const Styles = StyleSheet.create({
     gap: 10,
   },
   pursuitImage: {
-    height: 400,
-    width: 300,
+    height: 350,
+    width: 250,
     margin: "auto",
   },
   title: {
