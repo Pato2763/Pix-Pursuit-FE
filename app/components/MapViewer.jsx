@@ -1,7 +1,14 @@
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
-import MapView, { Circle } from "react-native-maps";
-import { StyleSheet, View, Text } from "react-native";
+import MapView, { Animated, AnimatedRegion, Circle } from "react-native-maps";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import Colours from "../utils/Colours";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
 import { useNavigation } from "@react-navigation/native";
@@ -10,6 +17,8 @@ import MapViewDirections from "react-native-maps-directions";
 import { getCenter } from "geolib";
 import { UserContext } from "../context/UserContext";
 import { getPursuitbyPursuitID } from "../api";
+import { blueButton } from "../utils/styles/buttons";
+import { Ionicons } from "@expo/vector-icons";
 
 export const MapViewer = ({ setPursuitImage }) => {
   const [region, setRegion] = useState({
@@ -26,6 +35,7 @@ export const MapViewer = ({ setPursuitImage }) => {
     latitude: 0,
     longitude: 0,
   });
+  const [key, setKey] = useState(0);
   const { user } = useContext(UserContext);
 
   const navigation = useNavigation();
@@ -66,8 +76,13 @@ export const MapViewer = ({ setPursuitImage }) => {
         style={styles.map}
         showsUserLocation={true} // Show blue dot for user's location
         trackedLocation={trackedLocation}
+        initialRegion={region}
         region={region}
+        key={key}
       >
+        <Pressable onPress={() => setKey((currKey) => currKey + 1)}>
+          <Ionicons name="sync" size={24} color="black" />
+        </Pressable>
         {!loading ? (
           <MapViewDirections
             origin={trackedLocation}
@@ -141,10 +156,13 @@ const styles = StyleSheet.create({
     padding: 5,
     borderColor: "#D9D9D9",
     borderWidth: 2,
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     backgroundColor: Colours.AQUA_BLUE,
     marginHorizontal: "auto",
+  },
+  button: {
+    flex: 1,
+    justifyContent: "flex-end",
   },
 });
