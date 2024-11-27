@@ -90,7 +90,7 @@ const Styles = StyleSheet.create({
   },
   pursuitImage: {
     height: 350,
-    width: 250,
+    width: 300,
     margin: "auto",
   },
   title: {
