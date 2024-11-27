@@ -1,10 +1,10 @@
 import { View, Image, ScrollView } from "react-native";
 import LeaderbaordList from "../components/LeaderboardList";
-import { leaderboard } from "../utils/styles/leaderboard";
+import { BigLeaderboard } from "../components/BigLeaderboardCard";
 
 const Leaderboard = () => {
   return (
-    <View style={leaderboard.leaderboardPageContainer}>
+    <View style={BigLeaderboard.leaderboardPageContainer}>
       <LeaderbaordList />
     </View>
   );
