@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
-import MapView, { Animated, AnimatedRegion, Circle } from "react-native-maps";
+import MapView from "react-native-maps";
 import {
   StyleSheet,
   View,
-  Text,
-  Button,
-  Pressable,
   TouchableOpacity,
+  Image,
+  Dimensions,
 } from "react-native";
 import Colours from "../utils/Colours";
 import { getLocation, getTrackedLocation } from "../utils/loaction";
@@ -17,8 +16,6 @@ import MapViewDirections from "react-native-maps-directions";
 import { getCenter } from "geolib";
 import { UserContext } from "../context/UserContext";
 import { getPursuitbyPursuitID } from "../api";
-import { blueButton } from "../utils/styles/buttons";
-import { Ionicons } from "@expo/vector-icons";
 
 export const MapViewer = ({ setPursuitImage, setCreatedAt }) => {
   const [region, setRegion] = useState({
@@ -81,9 +78,12 @@ export const MapViewer = ({ setPursuitImage, setCreatedAt }) => {
         region={region}
         key={key}
       >
-        <Pressable onPress={() => setKey((currKey) => currKey + 1)}>
-          <Ionicons name="sync" size={24} color="black" />
-        </Pressable>
+        <TouchableOpacity onPress={() => setKey((currKey) => currKey * -1)}>
+          <Image
+            source={require("../../assets/center-map.png")}
+            style={styles.image}
+          />
+        </TouchableOpacity>
         {!loading ? (
           <MapViewDirections
             origin={trackedLocation}
@@ -134,6 +134,8 @@ export const MapViewer = ({ setPursuitImage, setCreatedAt }) => {
   );
 };
 
+const { width, height } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
@@ -162,8 +164,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colours.AQUA_BLUE,
     marginHorizontal: "auto",
   },
-  button: {
-    flex: 1,
-    justifyContent: "flex-end",
+  image: {
+    width: width * 0.08,
+    height: width * 0.08,
   },
 });
