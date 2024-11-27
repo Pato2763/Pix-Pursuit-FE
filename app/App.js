@@ -16,6 +16,9 @@ import CameraScreen from "./screens/CameraScreen";
 import { PhotoProvider } from "./context/Photo";
 import { UserProvider } from "./context/UserContext";
 import PursuitCompletedScreen from "./screens/PursuitCompletedScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import ConfirmLogout from "./components/ConfirmLogout";
+import { LogoutOutlined } from "@ant-design/icons";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -33,8 +36,8 @@ const screenOptions = (route, color) => {
     case "Leaderboard":
       iconName = "Trophy";
       break;
-    case "Profile":
-      iconName = "user";
+    case "Log Out":
+      iconName = "logout";
       break;
     default:
       iconName = "home";
@@ -72,8 +75,8 @@ const NavTab = () => {
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="ChoosePursuits"
-        component={ChoosePursuitScreen}
+        name="Log Out"
+        component={ConfirmLogout}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
@@ -146,7 +149,13 @@ function App() {
                 header: () => <Header />,
               }}
             />
-            <Stack.Screen name="Profile" component={EmptyScreen} />
+            <Stack.Screen
+              name="LogOut"
+              component={ConfirmLogout}
+              options={{
+                header: () => <Header />,
+              }}
+            />
             <Stack.Screen name="Settings" component={EmptyScreen} />
           </Stack.Navigator>
         </UserProvider>
