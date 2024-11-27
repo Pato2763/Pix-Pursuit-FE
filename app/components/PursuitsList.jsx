@@ -20,7 +20,6 @@ import Loading from "./Loading";
 import { getPursuitImage } from "../api";
 import calcTimer from "../utils/calcTimer";
 
-
 export function PursuitsList() {
   const [location, setLocation] = useState({});
   const [pursuits, setPursuits] = useState([]);
@@ -82,7 +81,6 @@ export function PursuitsList() {
       .catch((err) => {
         setImageData(null);
         setImageLoading(false);
-        console.log(err);
       });
   }, [confirmPursuit.id]);
 
@@ -106,7 +104,7 @@ export function PursuitsList() {
 
   return (
     <SafeAreaView>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Modal animationType="none" transparent={true} visible={modalVisible}>
           <View style={choosePursuits.centeredView}>
             <View style={choosePursuits.modalView}>

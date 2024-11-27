@@ -94,9 +94,6 @@ export function getCompletedPursuits(user_id) {
     .get(`/pursuitsCompletedByUsers/users/${user_id}`)
     .then((response) => {
       return response.data.pursuits;
-    })
-    .catch((err) => {
-      console.log(err);
     });
 }
 

@@ -105,7 +105,6 @@ const CreatePursuit = () => {
     } catch (error) {
       setLoading(false);
       setError("Error uploading your pursuit");
-      console.log(error);
     }
   };
 
@@ -113,7 +112,7 @@ const CreatePursuit = () => {
     <SafeAreaProvider>
       <SafeAreaView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View>
               <Text style={Styles.introText}>
                 Here you can create a new pursuit for others to take part in!

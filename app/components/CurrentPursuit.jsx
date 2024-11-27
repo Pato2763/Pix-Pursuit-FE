@@ -9,8 +9,10 @@ import { getPursuitImage } from "../api";
 import { UserContext } from "../context/UserContext";
 import { NoActivePursuitHome } from "./NoActivePursuitHome";
 import Timer from "./Timer";
+import Colours from "../utils/Colours";
 import ActivePursuit from "./ActivePursuit";
 import InactivePursuit from "./InactivePursuit";
+
 
 const CurrentPursuit = () => {
   const [imageData, setImageData] = useState(null);
@@ -29,7 +31,6 @@ const CurrentPursuit = () => {
       .catch((err) => {
         setImageData(null);
         setImageLoading(false);
-        console.log(err);
       });
   }, [user.pursuit_id]);
 
@@ -73,9 +74,17 @@ const Styles = StyleSheet.create({
     gap: 10,
   },
   pursuitImage: {
-    height: 350,
-    width: 300,
-    margin: "auto",
+    flex: 1,
+    gap: 20,
+    width: "80%",
+    borderRadius: 10,
+    padding: 5,
+    borderColor: "#D9D9D9",
+    borderWidth: 2,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    backgroundColor: Colours.AQUA_BLUE,
+    marginHorizontal: "auto",
   },
   title: {
     marginBottom: 10,

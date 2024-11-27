@@ -43,6 +43,7 @@ const SignupScreen = () => {
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView
+            showsVerticalScrollIndicator={false}
             contentContainerStyle={Styles.container}
             keyboardShouldPersistTaps="handled"
             style={Styles.ScrollView}

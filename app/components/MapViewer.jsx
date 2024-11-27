@@ -68,9 +68,7 @@ export const MapViewer = ({
         setPursuitTitle(res.title);
         setIsActivePursuit(res.active);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
     getLocation(setLocation);
     setLoading(false);
   }, [coordinates]);
@@ -121,9 +119,7 @@ export const MapViewer = ({
                   ) + 0.04,
               });
             }}
-            onError={(err) => {
-              console.log(err);
-            }}
+            onError={(err) => {}}
             resetOnChange={false}
             apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
             strokeWidth={4}
@@ -157,8 +153,6 @@ const styles = StyleSheet.create({
   },
 
   map: {
-    width: "90%",
-    height: "90%",
     flex: 1,
     gap: 20,
     width: "80%",

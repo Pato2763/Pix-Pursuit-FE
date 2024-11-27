@@ -22,7 +22,7 @@ const LeaderbaordList = () => {
         style={BigLeaderboard.header}
       />
       <View style={BigLeaderboard.leaderboardListContainer}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {loading ? (
             <Loading />
           ) : (
