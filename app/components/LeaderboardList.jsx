@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { getUsers } from "../api";
-import LeaderboardCard from "./LeaderboardCard";
 import { Image, SafeAreaView, ScrollView, View } from "react-native";
-import { leaderboard } from "../utils/styles/leaderboard";
 import Loading from "./Loading";
+import { BigLeaderboardCard, BigLeaderboard } from "./BigLeaderboardCard";
 
 const LeaderbaordList = () => {
   const [users, setUsers] = useState([]);
@@ -20,15 +19,15 @@ const LeaderbaordList = () => {
     <SafeAreaView>
       <Image
         source={require("../../assets/Pursuit-Leader-boards.png")}
-        style={leaderboard.header}
+        style={BigLeaderboard.header}
       />
-      <View style={leaderboard.leaderboardListContainer}>
+      <View style={BigLeaderboard.leaderboardListContainer}>
         <ScrollView>
           {loading ? (
             <Loading />
           ) : (
             users.map((user) => {
-              return <LeaderboardCard key={user.user_id} user={user} />;
+              return <BigLeaderboardCard key={user.user_id} user={user} />;
             })
           )}
         </ScrollView>
