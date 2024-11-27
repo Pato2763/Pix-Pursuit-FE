@@ -114,7 +114,7 @@ export const choosePursuits = StyleSheet.create({
   },
   cardText: {
     color: Colours.AQUA_BLUE,
-    fontSize: 17,
+    fontSize: 25,
     textAlign: "center",
   },
 });
