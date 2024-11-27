@@ -83,14 +83,6 @@ const CreatePursuit = () => {
         fileName,
         user.user_id
       );
-      setPursuitData({
-        host_ID: user.user_id,
-        title: "",
-        image: "",
-        difficulty: null,
-        active: true,
-      });
-      setPhoto(null);
       setUser((user) => {
         return { ...user, hosted_pursuit_id: posted.pursuit_id };
       });
@@ -101,6 +93,15 @@ const CreatePursuit = () => {
       await uploadFileToS3(bucketName, fileName, fileData);
 
       setLoading(false);
+      setPhoto(null);
+      setPursuitData({
+        host_ID: user.user_id,
+        title: "",
+        image: "",
+        difficulty: null,
+        active: true,
+      });
+      navigation.goBack();
     } catch (error) {
       setLoading(false);
       setError("Error uploading your pursuit");
