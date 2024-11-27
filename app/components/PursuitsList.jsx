@@ -52,7 +52,11 @@ export function PursuitsList() {
 
   useEffect(() => {
     pursuits.forEach((pursuit, index) => {
-      if (calcTimer(pursuit.created_at) === "Pursuit timer expired!") {
+      if (
+        calcTimer(pursuit.created_at) === "Pursuit timer expired!" &&
+        pursuit.active
+      ) {
+        console.log("in here");
         pursuits.splice(index, 1);
         patchPursuit(pursuit.pursuit_id);
       } else {
