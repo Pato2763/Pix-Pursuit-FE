@@ -165,9 +165,8 @@ export function PursuitsList() {
             }
             if (
               pursuit.active &&
-              pursuit.host_id !== user.user_id
-              // &&
-              // !user.completedPursuits.includes(pursuit.pursuit_id)
+              pursuit.host_id !== user.user_id &&
+              !user.completedPursuits.includes(pursuit.pursuit_id)
             ) {
               return (
                 <PursuitCard
