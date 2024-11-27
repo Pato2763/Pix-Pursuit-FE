@@ -62,20 +62,6 @@ const PursuitCompletedScreen = ({ route }) => {
           >
             <Marker coordinate={userLocation} pinColor="blue"></Marker>
             <Marker coordinate={pursuitLocation} pinColor="green"></Marker>
-            <Polyline
-              coordinates={[
-                {
-                  latitude: userLocation.latitude,
-                  longitude: userLocation.longitude,
-                },
-                {
-                  latitude: pursuitLocation.latitude,
-                  longitude: pursuitLocation.longitude,
-                },
-              ]}
-              strokeColor={Colours.AQUA_BLUE}
-              strokeWidth={3}
-            />
           </MapView>
         </View>
         {pointsLoading ? (
@@ -151,7 +137,7 @@ const PursuitCompletedScreen = ({ route }) => {
               navigation.goBack();
             }}
           >
-            <Text style={blueButton.text}>Done</Text>
+            <Text style={blueButton.text}>Go Back</Text>
           </Pressable>
         </SafeAreaView>
       </ImageBackground>
