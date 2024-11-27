@@ -47,8 +47,9 @@ export function PursuitsList() {
   }, [user]);
 
   useEffect(() => {
-    pursuits.forEach((pursuit) => {
+    pursuits.forEach((pursuit, index) => {
       if (calcTimer(pursuit.created_at) === "Pursuit timer expired!") {
+        pursuits.splice(index, 1);
         patchPursuit(pursuit.pursuit_id);
       } else {
         pursuit.distance =
