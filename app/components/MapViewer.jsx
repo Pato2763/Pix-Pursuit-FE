@@ -32,7 +32,7 @@ export const MapViewer = ({ setPursuitImage, setCreatedAt }) => {
     latitude: 0,
     longitude: 0,
   });
-  const [key, setKey] = useState(0);
+  const [key, setKey] = useState(1);
   const { user } = useContext(UserContext);
 
   const navigation = useNavigation();
