@@ -39,9 +39,9 @@ export const BigLeaderboard = StyleSheet.create({
     resizeMode: "contain",
   },
   cardStyle: {
-    margin: 10,
-    width: 325,
-    backgroundColor: Colours.PURPLEBLUE,
+    margin: 6,
+    width: 326,
+    backgroundColor: Colours.GREY,
     borderRadius: 150,
     shadowColor: Colours.AQUA_BLUE,
     shadowOffset: {
@@ -53,7 +53,7 @@ export const BigLeaderboard = StyleSheet.create({
     elevation: 5,
     height: 70,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "start",
   },
   //actual background
   leaderboardListContainer: {
@@ -62,6 +62,7 @@ export const BigLeaderboard = StyleSheet.create({
     width: 350,
     gap: 100,
     position: "centre",
+    backgroundColor: Colours.PURPLEBLUE,
   },
   leaderboardCard: {
     flexDirection: "row",
@@ -79,15 +80,17 @@ export const BigLeaderboard = StyleSheet.create({
     color: Colours.AQUA_BLUE,
     fontSize: 18,
     justifyContent: "space-between",
-    margin: 5,
+    margin: 2,
     fontWeight: "bold",
+    padding: 5,
   },
   cardTextUser: {
     color: Colours.AQUA_BLUE,
     fontSize: 20,
     justifyContent: "space-between",
-    margin: 5,
+    margin: 2,
     fontWeight: "bold",
+    padding: 5,
   },
   miniLeaderboardCard: {
     flexDirection: "row",
@@ -99,7 +102,8 @@ export const BigLeaderboard = StyleSheet.create({
   },
   rowContainer: {
     flexDirection: "row",
-    justifyContent: "flex-start",
-    marginBottom: 0.5,
+    marginBottom: 0.6,
+    padding: 0.2,
+    paddingLeft: 15,
   },
 });
