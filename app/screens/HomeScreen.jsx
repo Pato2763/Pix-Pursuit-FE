@@ -1,6 +1,4 @@
 import { ImageBackground, ScrollView, View, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import CreatePursuit from "../components/buttons/CreatePursuit.jsx";
 import HostedPursuitInfo from "../components/HostedPuruitInfo.jsx";
 import CurrentPursuit from "../components/CurrentPursuit.jsx";
 

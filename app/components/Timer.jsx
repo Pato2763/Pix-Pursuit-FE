@@ -4,10 +4,12 @@ import calcTimer from "../utils/calcTimer";
 import { StyleSheet } from "react-native";
 import CreatePursuit from "./buttons/CreatePursuit";
 
-const Timer = ({ createdAt, type }) => {
+const Timer = ({ createdAt, type, setIsActivePursuit }) => {
   const [timeRemaining, setTimeRemaining] = useState(null);
 
   useEffect(() => {
+    if (timeRemaining <= 0) {
+    }
     const interval = setInterval(() => {
       setTimeRemaining(calcTimer(createdAt));
     }, 1000);

@@ -22,6 +22,7 @@ export const MapViewer = ({
   setCreatedAt,
   setPursuitTitle,
   setIsActivePursuit,
+  setKey1,
 }) => {
   const [region, setRegion] = useState({
     latitude: 0,

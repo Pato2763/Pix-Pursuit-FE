@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import ChoosePursuit from "./buttons/ChoosePursuit";
 
-const InactivePursuit = () => {
+const InactivePursuit = ({ setIsActivePursuit }) => {
   return (
     <View style={Styles.CurrentPursuitContainer}>
       <Text style={Styles.title}>Your pursuit is now inactive</Text>
@@ -13,7 +13,7 @@ const InactivePursuit = () => {
         a different pursuit and try again !
       </Text>
       <View style={Styles.ButtonContainer}>
-        <ChoosePursuit />
+        <ChoosePursuit setIsActivePursuit={setIsActivePursuit} />
       </View>
     </View>
   );

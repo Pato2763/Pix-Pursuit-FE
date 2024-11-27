@@ -11,14 +11,13 @@ import Colours from "../utils/Colours";
 const ActivePursuit = ({
   setIsActivePursuit,
   imageLoading,
-  setImageLoading,
   imageData,
+  setKey1,
 }) => {
   const [pursuitTitle, setPursuitTitle] = useState("");
   const [showingMap, setShowingMap] = useState(true);
   const [pursuitImage, setPursuitImage] = useState(null);
   const [createdAt, setCreatedAt] = useState(null);
-
   return (
     <View style={Styles.CurrentPursuitContainer}>
       <Text style={Styles.title}>{pursuitTitle}</Text>
