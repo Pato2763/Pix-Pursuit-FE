@@ -112,6 +112,15 @@ function App() {
               }}
             />
             <Stack.Screen
+              name="ChoosePursuits"
+              component={ChoosePursuitScreen}
+              options={{
+                headerShown: true,
+                gestureEnabled: false,
+                header: () => <Header />,
+              }}
+            />
+            <Stack.Screen
               name="Signup"
               component={SignupScreen}
               options={{
