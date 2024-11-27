@@ -61,9 +61,7 @@ export const MapViewer = ({ setPursuitImage, setCreatedAt }) => {
         setPursuitImage(res.image);
         setCoordinates(fetchedCoordinates);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
     getLocation(setLocation);
     setLoading(false);
   }, [coordinates]);
@@ -114,9 +112,7 @@ export const MapViewer = ({ setPursuitImage, setCreatedAt }) => {
                   ) + 0.04,
               });
             }}
-            onError={(err) => {
-              console.log(err);
-            }}
+            onError={(err) => {}}
             resetOnChange={false}
             apikey={process.env.EXPO_PUBLIC_GOOGLE_MAPS_APIKEY}
             strokeWidth={4}

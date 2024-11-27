@@ -42,6 +42,7 @@ const miniLB = StyleSheet.create({
   first: {
     textAlign: "center",
     fontSize: 30,
+    margin: "auto",
     color: "gold",
     marginVertical: 10,
   },

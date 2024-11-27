@@ -26,9 +26,7 @@ export const PursuitOverlay = ({
         setPursuitImage(res.image);
         setCoordinates(fetchedCoordinates);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [user]);
 
   return (

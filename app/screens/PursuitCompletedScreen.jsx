@@ -28,17 +28,19 @@ const PursuitCompletedScreen = ({ route }) => {
   const [pointsLoading, setPointsLoading] = useState(true);
   const [region, setRegion] = useState({});
 
-  if (won && user.pursuit_id) {
-    postPursuitsCompletedByUsers(user.user_id, pursuit.pursuit_id)
-      .then((points) => {
-        setPursuitPoints(points);
-        setPointsLoading(false);
-        return patchUsersPoints(user.user_id, points);
-      })
-      .then((fetchedUser) => {
-        patchUsersCurrentPursuit(user.user_id, null);
-      });
-  }
+  useEffect(() => {
+    if (won) {
+      postPursuitsCompletedByUsers(user.user_id, pursuit.pursuit_id)
+        .then((points) => {
+          setPursuitPoints(points);
+          setPointsLoading(false);
+          return patchUsersPoints(user.user_id, points);
+        })
+        .then((fetchedUser) => {
+          patchUsersCurrentPursuit(user.user_id, null);
+        });
+    }
+  }, []);
 
   const Won = () => {
     return (
@@ -103,9 +105,7 @@ const PursuitCompletedScreen = ({ route }) => {
           setImageData(res);
           setImageLoading(false);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     }, [user.pursuit_id]);
 
     let text = "You're nowhere near, Try harder!";

@@ -30,7 +30,6 @@ const CurrentPursuit = () => {
       .catch((err) => {
         setImageData(null);
         setImageLoading(false);
-        console.log(err);
       });
   }, [user.pursuit_id]);
 

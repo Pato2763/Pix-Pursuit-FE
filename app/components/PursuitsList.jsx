@@ -81,7 +81,6 @@ export function PursuitsList() {
       .catch((err) => {
         setImageData(null);
         setImageLoading(false);
-        console.log(err);
       });
   }, [confirmPursuit.id]);
 
@@ -166,8 +165,9 @@ export function PursuitsList() {
             }
             if (
               pursuit.active &&
-              pursuit.host_id !== user.user_id &&
-              !user.completedPursuits.includes(pursuit.pursuit_id)
+              pursuit.host_id !== user.user_id
+              // &&
+              // !user.completedPursuits.includes(pursuit.pursuit_id)
             ) {
               return (
                 <PursuitCard

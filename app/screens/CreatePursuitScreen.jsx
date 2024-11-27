@@ -105,7 +105,6 @@ const CreatePursuit = () => {
     } catch (error) {
       setLoading(false);
       setError("Error uploading your pursuit");
-      console.log(error);
     }
   };
 
