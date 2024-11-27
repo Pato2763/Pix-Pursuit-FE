@@ -29,7 +29,11 @@ const MiniLeaderBoardList = () => {
         Here is your personal leaderboard for your hosted pursuit:
       </Text>
       {!miniLeaderBoardUsers.length ? (
-        <Text>No users have completed this pursuit yet</Text>
+        <View style={Styles.NoCompletionsContainer}>
+          <Text style={Styles.NoCompletionsMsg}>
+            No users have completed this pursuit yet
+          </Text>
+        </View>
       ) : (
         <View style={Styles.leaderboardListContainer}>
           {miniLeaderBoardUsers.map((user, index) => {
@@ -58,6 +62,16 @@ const Styles = StyleSheet.create({
     width: "90%",
     backgroundColor: Colours.PURPLEBLUE,
     gap: 2,
+    margin: "auto",
+  },
+  NoCompletionsContainer: {
+    backgroundColor: Colours.PURPLEBLUE,
+    height: 100,
+    borderRadius: 10,
+  },
+  NoCompletionsMsg: {
+    color: "white",
+    paddingTop: 10,
     margin: "auto",
   },
 });
