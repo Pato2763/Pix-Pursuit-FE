@@ -70,7 +70,8 @@ export const choosePursuits = StyleSheet.create({
     margin: "auto",
   },
   imageLoadingContainer: {
-    marginBottom: 20,
+    height: 300,
+    width: 250,
     gap: 10,
     color: Colours.AQUA_BLUE,
   },
