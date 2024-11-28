@@ -79,6 +79,7 @@ export function PursuitsList() {
     });
 
     setOrderedPursuits(pursuits);
+
     setIsLoading(false);
   }, [pursuits]);
 
@@ -119,6 +120,34 @@ export function PursuitsList() {
   function handleCancel() {
     setConfirmPursuit({});
     setModalVisible(false);
+  }
+
+  if (isLoading) {
+    return (
+      <ImageBackground
+        source={require("../../assets/triangleBG.png")}
+        resizeMode="cover"
+        style={style.image}
+        imageStyle={{ opacity: 0.15, backgroundColor: "white" }}
+      >
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View>
+            <Text style={choosePursuits.titleText}>
+              Choose from your local pursuits below. The faster you complete it
+              the more pixels you will earn and climb up the leaderboards. Each
+              pursuit will last 24 hours before it deactivates.
+            </Text>
+          </View>
+          {pursuits.map((element, index) => {
+            return (
+              <View key={index} style={choosePursuits.pursuitLoading}>
+                <Loading />
+              </View>
+            );
+          })}
+        </ScrollView>
+      </ImageBackground>
+    );
   }
 
   if (
@@ -201,16 +230,6 @@ export function PursuitsList() {
         </View>
         <View style={choosePursuits.pursuitsListContainer}>
           {orderedPursuits.map((pursuit) => {
-            if (isLoading) {
-              return (
-                <View
-                  key={pursuit.pursuit_id}
-                  style={choosePursuits.pursuitdCard}
-                >
-                  <Loading />
-                </View>
-              );
-            }
             if (
               pursuit.active &&
               pursuit.host_id !== user.user_id &&
