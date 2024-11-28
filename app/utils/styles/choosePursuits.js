@@ -119,4 +119,16 @@ export const choosePursuits = StyleSheet.create({
     fontSize: 17,
     textAlign: "center",
   },
+  pursuitLoading: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    flex: 1,
+    width: 330,
+    height: 120,
+    borderWidth: 2,
+    borderRadius: 11,
+    borderColor: Colours.AQUA_BLUE,
+    backgroundColor: Colours.PURPLEBLUE,
+    justifyContent: "space-evenly",
+  },
 });
