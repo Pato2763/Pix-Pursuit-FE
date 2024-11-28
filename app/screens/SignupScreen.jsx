@@ -13,6 +13,7 @@ import React, { useState, useRef } from "react";
 import { Styles } from "../utils/styles/signup";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback } from "react-native";
+import { getUsersByUsername, postUser } from "../api";
 
 const SignupScreen = () => {
   const [signupInfo, setSignupInfo] = useState({
@@ -20,6 +21,7 @@ const SignupScreen = () => {
     password: "",
     email: "",
   });
+  const [error, setError] = useState(null);
   const [retypedPW, setRetypedPW] = useState("");
   const refEmailInput = useRef(null);
   const refPasswordInput = useRef(null);
@@ -28,6 +30,10 @@ const SignupScreen = () => {
 
   const handleInputChange = (key, value) => {
     setSignupInfo((prevState) => ({ ...prevState, [key]: value }));
+  };
+
+  const handleSignup = async () => {
+    postUser;
   };
 
   return (
@@ -99,7 +105,7 @@ const SignupScreen = () => {
               <TouchableOpacity
                 style={Styles.createBtn}
                 onPress={() => {
-                  console.log(signupInfo);
+                  handleSignup();
                 }}
               >
                 <Text>Sign up</Text>

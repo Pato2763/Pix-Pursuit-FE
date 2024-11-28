@@ -69,9 +69,8 @@ export const MapViewer = ({ setPursuitImage }) => {
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        showsUserLocation={true} // Show blue dot for user's location
+        showsUserLocation={true}
         trackedLocation={trackedLocation}
-        initialRegion={region}
         region={region}
         key={key}
       >

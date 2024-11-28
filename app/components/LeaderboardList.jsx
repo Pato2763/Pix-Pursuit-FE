@@ -21,17 +21,16 @@ const LeaderbaordList = () => {
         source={require("../../assets/Pursuit-Leader-boards.png")}
         style={BigLeaderboard.header}
       />
-      <View style={BigLeaderboard.leaderboardListContainer}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {loading ? (
-            <Loading />
-          ) : (
-            users.map((user) => {
-              return <BigLeaderboardCard key={user.user_id} user={user} />;
-            })
-          )}
-        </ScrollView>
-      </View>
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {loading ? (
+          <Loading />
+        ) : (
+          users.map((user) => {
+            return <BigLeaderboardCard key={user.user_id} user={user} />;
+          })
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };
