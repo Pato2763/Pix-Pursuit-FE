@@ -123,11 +123,9 @@ export function PursuitsList() {
 
   if (
     orderedPursuits.every((pursuit) => {
-
       return (
         !pursuit.active || user.completedPursuits.includes(pursuit.pursuit_id)
       );
-
     })
   ) {
     return (
