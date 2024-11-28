@@ -22,7 +22,7 @@ const CurrentPursuit = () => {
         setImageData(null);
         setImageLoading(false);
       });
-  }, []);
+  }, [user]);
 
   if (!user.currentPursuit) {
     return <View></View>;

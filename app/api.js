@@ -10,8 +10,20 @@ export function getUsers() {
   });
 }
 
+export function getUsersByUsername(username) {
+  return api.get(`/users/${username}`).then((response) => {
+    return response.data.user;
+  });
+}
+
 export function loginUser(body) {
   return api.post("/users/login", body).then((response) => {
+    return response.data.user;
+  });
+}
+
+export function postUser(body) {
+  return api.post("/users", body).then((response) => {
     return response.data.user;
   });
 }
