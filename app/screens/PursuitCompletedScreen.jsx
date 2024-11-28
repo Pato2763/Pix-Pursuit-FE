@@ -54,12 +54,12 @@ const PursuitCompletedScreen = ({ route }) => {
             style={styles.map}
             initialRegion={{
               ...userLocation,
-              latitudeDelta: Math.abs(
-                userLocation.latitude - pursuitLocation.latitude
-              ),
-              longitudeDelta: Math.abs(
-                userLocation.longitude - pursuitLocation.longitude
-              ),
+              latitudeDelta:
+                Math.abs(userLocation.latitude - pursuitLocation.latitude) +
+                0.01,
+              longitudeDelta:
+                Math.abs(userLocation.longitude - pursuitLocation.longitude) +
+                0.01,
             }}
           >
             <Marker coordinate={userLocation} pinColor="blue"></Marker>
