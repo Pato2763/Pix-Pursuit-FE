@@ -59,7 +59,15 @@ export function PursuitsList() {
           { latitude: location.latitude, longitude: location.longitude },
           { latitude: pursuit.target_lat, longitude: pursuit.target_long }
         ) / 1000;
-      calcTimer(pursuit.created_at, pursuit.pursuit_id);
+    });
+
+    pursuits.forEach((pursuit, index) => {
+      if (
+        calcTimer(pursuit.created_at, pursuit.pursuit_id) ===
+        "Pursuit timer expired!"
+      ) {
+        pursuits.splice(index, 1);
+      }
     });
 
     pursuits.sort((a, b) => {
@@ -111,7 +119,9 @@ export function PursuitsList() {
 
   if (
     orderedPursuits.every((pursuit) => {
-      return !pursuit.active;
+      return (
+        !pursuit.active || user.completedPursuits.includes(pursuit.pursuit_id)
+      );
     })
   ) {
     return (

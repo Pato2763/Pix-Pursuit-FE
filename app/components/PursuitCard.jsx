@@ -6,7 +6,10 @@ export function PursuitCard({ pursuit, setModalVisible, setConfirmPursuit }) {
     setModalVisible(true);
     setConfirmPursuit({ id: pursuit.pursuit_id, title: pursuit.title });
   }
-  const pursuitDistance = pursuit.distance.toFixed(1);
+  let pursuitDistance = "?";
+  if (pursuit.distance) {
+    pursuitDistance = pursuit.distance.toFixed(1);
+  }
   return (
     <Pressable onPress={handlePress} style={choosePursuits.pursuitdCard}>
       <Text style={choosePursuits.title}>{pursuit.title}</Text>

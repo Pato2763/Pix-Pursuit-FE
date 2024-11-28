@@ -45,18 +45,25 @@ const LoginScreen = () => {
 
         setUser(newUser);
 
-        return Promise.all([
-          getCompletedPursuits(newUser.user_id),
-          getPursuitbyPursuitID(newUser.pursuit_id),
-        ]);
+        const promsieArr = [getCompletedPursuits(newUser.user_id)];
+
+        if (newUser.pursuit_id) {
+          promsieArr.push(getPursuitbyPursuitID(newUser.pursuit_id));
+        }
+
+        return Promise.all(promsieArr);
       })
       .then(([completedPursuitsArr, currentPursuit]) => {
         const completedPursuitsIdArr = completedPursuitsArr.map((pursuit) => {
           return pursuit.pursuit_id;
         });
-        currentPursuit.active =
-          calcTimer(currentPursuit.created_at, currentPursuit.pursuit_id) !==
-          "Pursuit timer expired!";
+        if (currentPursuit) {
+          currentPursuit.active =
+            calcTimer(currentPursuit.created_at, currentPursuit.pursuit_id) !==
+            "Pursuit timer expired!";
+        } else {
+          currentPursuit = {};
+        }
         setUser((currUser) => {
           return {
             ...currUser,
