@@ -22,7 +22,7 @@ export const BigLeaderboardCard = ({ user }) => {
       </View>
 
       <View style={BigLeaderboard.rowContainer}>
-        <Text style={BigLeaderboard.cardTextPoints}>Points:</Text>
+        <Text style={BigLeaderboard.cardTextPoints}>Pixels:</Text>
         <Text style={BigLeaderboard.cardTextPoints}>{user.points}</Text>
       </View>
     </View>

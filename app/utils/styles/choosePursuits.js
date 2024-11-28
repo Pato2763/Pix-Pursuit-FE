@@ -13,6 +13,7 @@ export const choosePursuits = StyleSheet.create({
   },
   pursuitsListContainer: {
     alignItems: "center",
+    margin: "auto",
     borderRadius: 12,
     width: 350,
     backgroundColor: Colours.PURPLEBLUE,

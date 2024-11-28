@@ -8,6 +8,8 @@ import {
   ScrollView,
   Text,
   View,
+  StyleSheet,
+  ImageBackground,
 } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -24,6 +26,8 @@ import { getDistance } from "geolib";
 import Loading from "./Loading";
 import { getPursuitImage } from "../api";
 import calcTimer from "../utils/calcTimer";
+import Colours from "../utils/Colours";
+import { Styles } from "../utils/styles/login";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
@@ -119,30 +123,37 @@ export function PursuitsList() {
 
   if (
     orderedPursuits.every((pursuit) => {
+
       return (
         !pursuit.active || user.completedPursuits.includes(pursuit.pursuit_id)
       );
+
     })
   ) {
     return (
-      <>
-        <View>
-          <Text style={choosePursuits.titleText}>
-            Choose from your local pursuits below. The faster you complete it
-            the more points you will earn and climb up the leaderboards. Each
-            pursuit will last 24 hours before it deactivates.
+      <ImageBackground
+        source={require("../../assets/triangleBG.png")}
+        resizeMode="cover"
+        style={style.image}
+        imageStyle={{ opacity: 0.15, backgroundColor: "white" }}
+      >
+        <View style={style.noPursuitCon}>
+          <Text style={style.titleText}>
+            Wow!! It seems as if you have no active pursuits, please swipe back
+            to choose from a pursuit!! Gotta get those Pixels!!!
           </Text>
         </View>
-        {/* ADD STYLING HERE */}
-        <View>
-          <Text>no pursuits</Text>
-        </View>
-      </>
+      </ImageBackground>
     );
   }
 
   return (
-    <SafeAreaView>
+    <ImageBackground
+      source={require("../../assets/triangleBG.png")}
+      resizeMode="cover"
+      style={style.image}
+      imageStyle={{ opacity: 0.15, backgroundColor: "white" }}
+    >
       <ScrollView showsVerticalScrollIndicator={false}>
         <Modal animationType="none" transparent={true} visible={modalVisible}>
           <View style={choosePursuits.centeredView}>
@@ -186,7 +197,7 @@ export function PursuitsList() {
         <View>
           <Text style={choosePursuits.titleText}>
             Choose from your local pursuits below. The faster you complete it
-            the more points you will earn and climb up the leaderboards. Each
+            the more pixels you will earn and climb up the leaderboards. Each
             pursuit will last 24 hours before it deactivates.
           </Text>
         </View>
@@ -204,9 +215,8 @@ export function PursuitsList() {
             }
             if (
               pursuit.active &&
-              pursuit.host_id !== user.user_id
-              // &&
-              // !user.completedPursuits.includes(pursuit.pursuit_id)
+              pursuit.host_id !== user.user_id &&
+              !user.completedPursuits.includes(pursuit.pursuit_id)
             ) {
               return (
                 <PursuitCard
@@ -221,6 +231,38 @@ export function PursuitsList() {
           })}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </ImageBackground>
   );
 }
+
+const style = StyleSheet.create({
+  noPursuitCon: {
+    margin: "50%",
+    padding: 0.5,
+    borderColor: "#D9D9D9",
+    borderWidth: 2,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    backgroundColor: Colours.AQUA_BLUE,
+    marginHorizontal: "auto",
+  },
+  text: {
+    color: "black",
+    fontSize: 18,
+    margin: 10,
+    padding: 10,
+  },
+  titleText: {
+    margin: 2,
+    marginVertical: 2,
+    textAlign: "center",
+    width: 300,
+    backgroundColor: "white",
+    padding: 30,
+    borderRadius: 10,
+  },
+  image: {
+    height: "100%",
+    width: "100%",
+  },
+});
