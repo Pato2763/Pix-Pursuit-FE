@@ -93,7 +93,7 @@ const PursuitCompletedScreen = ({ route }) => {
               navigation.goBack();
             }}
           >
-            <Text style={blueButton.text}>Collect {pursuitPoints} Points</Text>
+            <Text style={blueButton.text}>Collect {pursuitPoints} Pixels</Text>
           </Pressable>
         )}
       </SafeAreaView>
