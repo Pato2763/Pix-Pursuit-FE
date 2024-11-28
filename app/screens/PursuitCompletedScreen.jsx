@@ -16,6 +16,7 @@ import {
 } from "../api";
 import Loading from "../components/Loading";
 import { StyleForTerm } from "../utils/styles/Terms";
+import CurrentPursuit from "../components/CurrentPursuit";
 
 const PursuitCompletedScreen = ({ route }) => {
   const { user, setUser } = useContext(UserContext);
@@ -83,6 +84,7 @@ const PursuitCompletedScreen = ({ route }) => {
                     return {
                       ...currUser,
                       pursuit_id: null,
+                      currentPursuit: {},
                       completedPursuits: completedPursuitsIdArr,
                     };
                   });

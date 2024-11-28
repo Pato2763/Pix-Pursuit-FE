@@ -23,6 +23,7 @@ import { UserContext } from "../context/UserContext";
 import { getDistance } from "geolib";
 import Loading from "./Loading";
 import { getPursuitImage } from "../api";
+import calcTimer from "../utils/calcTimer";
 
 export function PursuitsList() {
   const [location, setLocation] = useState({});
@@ -58,6 +59,7 @@ export function PursuitsList() {
           { latitude: location.latitude, longitude: location.longitude },
           { latitude: pursuit.target_lat, longitude: pursuit.target_long }
         ) / 1000;
+      calcTimer(pursuit.created_at, pursuit.pursuit_id);
     });
 
     pursuits.sort((a, b) => {
@@ -105,6 +107,28 @@ export function PursuitsList() {
   function handleCancel() {
     setConfirmPursuit({});
     setModalVisible(false);
+  }
+
+  if (
+    orderedPursuits.every((pursuit) => {
+      return !pursuit.active;
+    })
+  ) {
+    return (
+      <>
+        <View>
+          <Text style={choosePursuits.titleText}>
+            Choose from your local pursuits below. The faster you complete it
+            the more points you will earn and climb up the leaderboards. Each
+            pursuit will last 24 hours before it deactivates.
+          </Text>
+        </View>
+        {/* ADD STYLING HERE */}
+        <View>
+          <Text>no pursuits</Text>
+        </View>
+      </>
+    );
   }
 
   return (
@@ -170,8 +194,9 @@ export function PursuitsList() {
             }
             if (
               pursuit.active &&
-              pursuit.host_id !== user.user_id &&
-              !user.completedPursuits.includes(pursuit.pursuit_id)
+              pursuit.host_id !== user.user_id
+              // &&
+              // !user.completedPursuits.includes(pursuit.pursuit_id)
             ) {
               return (
                 <PursuitCard
