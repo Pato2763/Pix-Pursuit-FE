@@ -116,7 +116,7 @@ function App() {
               component={ChoosePursuitScreen}
               options={{
                 headerShown: true,
-                gestureEnabled: false,
+
                 header: () => <Header />,
               }}
             />
