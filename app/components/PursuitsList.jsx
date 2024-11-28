@@ -123,6 +123,7 @@ export function PursuitsList() {
             pursuit will last 24 hours before it deactivates.
           </Text>
         </View>
+        {/* ADD STYLING HERE */}
         <View>
           <Text>no pursuits</Text>
         </View>
