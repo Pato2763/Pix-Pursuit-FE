@@ -44,7 +44,7 @@ export default function ConfirmLocation() {
         userLocation: userLocation,
         pursuitLocation: pursuitLocation,
         pursuit: pursuit,
-        won: distance <= 50 ? true : false,
+        won: distance <= 25 ? true : false,
       });
     });
   };
